@@ -6,11 +6,12 @@ namespace ControleDeEstoqueApi.Domain.Models
     [Table("estoque")]
     public class Estoque
     {
-        [Key]
+        [ForeignKey("cod_funcionario")]
         internal int cod_func { get; set; }
 
-        [Key]
-        internal int cod_prod { get; set; }
+        
+        [ForeignKey("cod_produto")]
+        internal int cod_produto { get; set; }
 
         internal int quantidade { get; set; }
     }

@@ -15,7 +15,6 @@
     <Folder Include="Application\Services\" />
     <Folder Include="Application\ViewModels\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Domain\Models\" />
     <Folder Include="Domain\DTOs\" />
     <Folder Include="Infrastructure\Repositories\" />
   </ItemGroup>

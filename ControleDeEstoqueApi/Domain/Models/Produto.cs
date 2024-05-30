@@ -10,10 +10,10 @@ namespace ControleDeEstoqueApi.Domain.Models
         internal long cod_prod { get; set; }
 
         [ForeignKey("cod_fabricante")]
-        internal int cod_fabricante { get; set; }
+        internal int cod_fab{ get; set; }
 
         [ForeignKey("cod_fornecedor")]
-        internal int cod_fornecedor { get; set; }
+        internal int cod_fornc { get; set; }
 
         [MaxLength(250)]
         internal string nome_prod { get; set; }

@@ -1,7 +1,8 @@
 ﻿namespace ControleDeEstoqueApi.Domain.Models.Agents
 {
-    public class Gerente : Funcionario
+    public enum Cargo 
     {
-
+        Gerente,
+        Vendedor
     }
 }

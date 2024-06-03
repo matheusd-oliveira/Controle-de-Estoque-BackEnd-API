@@ -1,20 +1,36 @@
 ﻿using System.Collections;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ControleDeEstoqueApi.Domain.Models.Agents
 {
+    [Table("funcionario")]
     public class Funcionario
     {
-        // TODO: CRIAR PROPRIEDADES DA CLASSE E CRIAR AS PROPRIEDADES DE PRIMARY KEY E FOREING KEY .
-        // USAR COMO EXEMPLO AS OUTRAS CLASSES.
+        [MaxLength(250)]
+        public string nome { get; set; }
 
+        [Key]
+        public int cod_func { get; set; }
+        public Cargo cargo { get; set; }
+        public decimal salario { get; set; }
 
+        [MaxLength(250)]
+        public string endereco { get; set; }
 
+        [MaxLength(255)]
+        public string telefone { get; set; }
 
+        [MaxLength(250)]
+        public string cpf { get; set; }
+        
+        // TODO: Tratar essas propriedades, pois não é legal colocar senha no banco de dados.
+        public string login { get; set; }
+        public string senha { get; set; }
 
-
-
-
-
+        [MaxLength(250)]
+        public string data_nasc { get; set; }
+        public bool situacao { get; set; }
 
 
         // Escopo dos métodos criados de acordo com o PDF da documentação original.
@@ -22,9 +38,12 @@ namespace ControleDeEstoqueApi.Domain.Models.Agents
         // Esses métodos abaixo foram criados conforme a explicação do material, e isso está correto e faz sentido. 
         // O funcionario possui as funcionalides de Cadastrar/Alterar/Buscar um/Buscar todos os produtos. 
         // Criei apenas o escopo dos métodos. O resto fica com Biel.
-        public void CadastrarProduto() { }
-        public void AlterarProduto() { }
-        public void BuscarProduto() { }
-        public void BuscarTodosOsProdutosNoEstoque() { }
+        // Foi criado um padrão repository para os métodos. - 02/06/2024
+
+        //public void CadastrarProduto() { }
+        //public void AlterarProduto() { }
+        //public void BuscarProduto() { }
+        //public void BuscarTodosOsProdutosNoEstoque() { }
+        //public void EfetuaLogin() { }
     }
 }

@@ -7,7 +7,7 @@ namespace ControleDeEstoqueApi.Domain.Models
     public class Produto
     {
         [Key]
-        internal long cod_prod { get; set; }
+        internal int cod_prod { get; set; }
 
         [ForeignKey("cod_fabricante")]
         internal int cod_fab{ get; set; }

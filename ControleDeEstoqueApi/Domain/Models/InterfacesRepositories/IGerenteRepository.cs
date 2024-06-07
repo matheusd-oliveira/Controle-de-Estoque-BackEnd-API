@@ -2,6 +2,8 @@
 {
     public interface IGerenteRepository : IVendedorRepository
     {   
+        // TODO: Adicionar async aos métodos
+
         // Gerar Relatorio
         public void ExibirRelatorioDeVendasDoMes() { }
         public void ExibirRelatorioDeVendasNoDiaVigente() { }

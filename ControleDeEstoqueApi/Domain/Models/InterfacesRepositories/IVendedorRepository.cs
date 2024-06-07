@@ -1,7 +1,9 @@
 ﻿namespace ControleDeEstoqueApi.Domain.Models.InterfacesRepositories
 {
     public interface IVendedorRepository
-    {   
+    {
+        // TODO: Adicionar async aos métodos
+
         // Login
         public void EfetuarLogin() { }
 

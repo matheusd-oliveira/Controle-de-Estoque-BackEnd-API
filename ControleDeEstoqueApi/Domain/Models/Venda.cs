@@ -6,6 +6,8 @@ namespace ControleDeEstoqueApi.Domain.Models
     [Table("venda")]
     public class Venda
     {
+        // TODO: Criar um Id para cada classe como Primary Key.
+
         [Key]
         public int cod_venda { get; set; }
 

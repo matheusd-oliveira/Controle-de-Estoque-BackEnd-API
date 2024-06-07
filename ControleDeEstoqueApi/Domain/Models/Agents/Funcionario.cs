@@ -7,6 +7,8 @@ namespace ControleDeEstoqueApi.Domain.Models.Agents
     [Table("funcionario")]
     public class Funcionario
     {
+        // TODO: Criar um Id para cada classe como Primary Key.
+
         [MaxLength(250)]
         public string nome { get; set; }
 

@@ -6,6 +6,7 @@ namespace ControleDeEstoqueApi.Domain.Models
     [Table("fornecedor")]
     public class Fornecedor
     {
+        // TODO: Criar um Id para cada classe como Primary Key.
         [Key]
         internal int cod_fornc{ get; set; }
 

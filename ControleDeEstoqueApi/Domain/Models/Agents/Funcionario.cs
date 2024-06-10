@@ -1,38 +1,40 @@
-﻿using System.Collections;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ControleDeEstoqueApi.Domain.Models.Agents
 {
     [Table("funcionario")]
+    [Index(nameof(cod_func), IsUnique = true)] // Código de funcionario como CONSTRAINT UNIQUE
+    [Index(nameof(cpf), IsUnique = true)] // Cpf como CONSTRAINT UNIQUE
     public class Funcionario
     {
-        // TODO: Criar um Id para cada classe como Primary Key.
-
-        [MaxLength(250)]
-        public string nome { get; set; }
-
         [Key]
-        public int cod_func { get; set; }
-        public Cargo cargo { get; set; }
-        public decimal salario { get; set; }
+        internal int id_funcionario { get; set; }
 
         [MaxLength(250)]
-        public string endereco { get; set; }
+        internal string nome { get; set; }
+        internal int cod_func { get; set; }
+        internal Cargo cargo { get; set; }
+        internal decimal salario { get; set; }
+
+        [MaxLength(250)]
+        internal string endereco { get; set; }
 
         [MaxLength(255)]
-        public string telefone { get; set; }
+        internal string telefone { get; set; }
 
         [MaxLength(250)]
-        public string cpf { get; set; }
-        
+        internal string cpf { get; set; }
+
         // TODO: Tratar essas propriedades, pois não é legal colocar senha no banco de dados.
-        public string login { get; set; }
-        public string senha { get; set; }
+        internal string login { get; set; }
+        internal string senha { get; set; }
 
         [MaxLength(250)]
-        public string data_nasc { get; set; }
-        public bool situacao { get; set; }
+        internal string data_nasc { get; set; }
+        internal bool situacao { get; set; }
 
 
         // Escopo dos métodos criados de acordo com o PDF da documentação original.

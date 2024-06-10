@@ -1,22 +1,24 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.InteropServices;
 
 namespace ControleDeEstoqueApi.Domain.Models
 {
     [Table("venda")]
+    [Index(nameof(cod_venda), IsUnique = true)] // Código de venda como CONSTRAINT UNIQUE
     public class Venda
     {
-        // TODO: Criar um Id para cada classe como Primary Key.
-
-        [Key]
-        public int cod_venda { get; set; }
+        [Key()]
+        internal int id_venda { get; set; }
+        internal int cod_venda { get; set; }
 
         [ForeignKey("cod_funcionario")]
-        public int cod_func { get; set; }
+        internal int cod_func { get; set; }
 
         [ForeignKey("cod_pagamento")]
-        public int cod_pagmt { get; set; }
-        public double valor_total { get; set; }
-        public DateTime data_venda { get; set; }
+        internal int cod_pagmt { get; set; }
+        internal double valor_total { get; set; }
+        internal DateTime data_venda { get; set; }
     }
 }

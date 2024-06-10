@@ -6,7 +6,8 @@ namespace ControleDeEstoqueApi.Domain.Models
     [Table("estoque")]
     public class Estoque
     {
-        // TODO: Criar um Id para cada classe como Primary Key.
+        [Key]
+        internal int id_estoque { get; set; }
 
         [ForeignKey("cod_funcionario")]
         internal int cod_func { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ControleDeEstoqueApi.Domain.Models
 {
@@ -6,6 +7,8 @@ namespace ControleDeEstoqueApi.Domain.Models
     public class Item_Venda
     {
         // TODO: Criar um Id para cada classe como Primary Key.
+        [Key]
+        internal int id_item_venda { get; set; }
 
         [ForeignKey("cod_produto")]
         public int cod_prod { get; set; }

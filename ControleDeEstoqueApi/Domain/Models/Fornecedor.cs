@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ControleDeEstoqueApi.Domain.Models
 {
     [Table("fornecedor")]
+    [Index(nameof(cnpj), IsUnique = true)] // CNPJ como CONSTRAINT UNIQUE
     public class Fornecedor
     {
         // TODO: Criar um Id para cada classe como Primary Key.

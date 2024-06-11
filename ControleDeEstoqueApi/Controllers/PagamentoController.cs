@@ -21,7 +21,7 @@ namespace ControleDeEstoqueApi.Controllers
         [HttpPost]
         public IActionResult Add(PagamentoViewModel pagamentoView)
         {
-            var pagamento = new Pagamento(pagamentoView.CodPagamento, pagamentoView.NomePagamento);
+            var pagamento = new Pagamento(pagamentoView.NomePagamento);
 
             _pagamentoRepository.Add(pagamento);
             return Ok();

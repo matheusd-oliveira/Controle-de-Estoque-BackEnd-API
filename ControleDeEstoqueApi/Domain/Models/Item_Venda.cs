@@ -1,14 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ControleDeEstoqueApi.Domain.Models
 {
     [Table("item_venda")]
+    [Index(nameof(codigo_item_venda), IsUnique = true)]
     public class Item_Venda
     {
-        // TODO: Criar um Id para cada classe como Primary Key.
         [Key]
         internal int id_item_venda { get; set; }
+        internal int codigo_item_venda { get; set; }
 
         [ForeignKey("cod_produto")]
         public int cod_prod { get; set; }

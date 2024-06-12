@@ -12,6 +12,9 @@ namespace ControleDeEstoqueApi.Domain.Models
         [Key()]
         internal int id_venda { get; set; }
         internal int cod_venda { get; set; }
+        
+        // Pensar sobre essa propriedade
+        // internal List<Item_Venda> itens_da_venda { get; set; }
 
         [ForeignKey("cod_funcionario")]
         internal int cod_func { get; set; }

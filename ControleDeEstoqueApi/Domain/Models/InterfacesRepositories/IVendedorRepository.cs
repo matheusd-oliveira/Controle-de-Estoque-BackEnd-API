@@ -2,28 +2,27 @@
 {
     public interface IVendedorRepository
     {
-        // TODO: Adicionar async aos métodos
-
         // Login
         public void EfetuarLogin() { }
 
         // Mantem o Produto
-        public void CadastrarProduto() { }
-        public void AlterarProduto() { }
-        public void BuscarProduto() { }
+        public Task CadastrarProduto(Produto produto);
+        public Task AlterarProduto(int codigoDoProduto);
+        public Task<Produto> BuscarProduto(int codigoDoProduto, string nomeDoProduto); // Retorna o produto chamado através do seu código UNIQUE E SEU NOME.
 
         // Mantem o Estoque
-        public void BuscarTodosOsProdutosNoEstoque() { }
-        public void BuscarProdutoNoEstoquePorId() { }
-        public void EntradaDoProdutoNoEstoque() { }
-        public void SaidaDoProdutoNoEstoque() { }
+        public Task<IEnumerable<Produto>> BuscarTodosOsProdutosNoEstoque(); // Retorna uma lista de Produtos
+        public Task<Produto> BuscarProdutoNoEstoquePorId(int codigoDoProduto, string nomeDoProduto); // Retorna o produto dentro do estoque. 
+        public Task EntradaDoProdutoNoEstoque(Produto produto); // O produto já está cadastrado, ele só vai buscar da lista de produtos cadastrados e dar ENTRADA no estoque.
+        public Task SaidaDoProdutoNoEstoque(Produto produto); // Dar a SAIDA do estoque por meio da propriedade cod_prod que é UNIQUE.
 
         // Manter Vendas
-        public void EfetuarVenda() { }
-        public void CancelarVenda() { }
-        public void AdicionarItemDeVenda() { }
-        public void CancelarItemDeVenda() { }
-        public void ListarProdutosPorNomeNaTelaDeVenda() { }
-        
+        public Task<Venda> EfetuarVenda(Venda venda); 
+        public Task<Venda> CancelarVenda(Venda venda); // Cancelar venda através do codigo da venda.
+        public Task AdicionarItemDeVenda(Item_Venda itemDaVenda); // Adicionar item da venda na Venda.
+        public Task CancelarItemDeVenda(Item_Venda itemDaVenda); // Cancelar item da venda através do codigo do item , que é UNIQUE.
+        public Task<IEnumerable<Produto>> ListarProdutosPorNomeNaTelaDeVenda(string nomeDoProduto); // Listar todos os produtos através do nome na tela Venda.
+
+
     }
 }

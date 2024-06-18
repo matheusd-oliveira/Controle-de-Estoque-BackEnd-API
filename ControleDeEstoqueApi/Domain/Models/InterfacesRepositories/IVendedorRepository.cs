@@ -12,7 +12,7 @@
 
         // Mantem o Estoque
         public Task<IEnumerable<Produto>> BuscarTodosOsProdutosNoEstoque(); // Retorna uma lista de Produtos
-        public Task<Produto> BuscarProdutoNoEstoquePorId(int codigoDoProduto, string nomeDoProduto); // Retorna o produto dentro do estoque. 
+        public Task<Produto> BuscarProdutoNoEstoquePorId(int codigoDoProduto); // Retorna o produto dentro do estoque. 
         public Task EntradaDoProdutoNoEstoque(Produto produto); // O produto já está cadastrado, ele só vai buscar da lista de produtos cadastrados e dar ENTRADA no estoque.
         public Task SaidaDoProdutoNoEstoque(Produto produto); // Dar a SAIDA do estoque por meio da propriedade cod_prod que é UNIQUE.
 

@@ -6,6 +6,13 @@ namespace ControleDeEstoqueApi.Domain.Models
     [Table("estoque")]
     public class Estoque
     {
+        public Estoque(int cod_func, int cod_prod, int quantidade)
+        {
+            this.cod_func = cod_func;
+            this.cod_prod = cod_prod;
+            this.quantidade = quantidade;
+        }
+
         [Key]
         internal int id_estoque { get; set; }
 

@@ -11,6 +11,7 @@ namespace ControleDeEstoqueApi.Infrastructure
     {
         public DbSet<Pagamento> Pagamento { get; set; }
         public DbSet<Produto> Produto { get; set; }
+        public DbSet<Estoque> Estoque { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
           =>optionsBuilder.UseNpgsql(
          "Server=controle-estoque.cdmowgqow0s1.us-east-1.rds.amazonaws.com;" +

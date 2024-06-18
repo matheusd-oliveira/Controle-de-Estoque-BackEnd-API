@@ -56,10 +56,19 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             return await _dbConnection.Produto.FirstOrDefaultAsync(x => x.nome_prod == nomeDoProduto);
         }
 
-        public Task<Produto> BuscarProdutoNoEstoquePorId(int codigoDoProduto, string nomeDoProduto)
+        public async Task<Produto> BuscarProdutoNoEstoquePorId(int codigoDoProduto)
         {
-            throw new NotImplementedException();
+            // Estou pegando uma entidade de "Estoque", que vai ser o meu produto estocado. 
+            var produtoNoEstoque =  await _dbConnection.Estoque.FirstOrDefaultAsync(x => x.cod_prod == codigoDoProduto);
+           
+            // Aqui eu busco o produto correspondente ao código na entidade "Estoque" acima.
+            return await _dbConnection.Produto.FirstOrDefaultAsync(y => y.cod_prod == produtoNoEstoque.cod_prod);
         }
+
+
+
+
+
 
         public Task<IEnumerable<Produto>> BuscarTodosOsProdutosNoEstoque()
         {

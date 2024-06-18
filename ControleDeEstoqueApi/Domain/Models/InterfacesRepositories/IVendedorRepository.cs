@@ -7,8 +7,8 @@
 
         // Mantem o Produto
         public Task CadastrarProduto(Produto produto);
-        public Task AlterarProduto(int codigoDoProduto);
-        public Task<Produto> BuscarProduto(int codigoDoProduto, string nomeDoProduto); // Retorna o produto chamado através do seu código UNIQUE E SEU NOME.
+        public Task AlterarProduto(int codigoDoProduto, Produto novoProduto);
+        public Task<Produto> BuscarProduto(string nomeDoProduto); // Retorna os produtos através do nome, pois o nome é mais facil de achar já que é UNIQUE.
 
         // Mantem o Estoque
         public Task<IEnumerable<Produto>> BuscarTodosOsProdutosNoEstoque(); // Retorna uma lista de Produtos

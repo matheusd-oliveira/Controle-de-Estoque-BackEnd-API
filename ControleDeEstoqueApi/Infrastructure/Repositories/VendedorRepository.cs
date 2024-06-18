@@ -61,6 +61,8 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             // Estou pegando uma entidade de "Estoque", que vai ser o meu produto estocado. 
             var produtoNoEstoque =  await _dbConnection.Estoque.FirstOrDefaultAsync(x => x.cod_prod == codigoDoProduto);
            
+            // TODO: Criar uma verificação caso não encontre o produto no estoque.
+
             // Aqui eu busco o produto correspondente ao código na entidade "Estoque" acima.
             return await _dbConnection.Produto.FirstOrDefaultAsync(y => y.cod_prod == produtoNoEstoque.cod_prod);
         }

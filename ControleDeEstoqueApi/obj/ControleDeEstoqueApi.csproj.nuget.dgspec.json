@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\c#\\Controle-de-Estoque-BackEnd-API\\ControleDeEstoqueApi\\ControleDeEstoqueApi.csproj": {}
+    "D:\\Desenvolvimento de Software\\Projetos Pessoais\\OldWestCode\\Sistema Estoque\\WPF - Backend\\Controle-de-Estoque-BackEnd-API\\ControleDeEstoqueApi\\ControleDeEstoqueApi.csproj": {}
   },
   "projects": {
-    "C:\\c#\\Controle-de-Estoque-BackEnd-API\\ControleDeEstoqueApi\\ControleDeEstoqueApi.csproj": {
+    "D:\\Desenvolvimento de Software\\Projetos Pessoais\\OldWestCode\\Sistema Estoque\\WPF - Backend\\Controle-de-Estoque-BackEnd-API\\ControleDeEstoqueApi\\ControleDeEstoqueApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\c#\\Controle-de-Estoque-BackEnd-API\\ControleDeEstoqueApi\\ControleDeEstoqueApi.csproj",
+        "projectUniqueName": "D:\\Desenvolvimento de Software\\Projetos Pessoais\\OldWestCode\\Sistema Estoque\\WPF - Backend\\Controle-de-Estoque-BackEnd-API\\ControleDeEstoqueApi\\ControleDeEstoqueApi.csproj",
         "projectName": "ControleDeEstoqueApi",
-        "projectPath": "C:\\c#\\Controle-de-Estoque-BackEnd-API\\ControleDeEstoqueApi\\ControleDeEstoqueApi.csproj",
-        "packagesPath": "C:\\Users\\jão\\.nuget\\packages\\",
-        "outputPath": "C:\\c#\\Controle-de-Estoque-BackEnd-API\\ControleDeEstoqueApi\\obj\\",
+        "projectPath": "D:\\Desenvolvimento de Software\\Projetos Pessoais\\OldWestCode\\Sistema Estoque\\WPF - Backend\\Controle-de-Estoque-BackEnd-API\\ControleDeEstoqueApi\\ControleDeEstoqueApi.csproj",
+        "packagesPath": "C:\\Users\\mathe\\.nuget\\packages\\",
+        "outputPath": "D:\\Desenvolvimento de Software\\Projetos Pessoais\\OldWestCode\\Sistema Estoque\\WPF - Backend\\Controle-de-Estoque-BackEnd-API\\ControleDeEstoqueApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\jão\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mathe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -39,11 +39,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -96,7 +91,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

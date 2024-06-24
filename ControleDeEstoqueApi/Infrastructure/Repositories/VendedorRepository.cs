@@ -1,4 +1,5 @@
 ﻿using ControleDeEstoqueApi.Domain.Models;
+using ControleDeEstoqueApi.Domain.Models.Agents;
 using ControleDeEstoqueApi.Domain.Models.InterfacesRepositories;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
@@ -67,19 +68,13 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             return await _dbConnection.Produto.FirstOrDefaultAsync(y => y.cod_prod == produtoNoEstoque.cod_prod);
         }
 
-
-
-
-
-
-        public Task<IEnumerable<Produto>> BuscarTodosOsProdutosNoEstoque()
-        {
-            throw new NotImplementedException();
+        public async Task<IEnumerable<Estoque>> BuscarTodosOsProdutosNoEstoque()
+        {   
+            return await _dbConnection.Estoque.ToListAsync();
         }
 
-        public Task EntradaDoProdutoNoEstoque(Produto produto)
+        public async Task EntradaDoProdutoNoEstoque(Produto produto, Funcionario funcionario)
         {
-            throw new NotImplementedException();
         }
         public Task SaidaDoProdutoNoEstoque(Produto produto)
         {

@@ -6,6 +6,7 @@ namespace ControleDeEstoqueApi.Domain.Models
 {
     [Table("fornecedor")]
     [Index(nameof(cnpj), IsUnique = true)] // CNPJ como CONSTRAINT UNIQUE
+    [Index(nameof(nome_fant), IsUnique = true)] // nome fantasia como CONSTRAINT UNIQUE
     public class Fornecedor
     {
         // TODO: Criar um Id para cada classe como Primary Key.

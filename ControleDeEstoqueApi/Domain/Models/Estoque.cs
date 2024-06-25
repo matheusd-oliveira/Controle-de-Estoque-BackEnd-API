@@ -6,12 +6,14 @@ namespace ControleDeEstoqueApi.Domain.Models
     [Table("estoque")]
     public class Estoque
     {
-        public Estoque(int cod_func, int cod_prod, int quantidade, string nome_prod)
+        public Estoque(int cod_func, int cod_prod, string nome_prod, string nome_fant, string nome_fab, int quantidade)
         {
             this.cod_func = cod_func;
             this.cod_prod = cod_prod;
-            this.quantidade = quantidade;
             this.nome_prod = nome_prod;
+            this.nome_fant = nome_fant;
+            this.nome_fab = nome_fab;
+            this.quantidade = quantidade;
         }
 
         [Key]
@@ -26,11 +28,11 @@ namespace ControleDeEstoqueApi.Domain.Models
         [MaxLength(250)] // Adicionado o nome para ser identificado no estoque
         internal string nome_prod { get; set; }
 
-        [ForeignKey("cod_fornecedor")]
-        internal int cod_fornc { get; set; }
+        [ForeignKey("nome_fantasia_fornecedor")]
+        internal string nome_fant { get; set; }
 
-        [ForeignKey("cod_fabricante")]
-        internal int cod_fab { get; set; }
+        [ForeignKey("nome_fabricante")]
+        internal string nome_fab { get; set; }
         internal int quantidade { get; set; }
     }
 }

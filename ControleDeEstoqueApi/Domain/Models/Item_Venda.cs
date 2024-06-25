@@ -8,6 +8,16 @@ namespace ControleDeEstoqueApi.Domain.Models
     [Index(nameof(codigo_item_venda), IsUnique = true)]
     public class Item_Venda
     {
+        public Item_Venda(int codigo_item_venda, int cod_prod, int cod_func, int cod_venda, int quantidade, decimal valor_unitario)
+        {
+            this.codigo_item_venda = codigo_item_venda;
+            this.cod_prod = cod_prod;
+            this.cod_func = cod_func;
+            this.cod_venda = cod_venda;
+            this.quantidade = quantidade;
+            this.valor_unitario = valor_unitario;
+        }
+
         [Key]
         internal int id_item_venda { get; set; }
         internal int codigo_item_venda { get; set; }

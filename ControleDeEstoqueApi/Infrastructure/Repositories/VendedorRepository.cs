@@ -12,8 +12,20 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
 
         public async Task CadastrarProduto(Produto produto)
         {
-            _dbConnection.Produto.Add(produto);
-            await _dbConnection.SaveChangesAsync();
+            try
+            {
+                if (produto != null)
+                {
+                    _dbConnection.Produto.Add(produto);
+                    await _dbConnection.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw new ArgumentException(e.Message);
+            }
+            
         }
 
         /// <summary>
@@ -73,6 +85,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             return await _dbConnection.Estoque.ToListAsync();
         }
 
+        #region TODO: // DISCUTIR SOBRE CRIAÇÃO DE MODELS PARA ENTRADA E SAIDA DE PRODUTO NO ESTOQUE
         public async Task EntradaDoProdutoNoEstoque(Produto produto, Funcionario funcionario)
         {
 
@@ -81,15 +94,40 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
-
-        public Task AdicionarItemDeVenda(Item_Venda itemDaVenda)
+        #endregion
+        public async Task AdicionarItemDeVenda(Item_Venda itemDaVenda)
         {
-            throw new NotImplementedException();
+            try
+            {   
+                if(itemDaVenda != null) 
+                {
+                    _dbConnection.Item_Venda.Add(itemDaVenda);
+                    await _dbConnection.SaveChangesAsync();
+                }                  
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException(e.Message);
+            }
+            
         }
 
-        public Task CancelarItemDeVenda(Item_Venda itemDaVenda)
+        public async Task CancelarItemDeVenda(Item_Venda itemDaVenda)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (itemDaVenda != null)
+                {
+                    _dbConnection.Item_Venda.Remove(itemDaVenda);
+                    await _dbConnection.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw new ArgumentException(e.Message);
+            }
+
         }
 
         public Task<Venda> CancelarVenda(Venda venda)

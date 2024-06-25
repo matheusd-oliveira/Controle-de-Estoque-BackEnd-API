@@ -9,7 +9,7 @@ namespace ControleDeEstoqueApi.Domain.Models
     [Index(nameof(cod_venda), IsUnique = true)] // Código de venda como CONSTRAINT UNIQUE
     public class Venda
     {
-        [Key()]
+        [Key]
         internal int id_venda { get; set; }
         internal int cod_venda { get; set; }
         

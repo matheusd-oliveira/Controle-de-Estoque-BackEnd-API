@@ -75,8 +75,9 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
 
         public async Task EntradaDoProdutoNoEstoque(Produto produto, Funcionario funcionario)
         {
+
         }
-        public Task SaidaDoProdutoNoEstoque(Produto produto)
+        public Task SaidaDoProdutoNoEstoque(Produto produto, Funcionario funcionario)
         {
             throw new NotImplementedException();
         }

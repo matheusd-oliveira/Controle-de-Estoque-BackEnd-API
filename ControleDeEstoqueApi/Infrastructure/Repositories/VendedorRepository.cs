@@ -3,6 +3,7 @@ using ControleDeEstoqueApi.Domain.Models.Agents;
 using ControleDeEstoqueApi.Domain.Models.InterfacesRepositories;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Immutable;
 
 namespace ControleDeEstoqueApi.Infrastructure.Repositories
 {
@@ -130,21 +131,19 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
 
         }
 
-        public Task<Venda> CancelarVenda(Venda venda)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<Venda> EfetuarVenda(Venda venda)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Produto>> ListarProdutosPorNomeNaTelaDeVenda(string nomeDoProduto)
+        public async Task<IEnumerable<Estoque>> ListarProdutosPorNomeNaTelaDeVenda(string nomeDoProduto)
+        {
+            return await _dbConnection.Estoque.Where(produto => produto.nome_prod == nomeDoProduto).ToListAsync();
+        }
+        public Task<IEnumerable<Produto>> ListarProdutosPorCodigoNaTelaDeVenda(int codigoDoProduto) 
         {
             throw new NotImplementedException();
         }
-
 
     }
 }

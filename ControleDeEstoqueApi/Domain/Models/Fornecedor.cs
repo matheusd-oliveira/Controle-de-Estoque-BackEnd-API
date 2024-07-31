@@ -11,21 +11,21 @@ namespace ControleDeEstoqueApi.Domain.Models
     {
         // TODO: Criar um Id para cada classe como Primary Key.
         [Key]
-        internal int cod_fornc{ get; set; }
+        public int cod_fornc{ get; set; }
 
         [ForeignKey("cod_funcionario")]
-        internal int cod_func { get; set; }
+        public int cod_func { get; set; }
 
         [Column("nome_fantasia")]
-        internal string nome_fant { get; set; }
-        internal string cnpj { get; set; }
-        internal string endereco { get; set; }
-        internal string email { get; set; }
-        internal string site { get; set; }
+        public string nome_fant { get; set; }
+        public string cnpj { get; set; }
+        public string endereco { get; set; }
+        public string email { get; set; }
+        public string site { get; set; }
 
         [MaxLength(20)]
-        internal string telefone { get; set; }
-        internal string tempo_entrega { get; set; }
+        public string telefone { get; set; }
+        public string tempo_entrega { get; set; }
 
     }
 }

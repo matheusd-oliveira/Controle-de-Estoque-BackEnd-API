@@ -20,10 +20,10 @@ namespace ControleDeEstoqueApi.Domain.Models.InterfacesRepositories
 
         // Manter Vendas
         public Task<Venda> EfetuarVenda(Venda venda); 
-        public Task<Venda> CancelarVenda(Venda venda); // Cancelar venda através do codigo da venda.
         public Task AdicionarItemDeVenda(Item_Venda itemDaVenda); // Adicionar item da venda na Venda.
         public Task CancelarItemDeVenda(Item_Venda itemDaVenda); // Cancelar item da venda através do codigo do item , que é UNIQUE.
-        public Task<IEnumerable<Produto>> ListarProdutosPorNomeNaTelaDeVenda(string nomeDoProduto); // Listar todos os produtos através do nome na tela Venda.
+        public Task<IEnumerable<Estoque>> ListarProdutosPorNomeNaTelaDeVenda(string nomeDoProduto); // Listar todos os produtos através do nome na tela Venda.
+        public Task<IEnumerable<Produto>> ListarProdutosPorCodigoNaTelaDeVenda(int codigoDoProduto); // Listar todos os produtos através do código na tela Venda.
 
 
     }

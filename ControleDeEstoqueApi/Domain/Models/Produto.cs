@@ -21,26 +21,26 @@ namespace ControleDeEstoqueApi.Domain.Models
         }
 
         [Key]
-        internal int id_produto { get; set; }
-        internal int cod_prod { get; set; }
+        public int id_produto { get; set; }
+        public int cod_prod { get; set; }
 
         [ForeignKey("cod_fabricante")]
-        internal int cod_fab{ get; set; }
+        public int cod_fab{ get; set; }
 
         [ForeignKey("cod_fornecedor")]
-        internal int cod_fornc { get; set; }
+        public int cod_fornc { get; set; }
 
         [MaxLength(250)]
-        internal string nome_prod { get; set; }
+        public string nome_prod { get; set; }
 
-        internal decimal valor_compra { get; set; }
+        public decimal valor_compra { get; set; }
 
-        internal decimal valor_venda { get; set; }
+        public decimal valor_venda { get; set; }
 
         [MaxLength(250)]
-        internal string descricao { get; set; }
+        public string descricao { get; set; }
 
-        internal int quantidade_min { get; set; }    
+        public int quantidade_min { get; set; }    
 
     }
     

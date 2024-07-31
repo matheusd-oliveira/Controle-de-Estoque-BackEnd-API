@@ -13,10 +13,10 @@ namespace ControleDeEstoqueApi.Domain.Models
 
         [Key]
         public int id_fabricante { get; set; }
-        internal int cod_fab { get; set; }
+        public int cod_fab { get; set; }
 
         [MaxLength(255)]
-        internal string nome_fab { get; set; }
+        public string nome_fab { get; set; }
 
     }
 }

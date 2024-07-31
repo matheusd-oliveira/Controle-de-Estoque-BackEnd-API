@@ -10,18 +10,18 @@ namespace ControleDeEstoqueApi.Domain.Models
     public class Venda
     {
         [Key]
-        internal int id_venda { get; set; }
-        internal int cod_venda { get; set; }
+        public int id_venda { get; set; }
+        public int cod_venda { get; set; }
         
         // Pensar sobre essa propriedade
         // internal List<Item_Venda> itens_da_venda { get; set; }
 
         [ForeignKey("cod_funcionario")]
-        internal int cod_func { get; set; }
+        public int cod_func { get; set; }
 
         [ForeignKey("cod_pagamento")]
-        internal int cod_pagmt { get; set; }
-        internal double valor_total { get; set; }
-        internal DateTime data_venda { get; set; }
+        public int cod_pagmt { get; set; }
+        public double valor_total { get; set; }
+        public DateTime data_venda { get; set; }
     }
 }

@@ -19,8 +19,8 @@ namespace ControleDeEstoqueApi.Domain.Models
         }
 
         [Key]
-        internal int id_item_venda { get; set; }
-        internal int codigo_item_venda { get; set; }
+        public int id_item_venda { get; set; }
+        public int codigo_item_venda { get; set; }
 
         [ForeignKey("cod_produto")]
         public int cod_prod { get; set; }

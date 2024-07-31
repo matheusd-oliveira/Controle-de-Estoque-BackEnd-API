@@ -11,30 +11,30 @@ namespace ControleDeEstoqueApi.Domain.Models.Agents
     public class Funcionario
     {
         [Key]
-        internal int id_funcionario { get; set; }
+        public int id_funcionario { get; set; }
 
         [MaxLength(250)]
-        internal string nome { get; set; }
-        internal int cod_func { get; set; }
-        internal Cargo cargo { get; set; }
-        internal decimal salario { get; set; }
+        public string nome { get; set; }
+        public int cod_func { get; set; }
+        public Cargo cargo { get; set; }
+        public decimal salario { get; set; }
 
         [MaxLength(250)]
-        internal string endereco { get; set; }
+        public string endereco { get; set; }
 
         [MaxLength(255)]
-        internal string telefone { get; set; }
+        public string telefone { get; set; }
 
         [MaxLength(250)]
-        internal string cpf { get; set; }
+        public string cpf { get; set; }
 
         // TODO: Tratar essas propriedades, pois não é legal colocar senha no banco de dados.
-        internal string login { get; set; }
-        internal string senha { get; set; }
+        public string login { get; set; }
+        public string senha { get; set; }
 
         [MaxLength(250)]
-        internal string data_nasc { get; set; }
-        internal bool situacao { get; set; }
+        public string data_nasc { get; set; }
+        public bool situacao { get; set; }
 
 
         // Escopo dos métodos criados de acordo com o PDF da documentação original.

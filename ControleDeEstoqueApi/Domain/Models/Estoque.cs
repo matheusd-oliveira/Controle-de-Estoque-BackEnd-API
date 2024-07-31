@@ -17,22 +17,22 @@ namespace ControleDeEstoqueApi.Domain.Models
         }
 
         [Key]
-        internal int id_estoque { get; set; }
+        public int id_estoque { get; set; }
 
         [ForeignKey("cod_funcionario")]
-        internal int cod_func { get; set; }
+        public int cod_func { get; set; }
 
         [ForeignKey("cod_produto")]
-        internal int cod_prod { get; set; }
+        public int cod_prod { get; set; }
         
         [MaxLength(250)] // Adicionado o nome para ser identificado no estoque
-        internal string nome_prod { get; set; }
+        public string nome_prod { get; set; }
 
         [ForeignKey("nome_fantasia_fornecedor")]
-        internal string nome_fant { get; set; }
+        public string nome_fant { get; set; }
 
         [ForeignKey("nome_fabricante")]
-        internal string nome_fab { get; set; }
-        internal int quantidade { get; set; }
+        public string nome_fab { get; set; }
+        public int quantidade { get; set; }
     }
 }

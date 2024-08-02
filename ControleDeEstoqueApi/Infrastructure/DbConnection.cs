@@ -13,17 +13,30 @@ namespace ControleDeEstoqueApi.Infrastructure
         public DbSet<Produto> Produto { get; set; }
         public DbSet<Estoque> Estoque { get; set; }
         public DbSet<Item_Venda> Item_Venda { get; set; }
+
+        /// <summary>
+        /// Configuração POSTGRES AMAZON AWS
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //  =>optionsBuilder.UseNpgsql(
+        //  => optionsBuilder.UseNpgsql(
         // "Server=controle-estoque.cdmowgqow0s1.us-east-1.rds.amazonaws.com;" +
         // "Port=5432; Database=postgres;" +
         // "User Id=postgres;" +
         // "Password=Senha123;");
 
+        // Conexão realizada para o Postgres LOCAL
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Data Source=BancoTeste.sqlite");
+            => optionsBuilder.UseNpgsql("Server=localhost; User Id=postgres; Password=1234; Port=5432; Database=BancoTeste;");
 
-        }
+        /// <summary>
+        /// Configuração SQLITE
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlite("Data Source=BancoTeste.sqlite");
+
+        //}
     }
 }

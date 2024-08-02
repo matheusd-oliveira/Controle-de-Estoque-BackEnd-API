@@ -22,7 +22,7 @@ namespace ControleDeEstoqueApi.Domain.Models
         [ForeignKey("cod_funcionario")]
         public int cod_func { get; set; }
 
-        [ForeignKey("cod_produto")]
+        //[ForeignKey("cod_produto")]
         public int cod_prod { get; set; }
         
         [MaxLength(250)] // Adicionado o nome para ser identificado no estoque

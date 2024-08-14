@@ -36,6 +36,17 @@ namespace ControleDeEstoqueApi.Domain.Models.Agents
         public string data_nasc { get; set; }
         public bool situacao { get; set; }
 
+        /// <summary>
+        /// Propriedades de navegação entre as tabelas para mapeamento do EntityFramework
+        /// </summary>
+        public ICollection<Estoque> Estoque { get; set; }
+        public Fornecedor Fornecedor { get; set; } 
+        public Fabricante Fabricante { get; set; } 
+        public ICollection<Venda> Venda { get; set; } 
+
+
+
+
 
         // Escopo dos métodos criados de acordo com o PDF da documentação original.
         // Lendo um pouco mais sobre as funcionalidades da classe "Funcionario", descobri que o diagrama de classes e o diagrama relacional posusi alguns erros, que foram corrigidos.

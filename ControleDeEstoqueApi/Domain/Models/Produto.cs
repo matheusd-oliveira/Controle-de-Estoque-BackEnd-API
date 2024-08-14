@@ -24,10 +24,10 @@ namespace ControleDeEstoqueApi.Domain.Models
         public int id_produto { get; set; }
         public int cod_prod { get; set; }
 
-        [ForeignKey("cod_fabricante")]
+        [ForeignKey("Fabricante")]
         public int cod_fab{ get; set; }
 
-        [ForeignKey("cod_fornecedor")]
+        [ForeignKey("Fornecedor")]
         public int cod_fornc { get; set; }
 
         [MaxLength(250)]
@@ -40,8 +40,15 @@ namespace ControleDeEstoqueApi.Domain.Models
         [MaxLength(250)]
         public string descricao { get; set; }
 
-        public int quantidade_min { get; set; }    
+        public int quantidade_min { get; set; }
 
+        /// <summary>
+        /// Propriedades de navegação entre as tabelas para mapeamento do EntityFramework
+        /// </summary>
+        public Estoque Estoque { get; set; } 
+        public Item_Venda Item_Venda { get; set; } 
+        public Fabricante Fabricante { get; set;}
+        public Fornecedor Fornecedor { get; set; }
     }
     
 }

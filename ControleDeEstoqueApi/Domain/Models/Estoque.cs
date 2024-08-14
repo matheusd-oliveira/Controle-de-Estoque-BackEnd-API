@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ControleDeEstoqueApi.Domain.Models.Agents;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ControleDeEstoqueApi.Domain.Models
@@ -19,20 +20,24 @@ namespace ControleDeEstoqueApi.Domain.Models
         [Key]
         public int id_estoque { get; set; }
 
-        [ForeignKey("cod_funcionario")]
+        [ForeignKey("Funcionario")]
         public int cod_func { get; set; }
 
-        //[ForeignKey("cod_produto")]
+        [ForeignKey("Produto")]
         public int cod_prod { get; set; }
-        
+
         [MaxLength(250)] // Adicionado o nome para ser identificado no estoque
         public string nome_prod { get; set; }
 
-        [ForeignKey("nome_fantasia_fornecedor")]
-        public string nome_fant { get; set; }
+        [ForeignKey("Fornecedor")]
+        public string nome_fant { get; set; } // Criando propriedade de navegação para acessar a tabela Fabricante
 
-        [ForeignKey("nome_fabricante")]
+        [ForeignKey("Fabricante")]
         public string nome_fab { get; set; }
         public int quantidade { get; set; }
+        public Produto Produto { get; set; } // Criando propriedade de navegação para acessar a tabela Produto
+        public Fabricante Fabricante { get; set; } // Criando propriedade de navegação para acessar a tabela Fabricante
+        public Fornecedor Fornecedor { get; set; } // Criando propriedade de navegação para acessar a tabela Fornecedor
+        public Funcionario Funcionario { get; set; } // Criando propriedade de naveção para acessar a tabela Funcionário
     }
 }

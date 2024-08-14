@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ControleDeEstoqueApi.Domain.Models.Agents;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,10 +14,8 @@ namespace ControleDeEstoqueApi.Domain.Models
         [Key]
         public int cod_fornc{ get; set; }
 
-        [ForeignKey("cod_funcionario")]
+        [ForeignKey("Funcionario")]
         public int cod_func { get; set; }
-
-        [Column("nome_fantasia")]
         public string nome_fant { get; set; }
         public string cnpj { get; set; }
         public string endereco { get; set; }
@@ -27,5 +26,11 @@ namespace ControleDeEstoqueApi.Domain.Models
         public string telefone { get; set; }
         public string tempo_entrega { get; set; }
 
+        /// <summary>
+        /// Propriedades de navegação entre as tabelas para mapamento do EntityFramework
+        /// </summary>
+        public ICollection<Estoque> Estoque { get; set; } 
+        public Funcionario Funcionario { get; set; } 
+        public ICollection<Produto> Produto { get; set; }
     }
 }

@@ -25,8 +25,6 @@ namespace ControleDeEstoqueApi.Domain.Models
         /// </summary>
         public ICollection<Item_Venda> Item_Venda { get; set; }
         public Funcionario Funcionario { get; set; }
-        
-        // Relação muitos-para-muitos
-        //public ICollection<VendaPagamento> VendaPagamentos { get; set; }
+        public ICollection<VendaPagamento> VendaPagamentos { get; set; } // Relação muitos-para-muitos
     }
 }

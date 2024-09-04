@@ -17,6 +17,7 @@ namespace ControleDeEstoqueApi.Infrastructure
         public DbSet<Fabricante> Fabricante { get; set; }
         public DbSet<Fornecedor> Fornecedor { get; set; }
         public DbSet<Funcionario> Funcionario { get; set; }
+        public DbSet<VendaPagamento> VendaPagamentos { get; set; } // Tabela de junção.
 
         /// <summary>
         /// Configuração POSTGRES AMAZON AWS
@@ -122,11 +123,36 @@ namespace ControleDeEstoqueApi.Infrastructure
                 .HasForeignKey(v => v.cod_func)
                 .HasPrincipalKey(func => func.cod_func);
 
-
-                
-
-
+            modelBuilder.Entity<Venda>()
+                .HasMany(v => v.VendaPagamentos)
+                .WithOne(vp => vp.Venda)
+                .HasForeignKey(vp => vp.id_venda);
             #endregion
+
+            #region Criação e configuração das FK's do Model Pagamento
+            modelBuilder.Entity<Pagamento>(entity =>
+            {
+                // Configuração para a propriedade de navegação
+                entity.HasMany(p => p.VendaPagamentos)
+                      .WithOne(vp => vp.Pagamento)
+                      .HasForeignKey(vp => vp.id_pagamento); // Novamente, opcional, mas útil para clareza
+            });
+            #endregion
+           
+            #region Criação e configuração das FK's do Model VendaPagamento
+            modelBuilder.Entity<VendaPagamento>().HasKey(vp => new { vp.id_venda, vp.id_pagamento });
+
+            modelBuilder.Entity<VendaPagamento>()
+                .HasOne<Venda>(vp => vp.Venda)
+                .WithMany(v => v.VendaPagamentos)
+                .HasForeignKey(vp => vp.id_venda);
+
+            modelBuilder.Entity<VendaPagamento>()
+                .HasOne<Pagamento>(vp => vp.Pagamento)
+                .WithMany(v => v.VendaPagamentos)
+                .HasForeignKey(vp => vp.id_pagamento);
+            #endregion
+        
         }
         /// <summary>
         /// Configuração SQLITE

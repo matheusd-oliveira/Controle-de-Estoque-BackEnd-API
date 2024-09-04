@@ -20,8 +20,7 @@ namespace ControleDeEstoqueApi.Domain.Models
         /// <summary>
         /// Propriedades de navegação entre as tabelas para mapeamento do EntityFramework
         /// </summary>
-        // Relação muitos-para-muitos
-        //public ICollection<VendaPagamento> VendaPagamentos { get; set; }
+        public ICollection<VendaPagamento> VendaPagamentos { get; set; } // Relação muitos-para-muitos
 
     }
 }

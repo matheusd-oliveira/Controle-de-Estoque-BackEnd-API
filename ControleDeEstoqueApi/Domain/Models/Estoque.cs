@@ -30,7 +30,7 @@ namespace ControleDeEstoqueApi.Domain.Models
         public string nome_prod { get; set; }
 
         [ForeignKey("Fornecedor")]
-        public string nome_fant { get; set; } // Criando propriedade de navegação para acessar a tabela Fabricante
+        public string nome_fant { get; set; } 
 
         [ForeignKey("Fabricante")]
         public string nome_fab { get; set; }

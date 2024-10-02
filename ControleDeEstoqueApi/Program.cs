@@ -12,6 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DbConnection>();
 builder.Services.AddTransient<IPagamentoRepository, PagamentoRepository>();
+builder.Services.AddTransient<IVendedorRepository, VendedorRepository>();
+builder.Services.AddApiVersioning();
 
 var app = builder.Build();
 

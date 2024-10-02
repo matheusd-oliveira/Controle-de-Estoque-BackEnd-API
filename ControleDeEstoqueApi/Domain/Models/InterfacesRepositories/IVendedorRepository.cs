@@ -1,4 +1,5 @@
-﻿using ControleDeEstoqueApi.Domain.Models.Agents;
+﻿using ControleDeEstoqueApi.Application.ViewModels;
+using ControleDeEstoqueApi.Domain.Models.Agents;
 
 namespace ControleDeEstoqueApi.Domain.Models.InterfacesRepositories
 {
@@ -8,9 +9,9 @@ namespace ControleDeEstoqueApi.Domain.Models.InterfacesRepositories
         public void EfetuarLogin() { }
 
         // Mantem o Produto
-        public Task CadastrarProduto(Produto produto);
-        public Task AlterarProduto(int codigoDoProduto, Produto novoProduto);
-        public Task<Produto> BuscarProduto(string nomeDoProduto); // Retorna os produtos através do nome, pois o nome é mais facil de achar já que é UNIQUE.
+        public Task<Produto> CadastrarProduto(Produto produto);
+        public Task<Produto> AlterarProduto(int codigoDoProduto, Produto novoProduto);
+        public Task<IEnumerable<Produto>> BuscarProduto(string nomeDoProduto); // Retorna os produtos através do nome, pois o nome é mais facil de achar já que é UNIQUE.
 
         // Mantem o Estoque
         public Task<IEnumerable<Estoque>> BuscarTodosOsProdutosNoEstoque(); // Retorna uma lista de Produtos
@@ -24,7 +25,5 @@ namespace ControleDeEstoqueApi.Domain.Models.InterfacesRepositories
         public Task CancelarItemDeVenda(Item_Venda itemDaVenda); // Cancelar item da venda através do codigo do item , que é UNIQUE.
         public Task<IEnumerable<Estoque>> ListarProdutosPorNomeNaTelaDeVenda(string nomeDoProduto); // Listar todos os produtos através do nome na tela Venda.
         public Task<IEnumerable<Produto>> ListarProdutosPorCodigoNaTelaDeVenda(int codigoDoProduto); // Listar todos os produtos através do código na tela Venda.
-
-
     }
 }

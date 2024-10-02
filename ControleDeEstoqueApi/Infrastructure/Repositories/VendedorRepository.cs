@@ -4,6 +4,7 @@ using ControleDeEstoqueApi.Domain.Models.InterfacesRepositories;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace ControleDeEstoqueApi.Infrastructure.Repositories
 {
@@ -11,7 +12,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
     {
         DbConnection _dbConnection = new DbConnection();
 
-        public async Task CadastrarProduto(Produto produto)
+        public async Task<Produto> CadastrarProduto(Produto produto)
         {
             try
             {
@@ -20,6 +21,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
                     _dbConnection.Produto.Add(produto);
                     await _dbConnection.SaveChangesAsync();
                 }
+                return produto;
             }
             catch (Exception e)
             {
@@ -34,7 +36,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
         /// </summary>
         /// <param name="codigoDoProduto">Código do produto a ser alterado</param>
         /// <param name="novoProduto">Produto Alterado</param>
-        public async Task AlterarProduto(int codigoDoProduto, Produto novoProduto)
+        public async Task<Produto> AlterarProduto(int codigoDoProduto, Produto novoProduto)
         {
             var produtoEncontrado =  await _dbConnection.Produto.FirstOrDefaultAsync(x => x.cod_prod == codigoDoProduto);
 
@@ -51,6 +53,8 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
 
                 // Salvando no banco
                 await _dbConnection.SaveChangesAsync();
+
+                return produtoEncontrado;
             }
             else
             {
@@ -65,9 +69,9 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
         /// </summary>
         /// <param name="nomeDoProduto"></param>
         /// <returns></returns>
-        public async Task<Produto> BuscarProduto(string nomeDoProduto)
+        public async Task<IEnumerable<Produto>> BuscarProduto(string nomeDoProduto)
         {
-            return await _dbConnection.Produto.FirstOrDefaultAsync(x => x.nome_prod == nomeDoProduto);
+            return await _dbConnection.Produto.Where(x => x.nome_prod.Contains(nomeDoProduto)).ToListAsync();
         }
 
         public async Task<Produto> BuscarProdutoNoEstoquePorId(int codigoDoProduto)

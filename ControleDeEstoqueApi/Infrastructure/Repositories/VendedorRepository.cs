@@ -28,7 +28,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
 
                 throw new ArgumentException(e.Message);
             }
-            
+
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
         /// <param name="novoProduto">Produto Alterado</param>
         public async Task<Produto> AlterarProduto(int codigoDoProduto, Produto novoProduto)
         {
-            var produtoEncontrado =  await _dbConnection.Produto.FirstOrDefaultAsync(x => x.cod_prod == codigoDoProduto);
+            var produtoEncontrado = await _dbConnection.Produto.FirstOrDefaultAsync(x => x.cod_prod == codigoDoProduto);
 
             if (produtoEncontrado != null)
             {
@@ -61,7 +61,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
                 // TODO: MELHORAR ESSA EXCEÇÃO NO FUTURO
                 throw new Exception("Produto não encontrado");
             }
-            
+
         }
 
         /// <summary>
@@ -74,26 +74,24 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             return await _dbConnection.Produto.Where(x => x.nome_prod.Contains(nomeDoProduto)).ToListAsync();
         }
 
-        public async Task<Produto> BuscarProdutoNoEstoquePorId(int codigoDoProduto)
+        public async Task<Estoque> BuscarProdutoNoEstoquePorId(int codigoDoProduto)
         {
             // Estou pegando uma entidade de "Estoque", que vai ser o meu produto estocado. 
-            var produtoNoEstoque =  await _dbConnection.Estoque.FirstOrDefaultAsync(x => x.cod_prod == codigoDoProduto);
-           
-            // TODO: Criar uma verificação caso não encontre o produto no estoque.
+            var produtoNoEstoque = await _dbConnection.Estoque.FirstOrDefaultAsync(x => x.cod_prod == codigoDoProduto);
 
             // Aqui eu busco o produto correspondente ao código na entidade "Estoque" acima.
-            return await _dbConnection.Produto.FirstOrDefaultAsync(y => y.cod_prod == produtoNoEstoque.cod_prod);
-        }
+            //return await _dbConnection.Produto.FirstOrDefaultAsync(y => y.cod_prod == produtoNoEstoque.cod_prod);
+            return produtoNoEstoque;
 
+        }
         public async Task<IEnumerable<Estoque>> BuscarTodosOsProdutosNoEstoque()
-        {   
+        {
             return await _dbConnection.Estoque.ToListAsync();
         }
 
         #region TODO: // DISCUTIR SOBRE CRIAÇÃO DE MODELS PARA ENTRADA E SAIDA DE PRODUTO NO ESTOQUE
         public async Task EntradaDoProdutoNoEstoque(Produto produto, Funcionario funcionario)
         {
-
         }
         public Task SaidaDoProdutoNoEstoque(Produto produto, Funcionario funcionario)
         {
@@ -103,18 +101,18 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
         public async Task AdicionarItemDeVenda(Item_Venda itemDaVenda)
         {
             try
-            {   
-                if(itemDaVenda != null) 
+            {
+                if (itemDaVenda != null)
                 {
                     _dbConnection.Item_Venda.Add(itemDaVenda);
                     await _dbConnection.SaveChangesAsync();
-                }                  
+                }
             }
             catch (Exception e)
             {
                 throw new ArgumentException(e.Message);
             }
-            
+
         }
 
         public async Task CancelarItemDeVenda(Item_Venda itemDaVenda)
@@ -144,7 +142,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
         {
             return await _dbConnection.Estoque.Where(produto => produto.nome_prod == nomeDoProduto).ToListAsync();
         }
-        public Task<IEnumerable<Produto>> ListarProdutosPorCodigoNaTelaDeVenda(int codigoDoProduto) 
+        public Task<IEnumerable<Produto>> ListarProdutosPorCodigoNaTelaDeVenda(int codigoDoProduto)
         {
             throw new NotImplementedException();
         }

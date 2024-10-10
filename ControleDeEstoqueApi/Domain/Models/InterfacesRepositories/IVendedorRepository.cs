@@ -9,15 +9,15 @@ namespace ControleDeEstoqueApi.Domain.Models.InterfacesRepositories
         public void EfetuarLogin() { }
 
         // Mantem o Produto
-        public Task<Produto> CadastrarProduto(Produto produto);
-        public Task<Produto> AlterarProduto(int codigoDoProduto, Produto novoProduto);
-        public Task<IEnumerable<Produto>> BuscarProduto(string nomeDoProduto); // Retorna os produtos através do nome, pois o nome é mais facil de achar já que é UNIQUE.
+        public Task<Produto> CadastrarProduto(Produto produto); // OK Mudar a responsabilidade para o Gerente
+        public Task<Produto> AlterarProduto(int codigoDoProduto, Produto novoProduto); // OK Mudar a responsabilidade para o Gerente
+        public Task<IEnumerable<Produto>> BuscarProduto(string nomeDoProduto); // OK // Retorna os produtos através do nome, pois o nome é mais facil de achar já que é UNIQUE.
 
         // Mantem o Estoque
-        public Task<IEnumerable<Estoque>> BuscarTodosOsProdutosNoEstoque(); // Retorna uma lista de Produtos
-        public Task<Produto> BuscarProdutoNoEstoquePorId(int codigoDoProduto); // Retorna o produto dentro do estoque. 
-        public Task EntradaDoProdutoNoEstoque(Produto produto, Funcionario funcionario); // O produto já está cadastrado, ele só vai buscar da lista de produtos cadastrados e dar ENTRADA no estoque.
-        public Task SaidaDoProdutoNoEstoque(Produto produto, Funcionario funcionario); // Dar a SAIDA do estoque por meio da propriedade cod_prod que é UNIQUE.
+        public Task<IEnumerable<Estoque>> BuscarTodosOsProdutosNoEstoque(); // OK // Retorna uma lista de Produtos
+        public Task<Estoque> BuscarProdutoNoEstoquePorId(int codigoDoProduto);  // OK // Retorna o produto dentro do estoque. 
+        public Task EntradaDoProdutoNoEstoque(Produto produto, Funcionario funcionario); // Mudar a responsabilidade para o Gerente - O produto já está cadastrado, ele só vai buscar da lista de produtos cadastrados e dar ENTRADA no estoque.
+        public Task SaidaDoProdutoNoEstoque(Produto produto, Funcionario funcionario); // Mudar a responsabilidade para o Gerente -  Dar a SAIDA do estoque por meio da propriedade cod_prod que é UNIQUE.
 
         // Manter Vendas
         public Task<Venda> EfetuarVenda(Venda venda); 

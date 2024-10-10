@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ControleDeEstoqueApi.Controllers
 {
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[Controller]")]
+    [Route("api/v{version:apiVersion}/[Controller]/[action]")]
     public class VendedorController : ControllerBase
     {
         private readonly IVendedorRepository _vendedorRepository;
@@ -28,7 +28,7 @@ namespace ControleDeEstoqueApi.Controllers
                     produtoView.CodigoDoProduto,
                     produtoView.CodigoDoFabricante,
                     produtoView.CodigoDoFornecedor,
-                    produtoView.NomeDoProduto,
+                    produtoView.NomeDoProduto.ToUpper(),
                     produtoView.ValorDeCompra,
                     produtoView.ValorDeVenda,
                     produtoView.DescricaoDoProduto,
@@ -48,6 +48,7 @@ namespace ControleDeEstoqueApi.Controllers
             }
         }
 
+        // TODO: COLOCAR NOME_PROD COMO MAIUSCULO TAMBÉM
         [HttpPut]
         public async Task<IActionResult> AlteracaoDeProdutos(ProdutoViewModel produtoView)
         {
@@ -76,12 +77,10 @@ namespace ControleDeEstoqueApi.Controllers
         }
 
 
-        // TODO: CONSERTAR O CADASTRO DE PRODUTOS NO BANCO, POIS SÓ PUXA A LISTA DE PRODUTOS SE COLOCAR O NOME IGUAL. 
-        // TEM QUE PUXAR INDEPENDENTE DA LETRA SER MAISCULA OU MINUSCULA
         [HttpGet]
         public async Task<IActionResult> BuscarProduto(string nomeDoProduto)
         {
-            var result = await _vendedorRepository.BuscarProduto(nomeDoProduto);
+            var result = await _vendedorRepository.BuscarProduto(nomeDoProduto.ToUpper());
 
             try
             {
@@ -93,6 +92,51 @@ namespace ControleDeEstoqueApi.Controllers
             catch (Exception e)
             {
                 return StatusCode(404, $"{e.Message}");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> BuscarProdutoNoEstoquePorId(int codigoDoProduto)
+        {
+
+
+            try
+            {
+                if (codigoDoProduto != null)
+                {
+                    var result = await _vendedorRepository.BuscarProdutoNoEstoquePorId(codigoDoProduto);
+
+                    if (result != null)
+                        return Ok(result);
+                    else
+                        return NotFound();
+                }
+                else
+                    return BadRequest();
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(400, $"Mensagem de erro: {e.Message}");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> BuscarTodosOsProdutosNoEstoque()
+        {
+            var result = await _vendedorRepository.BuscarTodosOsProdutosNoEstoque();
+
+            try
+            {
+                if (result != null)
+                    return Ok(result);
+
+                else
+                    return NotFound();
+            }
+            catch (Exception e)
+            {
+                return BadRequest($"Erro na requisição: {e.Message}");
             }
         }
     }

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ControleDeEstoqueApi.Domain.Models.Agents
 {
     [Table("funcionario")]
-    [Index(nameof(cod_func), IsUnique = true)] // Código de funcionario como CONSTRAINT UNIQUE
+    [Index(nameof(codigo_do_funcionario), IsUnique = true)] // Código de funcionario como CONSTRAINT UNIQUE
     [Index(nameof(cpf), IsUnique = true)] // Cpf como CONSTRAINT UNIQUE
     public class Funcionario
     {
@@ -14,8 +14,8 @@ namespace ControleDeEstoqueApi.Domain.Models.Agents
         public int id_funcionario { get; set; }
 
         [MaxLength(250)]
-        public string nome { get; set; }
-        public int cod_func { get; set; }
+        public string nome_do_funcionario { get; set; }
+        public int codigo_do_funcionario { get; set; }
         public Cargo cargo { get; set; }
         public decimal salario { get; set; }
 
@@ -33,7 +33,7 @@ namespace ControleDeEstoqueApi.Domain.Models.Agents
         public string senha { get; set; }
 
         [MaxLength(250)]
-        public string data_nasc { get; set; }
+        public string data_nascimento { get; set; }
         public bool situacao { get; set; }
 
         /// <summary>

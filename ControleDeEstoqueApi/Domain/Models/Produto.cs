@@ -19,13 +19,14 @@ namespace ControleDeEstoqueApi.Domain.Models
             this.descricao = descricao;
             this.quantidade_min = quantidade_min;
         }
+        // TODO : ADICIONAR DATA COMO PROPRIEDADE E REFAZER O BANCO DE DADOS .
 
         [Key]
         public int id_produto { get; set; }
         public int cod_prod { get; set; }
 
         [ForeignKey("Fabricante")]
-        public int cod_fab{ get; set; }
+        public int cod_fab { get; set; }
 
         [ForeignKey("Fornecedor")]
         public int cod_fornc { get; set; }
@@ -45,10 +46,10 @@ namespace ControleDeEstoqueApi.Domain.Models
         /// <summary>
         /// Propriedades de navegação entre as tabelas para mapeamento do EntityFramework
         /// </summary>
-        public Estoque Estoque { get; set; } 
-        public Item_Venda Item_Venda { get; set; } 
-        public Fabricante Fabricante { get; set;}
+        public Estoque Estoque { get; set; }
+        public Item_Venda Item_Venda { get; set; }
+        public Fabricante Fabricante { get; set; }
         public Fornecedor Fornecedor { get; set; }
     }
-    
+
 }

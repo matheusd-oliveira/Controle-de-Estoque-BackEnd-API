@@ -1,4 +1,5 @@
 ﻿using ControleDeEstoqueApi.Domain.Models.Agents;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,11 +9,11 @@ namespace ControleDeEstoqueApi.Domain.Models
     public class Estoque
     {
         public Estoque(
-            int codigo_do_funcionario, 
-            int codigo_do_produto, 
-            string nome_do_produto, 
-            string nome_fantasia_do_fornecedor, 
-            string nome_do_fabricante, 
+            int codigo_do_funcionario,
+            int codigo_do_produto,
+            string nome_do_produto,
+            string nome_fantasia_do_fornecedor,
+            string nome_do_fabricante,
             int quantidade_do_produto)
         {
             this.codigo_do_funcionario = codigo_do_funcionario;
@@ -33,7 +34,7 @@ namespace ControleDeEstoqueApi.Domain.Models
         public int codigo_do_produto { get; set; }
 
         [MaxLength(250)] // Adicionado o nome para ser identificado no estoque
-        public string nome_do_produto { get; set; }
+        public string nome_do_produto { get => nome_do_produto.ToUpper();  set { nome_do_produto.ToUpper(); } } // TESTE
 
         [ForeignKey("Fornecedor")]
         public string nome_fantasia_do_fornecedor { get; set; } 

@@ -6,21 +6,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ControleDeEstoqueApi.Domain.Models
 {
     [Table("fabricante")]
-    [Index(nameof(cod_fab), IsUnique = true)] // Código do fabricante como CONSTRAINT UNIQUE
-    [Index(nameof(nome_fab), IsUnique = true)] // Nome do fabricante como CONSTRAINT UNIQUE
+    [Index(nameof(codigo_do_fabricante), IsUnique = true)] // Código do fabricante como CONSTRAINT UNIQUE
+    [Index(nameof(nome_do_fabricante), IsUnique = true)] // Nome do fabricante como CONSTRAINT UNIQUE
     public class Fabricante
     {
-        // TODO: Criar um Id para cada classe como Primary Key.
+        public Fabricante(int codigo_do_fabricante, int codigo_do_funcionario, string nome_do_fabricante)
+        {
+            this.codigo_do_fabricante = codigo_do_fabricante;
+            this.codigo_do_funcionario = codigo_do_funcionario;
+            this.nome_do_fabricante = nome_do_fabricante;
+        }
 
         [Key]
         public int id_fabricante { get; set; }
-        public int cod_fab { get; set; }
+        public int codigo_do_fabricante { get; set; }
 
         [ForeignKey("Funcionario")]
-        public int cod_func { get; set; }
+        public int codigo_do_funcionario { get; set; }
 
         [MaxLength(255)]
-        public string nome_fab { get; set; }
+        public string nome_do_fabricante { get; set; }
 
         
         /// <summary>

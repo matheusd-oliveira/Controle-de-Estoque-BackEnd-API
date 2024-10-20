@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace ControleDeEstoqueApi.Domain.Models
 {
@@ -40,17 +41,17 @@ namespace ControleDeEstoqueApi.Domain.Models
         public int codigo_do_fornecedor { get; set; }
 
         [MaxLength(250)]
-        public string nome_do_produto { get => nome_do_produto.ToUpper(); set { nome_do_produto.ToUpper(); } } // TESTE
+        public string nome_do_produto { get; set; }
 
         public decimal valor_de_compra { get; set; }
 
         public decimal valor_de_venda { get; set; }
 
         [MaxLength(250)]
-        public string descricao_do_produto { get => descricao_do_produto.ToUpper(); set { descricao_do_produto.ToUpper(); } } // TESTE
+        public string descricao_do_produto { get; set;} 
 
         public int quantidade_minima_para_compra { get; set; }
-        public DateTime data_do_cadastro_do_produto { get => data_do_cadastro_do_produto; set { data_do_cadastro_do_produto = DateTime.Now; } }
+        public DateTime data_do_cadastro_do_produto { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// Propriedades de navegação entre as tabelas para mapeamento do EntityFramework

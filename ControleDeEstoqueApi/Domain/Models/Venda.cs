@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Runtime.InteropServices;
 
 namespace ControleDeEstoqueApi.Domain.Models
@@ -25,7 +26,7 @@ namespace ControleDeEstoqueApi.Domain.Models
         [ForeignKey("Funcionario")]
         public int codigo_do_funcionario { get; set; }
         public double valor_total_da_venda { get; set; }
-        public DateTime data_da_venda { get; set; }
+        public DateTime data_da_venda { get; set; } = DateTime.UtcNow;
 
 
         /// <summary>

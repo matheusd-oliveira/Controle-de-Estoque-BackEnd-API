@@ -1,6 +1,7 @@
 using ControleDeEstoqueApi.Domain.Models.InterfacesRepositories;
 using ControleDeEstoqueApi.Infrastructure;
 using ControleDeEstoqueApi.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,16 @@ builder.Services.AddTransient<IPagamentoRepository, PagamentoRepository>();
 builder.Services.AddTransient<IVendedorRepository, VendedorRepository>();
 builder.Services.AddApiVersioning();
 
+//builder.Services.AddCors(options =>
+//{
+//    options.AddDefaultPolicy(policy =>
+//    {
+//        policy.AllowAnyHeader();
+//        policy.AllowAnyMethod();
+//        policy.AllowCredentials();
+//    });
+//});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,6 +34,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//app.UseCors();
 
 app.UseHttpsRedirection();
 

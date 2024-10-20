@@ -34,10 +34,10 @@ namespace ControleDeEstoqueApi.Domain.Models
         public int codigo_do_produto { get; set; }
 
         [MaxLength(250)] // Adicionado o nome para ser identificado no estoque
-        public string nome_do_produto { get => nome_do_produto.ToUpper();  set { nome_do_produto.ToUpper(); } } // TESTE
+        public string nome_do_produto { get; set; } // TESTE
 
         [ForeignKey("Fornecedor")]
-        public string nome_fantasia_do_fornecedor { get; set; } 
+        public string nome_fantasia_do_fornecedor { get; set; }
 
         [ForeignKey("Fabricante")]
         public string nome_do_fabricante { get; set; }

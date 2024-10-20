@@ -43,76 +43,76 @@ namespace ControleDeEstoqueApi.Infrastructure
             modelBuilder.Entity<Estoque>()
                 .HasOne(e => e.Produto)
                 .WithOne(p => p.Estoque)
-                .HasForeignKey<Estoque>(e => e.cod_prod)
-                .HasPrincipalKey<Produto>(p => p.cod_prod);
+                .HasForeignKey<Estoque>(e => e.codigo_do_produto)
+                .HasPrincipalKey<Produto>(p => p.codigo_do_produto);
 
             // Criando chave estrangeira e passando referência de tabela e coluna. Estoque --> Fabricante. 
             // Estoque | nome_fab ---> Fabricante | nome_fab
             modelBuilder.Entity<Estoque>()
                 .HasOne(e => e.Fabricante)
                 .WithMany(f => f.Estoque)
-                .HasForeignKey(e => e.nome_fab)
-                .HasPrincipalKey(f => f.nome_fab);
+                .HasForeignKey(e => e.nome_do_fabricante)
+                .HasPrincipalKey(f => f.nome_do_fabricante);
 
             // Criando chave estrangeira e passando referência de tabela e coluna. Estoque --> Fornecedor. 
             // Estoque | nome_fant ---> Fornecedor | nome_fant
             modelBuilder.Entity<Estoque>()
                 .HasOne(e => e.Fornecedor)
                 .WithMany(f => f.Estoque)
-                .HasForeignKey(e => e.nome_fant)
-                .HasPrincipalKey(f => f.nome_fant);
+                .HasForeignKey(e => e.nome_fantasia_do_fornecedor)
+                .HasPrincipalKey(f => f.nome_fantasia_do_fornecedor);
 
             // Criando chave estrangeira e passando referência de tabela e coluna. Estoque --> Funcionario. 
             // Estoque | cod_func ---> Funcionario | cod_func
             modelBuilder.Entity<Estoque>()
                 .HasOne(e => e.Funcionario)
                 .WithMany(f => f.Estoque)
-                .HasForeignKey(e => e.cod_func)
-                .HasPrincipalKey(f => f.cod_func);
+                .HasForeignKey(e => e.codigo_do_funcionario)
+                .HasPrincipalKey(f => f.codigo_do_funcionario);
             #endregion
 
             #region Criação e configuração das FK's do Model Fornecedor
             modelBuilder.Entity<Fornecedor>()
                 .HasOne(fornc => fornc.Funcionario)
                 .WithOne(func => func.Fornecedor)
-                .HasForeignKey<Fornecedor>(fornc => fornc.cod_func)
-                .HasPrincipalKey<Funcionario>(func => func.cod_func);
+                .HasForeignKey<Fornecedor>(fornc => fornc.codigo_do_funcionario)
+                .HasPrincipalKey<Funcionario>(func => func.codigo_do_funcionario);
             #endregion
 
             #region Criação e configuração das FK's do Model Fabricante
             modelBuilder.Entity<Fabricante>()
                 .HasOne(fab => fab.Funcionario)
                 .WithOne(func => func.Fabricante)
-                .HasForeignKey<Fabricante>(fab => fab.cod_func)
-                .HasPrincipalKey<Funcionario>(func => func.cod_func);
+                .HasForeignKey<Fabricante>(fab => fab.codigo_do_funcionario)
+                .HasPrincipalKey<Funcionario>(func => func.codigo_do_funcionario);
             #endregion
 
             #region Criação e configuração das FK's do Model Item Venda
             modelBuilder.Entity<Item_Venda>()
                 .HasOne(item => item.Produto)
                 .WithOne(p => p.Item_Venda)
-                .HasForeignKey<Item_Venda>(item => item.cod_prod)
-                .HasPrincipalKey<Produto>(p => p.cod_prod);
+                .HasForeignKey<Item_Venda>(item => item.codigo_do_produto)
+                .HasPrincipalKey<Produto>(p => p.codigo_do_produto);
 
             modelBuilder.Entity<Item_Venda>()
                .HasOne(item => item.Venda)
                .WithMany(v => v.Item_Venda)
-               .HasForeignKey(item => item.cod_venda)
-               .HasPrincipalKey(v => v.cod_venda);
+               .HasForeignKey(item => item.codigo_da_venda)
+               .HasPrincipalKey(v => v.codigo_da_venda);
             #endregion
 
             #region Criação e configuração das FK's do Model Produto
             modelBuilder.Entity<Produto>()
                 .HasOne(p => p.Fabricante)
                 .WithMany(fab => fab.Produto)
-                .HasForeignKey(p => p.cod_fab)
-                .HasPrincipalKey(fab => fab.cod_fab);
+                .HasForeignKey(p => p.codigo_do_fabricante)
+                .HasPrincipalKey(fab => fab.codigo_do_fabricante);
 
             modelBuilder.Entity<Produto>()
                 .HasOne(p => p.Fornecedor)
                 .WithMany(fornc => fornc.Produto)
-                .HasForeignKey(p => p.cod_fornc)
-                .HasPrincipalKey(fornc => fornc.cod_fornc);
+                .HasForeignKey(p => p.codigo_do_fornecedor)
+                .HasPrincipalKey(fornc => fornc.codigo_do_fornecedor);
 
             #endregion
 
@@ -120,8 +120,8 @@ namespace ControleDeEstoqueApi.Infrastructure
             modelBuilder.Entity<Venda>()
                 .HasOne(v => v.Funcionario)
                 .WithMany(func => func.Venda)
-                .HasForeignKey(v => v.cod_func)
-                .HasPrincipalKey(func => func.cod_func);
+                .HasForeignKey(v => v.codigo_do_funcionario)
+                .HasPrincipalKey(func => func.codigo_do_funcionario);
 
             modelBuilder.Entity<Venda>()
                 .HasMany(v => v.VendaPagamentos)

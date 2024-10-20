@@ -31,7 +31,7 @@ namespace ControleDeEstoqueApi.Controllers
                     produtoView.NomeDoProduto.ToUpper(),
                     produtoView.ValorDeCompra,
                     produtoView.ValorDeVenda,
-                    produtoView.DescricaoDoProduto,
+                    produtoView.DescricaoDoProduto.ToUpper(),
                     produtoView.QuantidadeMinimaParaComprar
                     );
 
@@ -58,10 +58,10 @@ namespace ControleDeEstoqueApi.Controllers
                     produtoView.CodigoDoProduto,
                     produtoView.CodigoDoFabricante,
                     produtoView.CodigoDoFornecedor,
-                    produtoView.NomeDoProduto,
+                    produtoView.NomeDoProduto.ToUpper(),
                     produtoView.ValorDeCompra,
                     produtoView.ValorDeVenda,
-                    produtoView.DescricaoDoProduto,
+                    produtoView.DescricaoDoProduto.ToUpper(),
                     produtoView.QuantidadeMinimaParaComprar
                     );
 

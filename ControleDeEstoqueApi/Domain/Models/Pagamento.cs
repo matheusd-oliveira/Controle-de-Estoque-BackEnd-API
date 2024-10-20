@@ -10,7 +10,7 @@ namespace ControleDeEstoqueApi.Domain.Models
     {
         public Pagamento(string nome_do_pagamento)
         {
-            this.nome_do_pagamento = nome_do_pagamento ?? throw new ArgumentNullException(nameof(nome_pagmt));
+            this.nome_do_pagamento = nome_do_pagamento.ToUpper() ?? throw new ArgumentNullException(nameof(nome_do_pagamento));
         }
 
         [Key]

@@ -32,24 +32,24 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// TODO: Testar assim que conectar ao banco e realizar as migrations
+        /// 
         /// </summary>
         /// <param name="codigoDoProduto">Código do produto a ser alterado</param>
         /// <param name="novoProduto">Produto Alterado</param>
         public async Task<Produto> AlterarProduto(int codigoDoProduto, Produto novoProduto)
         {
-            var produtoEncontrado = await _dbConnection.Produto.FirstOrDefaultAsync(x => x.cod_prod == codigoDoProduto);
+            var produtoEncontrado = await _dbConnection.Produto.FirstOrDefaultAsync(x => x.codigo_do_produto == codigoDoProduto);
 
             if (produtoEncontrado != null)
             {
                 // Atualizando as propriedades
-                produtoEncontrado.cod_prod = novoProduto.cod_prod;
-                produtoEncontrado.cod_fab = novoProduto.cod_fab;
-                produtoEncontrado.cod_fornc = novoProduto.cod_fornc;
-                produtoEncontrado.nome_prod = novoProduto.nome_prod;
-                produtoEncontrado.valor_compra = novoProduto.valor_compra;
-                produtoEncontrado.valor_venda = novoProduto.valor_venda;
-                produtoEncontrado.descricao = novoProduto.descricao;
+                produtoEncontrado.codigo_do_produto = novoProduto.codigo_do_produto;
+                produtoEncontrado.codigo_do_fabricante = novoProduto.codigo_do_fabricante;
+                produtoEncontrado.codigo_do_fornecedor = novoProduto.codigo_do_fornecedor;
+                produtoEncontrado.nome_do_produto = novoProduto.nome_do_produto;
+                produtoEncontrado.valor_de_compra = novoProduto.valor_de_compra;
+                produtoEncontrado.valor_de_venda = novoProduto.valor_de_venda;
+                produtoEncontrado.descricao_do_produto = novoProduto.descricao_do_produto;
 
                 // Salvando no banco
                 await _dbConnection.SaveChangesAsync();
@@ -71,13 +71,13 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Produto>> BuscarProduto(string nomeDoProduto)
         {
-            return await _dbConnection.Produto.Where(x => x.nome_prod.Contains(nomeDoProduto)).ToListAsync();
+            return await _dbConnection.Produto.Where(x => x.nome_do_produto.Contains(nomeDoProduto)).ToListAsync();
         }
 
         public async Task<Estoque> BuscarProdutoNoEstoquePorId(int codigoDoProduto)
         {
             // Estou pegando uma entidade de "Estoque", que vai ser o meu produto estocado. 
-            var produtoNoEstoque = await _dbConnection.Estoque.FirstOrDefaultAsync(x => x.cod_prod == codigoDoProduto);
+            var produtoNoEstoque = await _dbConnection.Estoque.FirstOrDefaultAsync(x => x.codigo_do_produto == codigoDoProduto);
 
             // Aqui eu busco o produto correspondente ao código na entidade "Estoque" acima.
             //return await _dbConnection.Produto.FirstOrDefaultAsync(y => y.cod_prod == produtoNoEstoque.cod_prod);
@@ -140,7 +140,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
 
         public async Task<IEnumerable<Estoque>> ListarProdutosPorNomeNaTelaDeVenda(string nomeDoProduto)
         {
-            return await _dbConnection.Estoque.Where(produto => produto.nome_prod == nomeDoProduto).ToListAsync();
+            return await _dbConnection.Estoque.Where(produto => produto.nome_do_produto == nomeDoProduto).ToListAsync();
         }
         public Task<IEnumerable<Produto>> ListarProdutosPorCodigoNaTelaDeVenda(int codigoDoProduto)
         {

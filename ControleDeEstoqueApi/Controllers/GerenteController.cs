@@ -1,4 +1,5 @@
-﻿using ControleDeEstoqueApi.Domain.Models.InterfacesRepositories;
+﻿using Asp.Versioning;
+using ControleDeEstoqueApi.Domain.Models.InterfacesRepositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDeEstoqueApi.Controllers

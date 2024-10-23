@@ -1,54 +1,65 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace ControleDeEstoqueApi.Domain.Models
 {
     [Table("produto")]
-    [Index(nameof(cod_prod), IsUnique = true)] // Código do produto como CONSTRAINT UNIQUE
+    [Index(nameof(codigo_do_produto), IsUnique = true)] // Código do produto como CONSTRAINT UNIQUE
     public class Produto
     {
-        public Produto(int cod_prod, int cod_fab, int cod_fornc, string nome_prod, decimal valor_compra, decimal valor_venda, string descricao, int quantidade_min)
+        public Produto(
+            int codigo_do_produto, 
+            int codigo_do_fabricante, 
+            int codigo_do_fornecedor, 
+            string nome_do_produto, 
+            decimal valor_de_compra, 
+            decimal valor_de_venda, 
+            string descricao_do_produto, 
+            int quantidade_minima_para_compra )
         {
-            this.cod_prod = cod_prod;
-            this.cod_fab = cod_fab;
-            this.cod_fornc = cod_fornc;
-            this.nome_prod = nome_prod;
-            this.valor_compra = valor_compra;
-            this.valor_venda = valor_venda;
-            this.descricao = descricao;
-            this.quantidade_min = quantidade_min;
+            this.codigo_do_produto = codigo_do_produto;
+            this.codigo_do_fabricante = codigo_do_fabricante;
+            this.codigo_do_fornecedor = codigo_do_fornecedor;
+            this.nome_do_produto = nome_do_produto;
+            this.valor_de_compra = valor_de_compra;
+            this.valor_de_venda = valor_de_venda;
+            this.descricao_do_produto = descricao_do_produto;
+            this.quantidade_minima_para_compra = quantidade_minima_para_compra;
         }
+        
 
         [Key]
         public int id_produto { get; set; }
-        public int cod_prod { get; set; }
+        public int codigo_do_produto { get; set; }
 
         [ForeignKey("Fabricante")]
-        public int cod_fab{ get; set; }
+        public int codigo_do_fabricante { get; set; }
 
         [ForeignKey("Fornecedor")]
-        public int cod_fornc { get; set; }
+        public int codigo_do_fornecedor { get; set; }
 
         [MaxLength(250)]
-        public string nome_prod { get; set; }
+        public string nome_do_produto { get; set; }
 
-        public decimal valor_compra { get; set; }
+        public decimal valor_de_compra { get; set; }
 
-        public decimal valor_venda { get; set; }
+        public decimal valor_de_venda { get; set; }
 
         [MaxLength(250)]
-        public string descricao { get; set; }
+        public string descricao_do_produto { get; set;} 
 
-        public int quantidade_min { get; set; }
+        public int quantidade_minima_para_compra { get; set; }
+        public DateTime data_do_cadastro_do_produto { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// Propriedades de navegação entre as tabelas para mapeamento do EntityFramework
         /// </summary>
-        public Estoque Estoque { get; set; } 
-        public Item_Venda Item_Venda { get; set; } 
-        public Fabricante Fabricante { get; set;}
+        public Estoque Estoque { get; set; }
+        public Item_Venda Item_Venda { get; set; }
+        public Fabricante Fabricante { get; set; }
         public Fornecedor Fornecedor { get; set; }
     }
-    
+
 }

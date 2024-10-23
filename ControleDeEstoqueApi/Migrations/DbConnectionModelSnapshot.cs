@@ -33,7 +33,7 @@ namespace ControleDeEstoqueApi.Migrations
                     b.Property<int>("cargo")
                         .HasColumnType("integer");
 
-                    b.Property<int>("cod_func")
+                    b.Property<int>("codigo_do_funcionario")
                         .HasColumnType("integer");
 
                     b.Property<string>("cpf")
@@ -41,7 +41,7 @@ namespace ControleDeEstoqueApi.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
-                    b.Property<string>("data_nasc")
+                    b.Property<string>("data_nascimento")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
@@ -55,7 +55,7 @@ namespace ControleDeEstoqueApi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("nome")
+                    b.Property<string>("nome_do_funcionario")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
@@ -77,7 +77,7 @@ namespace ControleDeEstoqueApi.Migrations
 
                     b.HasKey("id_funcionario");
 
-                    b.HasIndex("cod_func")
+                    b.HasIndex("codigo_do_funcionario")
                         .IsUnique();
 
                     b.HasIndex("cpf")
@@ -94,38 +94,38 @@ namespace ControleDeEstoqueApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id_estoque"));
 
-                    b.Property<int>("cod_func")
+                    b.Property<int>("codigo_do_funcionario")
                         .HasColumnType("integer");
 
-                    b.Property<int>("cod_prod")
+                    b.Property<int>("codigo_do_produto")
                         .HasColumnType("integer");
 
-                    b.Property<string>("nome_fab")
+                    b.Property<string>("nome_do_fabricante")
                         .IsRequired()
                         .HasColumnType("character varying(255)");
 
-                    b.Property<string>("nome_fant")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("nome_prod")
+                    b.Property<string>("nome_do_produto")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
-                    b.Property<int>("quantidade")
+                    b.Property<string>("nome_fantasia_do_fornecedor")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("quantidade_do_produto")
                         .HasColumnType("integer");
 
                     b.HasKey("id_estoque");
 
-                    b.HasIndex("cod_func");
+                    b.HasIndex("codigo_do_funcionario");
 
-                    b.HasIndex("cod_prod")
+                    b.HasIndex("codigo_do_produto")
                         .IsUnique();
 
-                    b.HasIndex("nome_fab");
+                    b.HasIndex("nome_do_fabricante");
 
-                    b.HasIndex("nome_fant");
+                    b.HasIndex("nome_fantasia_do_fornecedor");
 
                     b.ToTable("estoque");
                 });
@@ -138,26 +138,26 @@ namespace ControleDeEstoqueApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id_fabricante"));
 
-                    b.Property<int>("cod_fab")
+                    b.Property<int>("codigo_do_fabricante")
                         .HasColumnType("integer");
 
-                    b.Property<int>("cod_func")
+                    b.Property<int>("codigo_do_funcionario")
                         .HasColumnType("integer");
 
-                    b.Property<string>("nome_fab")
+                    b.Property<string>("nome_do_fabricante")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
                     b.HasKey("id_fabricante");
 
-                    b.HasIndex("cod_fab")
+                    b.HasIndex("codigo_do_fabricante")
                         .IsUnique();
 
-                    b.HasIndex("cod_func")
+                    b.HasIndex("codigo_do_funcionario")
                         .IsUnique();
 
-                    b.HasIndex("nome_fab")
+                    b.HasIndex("nome_do_fabricante")
                         .IsUnique();
 
                     b.ToTable("fabricante");
@@ -165,17 +165,20 @@ namespace ControleDeEstoqueApi.Migrations
 
             modelBuilder.Entity("ControleDeEstoqueApi.Domain.Models.Fornecedor", b =>
                 {
-                    b.Property<int>("cod_fornc")
+                    b.Property<int>("id_fornecedor")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("cod_fornc"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id_fornecedor"));
 
                     b.Property<string>("cnpj")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("cod_func")
+                    b.Property<int>("codigo_do_fornecedor")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("codigo_do_funcionario")
                         .HasColumnType("integer");
 
                     b.Property<string>("email")
@@ -186,7 +189,7 @@ namespace ControleDeEstoqueApi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("nome_fant")
+                    b.Property<string>("nome_fantasia_do_fornecedor")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -199,19 +202,22 @@ namespace ControleDeEstoqueApi.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<string>("tempo_entrega")
+                    b.Property<string>("tempo_de_entrega")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("cod_fornc");
+                    b.HasKey("id_fornecedor");
 
                     b.HasIndex("cnpj")
                         .IsUnique();
 
-                    b.HasIndex("cod_func")
+                    b.HasIndex("codigo_do_fornecedor")
                         .IsUnique();
 
-                    b.HasIndex("nome_fant")
+                    b.HasIndex("codigo_do_funcionario")
+                        .IsUnique();
+
+                    b.HasIndex("nome_fantasia_do_fornecedor")
                         .IsUnique();
 
                     b.ToTable("fornecedor");
@@ -225,13 +231,13 @@ namespace ControleDeEstoqueApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id_item_venda"));
 
-                    b.Property<int>("cod_prod")
+                    b.Property<int>("codigo_da_venda")
                         .HasColumnType("integer");
 
-                    b.Property<int>("cod_venda")
+                    b.Property<int>("codigo_do_produto")
                         .HasColumnType("integer");
 
-                    b.Property<int>("quantidade")
+                    b.Property<int>("quantidade_do_produto")
                         .HasColumnType("integer");
 
                     b.Property<decimal>("valor_unitario")
@@ -239,10 +245,10 @@ namespace ControleDeEstoqueApi.Migrations
 
                     b.HasKey("id_item_venda");
 
-                    b.HasIndex("cod_prod")
-                        .IsUnique();
+                    b.HasIndex("codigo_da_venda");
 
-                    b.HasIndex("cod_venda");
+                    b.HasIndex("codigo_do_produto")
+                        .IsUnique();
 
                     b.ToTable("item_venda");
                 });
@@ -255,13 +261,13 @@ namespace ControleDeEstoqueApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id_pagamento"));
 
-                    b.Property<string>("nome_pagmt")
+                    b.Property<string>("nome_do_pagamento")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("id_pagamento");
 
-                    b.HasIndex("nome_pagmt")
+                    b.HasIndex("nome_do_pagamento")
                         .IsUnique();
 
                     b.ToTable("pagamento");
@@ -275,41 +281,44 @@ namespace ControleDeEstoqueApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id_produto"));
 
-                    b.Property<int>("cod_fab")
+                    b.Property<int>("codigo_do_fabricante")
                         .HasColumnType("integer");
 
-                    b.Property<int>("cod_fornc")
+                    b.Property<int>("codigo_do_fornecedor")
                         .HasColumnType("integer");
 
-                    b.Property<int>("cod_prod")
+                    b.Property<int>("codigo_do_produto")
                         .HasColumnType("integer");
 
-                    b.Property<string>("descricao")
+                    b.Property<DateTime>("data_do_cadastro_do_produto")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("descricao_do_produto")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
-                    b.Property<string>("nome_prod")
+                    b.Property<string>("nome_do_produto")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
-                    b.Property<int>("quantidade_min")
+                    b.Property<int>("quantidade_minima_para_compra")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("valor_compra")
+                    b.Property<decimal>("valor_de_compra")
                         .HasColumnType("numeric");
 
-                    b.Property<decimal>("valor_venda")
+                    b.Property<decimal>("valor_de_venda")
                         .HasColumnType("numeric");
 
                     b.HasKey("id_produto");
 
-                    b.HasIndex("cod_fab");
+                    b.HasIndex("codigo_do_fabricante");
 
-                    b.HasIndex("cod_fornc");
+                    b.HasIndex("codigo_do_fornecedor");
 
-                    b.HasIndex("cod_prod")
+                    b.HasIndex("codigo_do_produto")
                         .IsUnique();
 
                     b.ToTable("produto");
@@ -323,24 +332,24 @@ namespace ControleDeEstoqueApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id_venda"));
 
-                    b.Property<int>("cod_func")
+                    b.Property<int>("codigo_da_venda")
                         .HasColumnType("integer");
 
-                    b.Property<int>("cod_venda")
+                    b.Property<int>("codigo_do_funcionario")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("data_venda")
+                    b.Property<DateTime>("data_da_venda")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<double>("valor_total")
+                    b.Property<double>("valor_total_da_venda")
                         .HasColumnType("double precision");
 
                     b.HasKey("id_venda");
 
-                    b.HasIndex("cod_func");
-
-                    b.HasIndex("cod_venda")
+                    b.HasIndex("codigo_da_venda")
                         .IsUnique();
+
+                    b.HasIndex("codigo_do_funcionario");
 
                     b.ToTable("venda");
                 });
@@ -353,7 +362,7 @@ namespace ControleDeEstoqueApi.Migrations
                     b.Property<int>("id_pagamento")
                         .HasColumnType("integer");
 
-                    b.Property<double>("valor_pagamento")
+                    b.Property<double>("valor_do_pagamento")
                         .HasColumnType("double precision");
 
                     b.HasKey("id_venda", "id_pagamento");
@@ -367,29 +376,29 @@ namespace ControleDeEstoqueApi.Migrations
                 {
                     b.HasOne("ControleDeEstoqueApi.Domain.Models.Agents.Funcionario", "Funcionario")
                         .WithMany("Estoque")
-                        .HasForeignKey("cod_func")
-                        .HasPrincipalKey("cod_func")
+                        .HasForeignKey("codigo_do_funcionario")
+                        .HasPrincipalKey("codigo_do_funcionario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ControleDeEstoqueApi.Domain.Models.Produto", "Produto")
                         .WithOne("Estoque")
-                        .HasForeignKey("ControleDeEstoqueApi.Domain.Models.Estoque", "cod_prod")
-                        .HasPrincipalKey("ControleDeEstoqueApi.Domain.Models.Produto", "cod_prod")
+                        .HasForeignKey("ControleDeEstoqueApi.Domain.Models.Estoque", "codigo_do_produto")
+                        .HasPrincipalKey("ControleDeEstoqueApi.Domain.Models.Produto", "codigo_do_produto")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ControleDeEstoqueApi.Domain.Models.Fabricante", "Fabricante")
                         .WithMany("Estoque")
-                        .HasForeignKey("nome_fab")
-                        .HasPrincipalKey("nome_fab")
+                        .HasForeignKey("nome_do_fabricante")
+                        .HasPrincipalKey("nome_do_fabricante")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ControleDeEstoqueApi.Domain.Models.Fornecedor", "Fornecedor")
                         .WithMany("Estoque")
-                        .HasForeignKey("nome_fant")
-                        .HasPrincipalKey("nome_fant")
+                        .HasForeignKey("nome_fantasia_do_fornecedor")
+                        .HasPrincipalKey("nome_fantasia_do_fornecedor")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -406,8 +415,8 @@ namespace ControleDeEstoqueApi.Migrations
                 {
                     b.HasOne("ControleDeEstoqueApi.Domain.Models.Agents.Funcionario", "Funcionario")
                         .WithOne("Fabricante")
-                        .HasForeignKey("ControleDeEstoqueApi.Domain.Models.Fabricante", "cod_func")
-                        .HasPrincipalKey("ControleDeEstoqueApi.Domain.Models.Agents.Funcionario", "cod_func")
+                        .HasForeignKey("ControleDeEstoqueApi.Domain.Models.Fabricante", "codigo_do_funcionario")
+                        .HasPrincipalKey("ControleDeEstoqueApi.Domain.Models.Agents.Funcionario", "codigo_do_funcionario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -418,8 +427,8 @@ namespace ControleDeEstoqueApi.Migrations
                 {
                     b.HasOne("ControleDeEstoqueApi.Domain.Models.Agents.Funcionario", "Funcionario")
                         .WithOne("Fornecedor")
-                        .HasForeignKey("ControleDeEstoqueApi.Domain.Models.Fornecedor", "cod_func")
-                        .HasPrincipalKey("ControleDeEstoqueApi.Domain.Models.Agents.Funcionario", "cod_func")
+                        .HasForeignKey("ControleDeEstoqueApi.Domain.Models.Fornecedor", "codigo_do_funcionario")
+                        .HasPrincipalKey("ControleDeEstoqueApi.Domain.Models.Agents.Funcionario", "codigo_do_funcionario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -428,17 +437,17 @@ namespace ControleDeEstoqueApi.Migrations
 
             modelBuilder.Entity("ControleDeEstoqueApi.Domain.Models.Item_Venda", b =>
                 {
-                    b.HasOne("ControleDeEstoqueApi.Domain.Models.Produto", "Produto")
-                        .WithOne("Item_Venda")
-                        .HasForeignKey("ControleDeEstoqueApi.Domain.Models.Item_Venda", "cod_prod")
-                        .HasPrincipalKey("ControleDeEstoqueApi.Domain.Models.Produto", "cod_prod")
+                    b.HasOne("ControleDeEstoqueApi.Domain.Models.Venda", "Venda")
+                        .WithMany("Item_Venda")
+                        .HasForeignKey("codigo_da_venda")
+                        .HasPrincipalKey("codigo_da_venda")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ControleDeEstoqueApi.Domain.Models.Venda", "Venda")
-                        .WithMany("Item_Venda")
-                        .HasForeignKey("cod_venda")
-                        .HasPrincipalKey("cod_venda")
+                    b.HasOne("ControleDeEstoqueApi.Domain.Models.Produto", "Produto")
+                        .WithOne("Item_Venda")
+                        .HasForeignKey("ControleDeEstoqueApi.Domain.Models.Item_Venda", "codigo_do_produto")
+                        .HasPrincipalKey("ControleDeEstoqueApi.Domain.Models.Produto", "codigo_do_produto")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -451,14 +460,15 @@ namespace ControleDeEstoqueApi.Migrations
                 {
                     b.HasOne("ControleDeEstoqueApi.Domain.Models.Fabricante", "Fabricante")
                         .WithMany("Produto")
-                        .HasForeignKey("cod_fab")
-                        .HasPrincipalKey("cod_fab")
+                        .HasForeignKey("codigo_do_fabricante")
+                        .HasPrincipalKey("codigo_do_fabricante")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ControleDeEstoqueApi.Domain.Models.Fornecedor", "Fornecedor")
                         .WithMany("Produto")
-                        .HasForeignKey("cod_fornc")
+                        .HasForeignKey("codigo_do_fornecedor")
+                        .HasPrincipalKey("codigo_do_fornecedor")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -471,8 +481,8 @@ namespace ControleDeEstoqueApi.Migrations
                 {
                     b.HasOne("ControleDeEstoqueApi.Domain.Models.Agents.Funcionario", "Funcionario")
                         .WithMany("Venda")
-                        .HasForeignKey("cod_func")
-                        .HasPrincipalKey("cod_func")
+                        .HasForeignKey("codigo_do_funcionario")
+                        .HasPrincipalKey("codigo_do_funcionario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

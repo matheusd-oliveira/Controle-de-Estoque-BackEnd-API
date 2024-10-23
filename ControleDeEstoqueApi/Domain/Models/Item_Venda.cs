@@ -8,11 +8,11 @@ namespace ControleDeEstoqueApi.Domain.Models
     [Table("item_venda")]
     public class Item_Venda
     {
-        public Item_Venda(int cod_prod, int cod_venda, int quantidade, decimal valor_unitario)
+        public Item_Venda(int codigo_do_produto, int codigo_da_venda, int quantidade_do_produto, decimal valor_unitario)
         {
-            this.cod_prod = cod_prod;
-            this.cod_venda = cod_venda;
-            this.quantidade = quantidade;
+            this.codigo_do_produto = codigo_do_produto;
+            this.codigo_da_venda = codigo_da_venda;
+            this.quantidade_do_produto = quantidade_do_produto;
             this.valor_unitario = valor_unitario;
         }
 
@@ -20,11 +20,11 @@ namespace ControleDeEstoqueApi.Domain.Models
         public int id_item_venda { get; set; }
 
         [ForeignKey("Produto")]
-        public int cod_prod { get; set; }
+        public int codigo_do_produto { get; set; }
 
         [ForeignKey("Venda")]
-        public int cod_venda { get; set; }
-        public int quantidade { get; set; }
+        public int codigo_da_venda { get; set; }
+        public int quantidade_do_produto { get; set; }
         public decimal valor_unitario { get; set; }
 
         public Produto Produto { get; set; }

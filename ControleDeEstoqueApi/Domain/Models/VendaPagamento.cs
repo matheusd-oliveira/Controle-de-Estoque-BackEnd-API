@@ -8,6 +8,6 @@
         public int id_pagamento { get; set; }
         public Pagamento Pagamento { get; set; }
 
-        public double valor_pagamento { get; set; }
+        public double valor_do_pagamento { get; set; }
     }
 }

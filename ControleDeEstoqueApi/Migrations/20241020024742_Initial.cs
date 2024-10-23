@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ControleDeEstoqueApi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,8 +18,8 @@ namespace ControleDeEstoqueApi.Migrations
                 {
                     idfuncionario = table.Column<int>(name: "id_funcionario", type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    nome = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
-                    codfunc = table.Column<int>(name: "cod_func", type: "integer", nullable: false),
+                    nomedofuncionario = table.Column<string>(name: "nome_do_funcionario", type: "character varying(250)", maxLength: 250, nullable: false),
+                    codigodofuncionario = table.Column<int>(name: "codigo_do_funcionario", type: "integer", nullable: false),
                     cargo = table.Column<int>(type: "integer", nullable: false),
                     salario = table.Column<decimal>(type: "numeric", nullable: false),
                     endereco = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
@@ -27,14 +27,13 @@ namespace ControleDeEstoqueApi.Migrations
                     cpf = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
                     login = table.Column<string>(type: "text", nullable: false),
                     senha = table.Column<string>(type: "text", nullable: false),
-                    datanasc = table.Column<string>(name: "data_nasc", type: "character varying(250)", maxLength: 250, nullable: false),
+                    datanascimento = table.Column<string>(name: "data_nascimento", type: "character varying(250)", maxLength: 250, nullable: false),
                     situacao = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_funcionario", x => x.idfuncionario);
-                    table.UniqueConstraint("AK_funcionario_cod_func", x => x.codfunc);
-                    table.UniqueConstraint("AK_funcionario_cpf", x => x.cpf);
+                    table.UniqueConstraint("AK_funcionario_codigo_do_funcionario", x => x.codigodofuncionario);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,12 +42,11 @@ namespace ControleDeEstoqueApi.Migrations
                 {
                     idpagamento = table.Column<int>(name: "id_pagamento", type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    nomepagmt = table.Column<string>(name: "nome_pagmt", type: "text", nullable: false)
+                    nomedopagamento = table.Column<string>(name: "nome_do_pagamento", type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_pagamento", x => x.idpagamento);
-                    table.UniqueConstraint("AK_pagamento_nome_pagmt", x => x.nomepagmt);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,20 +55,20 @@ namespace ControleDeEstoqueApi.Migrations
                 {
                     idfabricante = table.Column<int>(name: "id_fabricante", type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    codfab = table.Column<int>(name: "cod_fab", type: "integer", nullable: false),
-                    codfunc = table.Column<int>(name: "cod_func", type: "integer", nullable: false),
-                    nomefab = table.Column<string>(name: "nome_fab", type: "character varying(255)", maxLength: 255, nullable: false)
+                    codigodofabricante = table.Column<int>(name: "codigo_do_fabricante", type: "integer", nullable: false),
+                    codigodofuncionario = table.Column<int>(name: "codigo_do_funcionario", type: "integer", nullable: false),
+                    nomedofabricante = table.Column<string>(name: "nome_do_fabricante", type: "character varying(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_fabricante", x => x.idfabricante);
-                    table.UniqueConstraint("AK_fabricante_cod_fab", x => x.codfab);
-                    table.UniqueConstraint("AK_fabricante_nome_fab", x => x.nomefab);
+                    table.UniqueConstraint("AK_fabricante_codigo_do_fabricante", x => x.codigodofabricante);
+                    table.UniqueConstraint("AK_fabricante_nome_do_fabricante", x => x.nomedofabricante);
                     table.ForeignKey(
-                        name: "FK_fabricante_funcionario_cod_func",
-                        column: x => x.codfunc,
+                        name: "FK_fabricante_funcionario_codigo_do_funcionario",
+                        column: x => x.codigodofuncionario,
                         principalTable: "funcionario",
-                        principalColumn: "cod_func",
+                        principalColumn: "codigo_do_funcionario",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -78,27 +76,28 @@ namespace ControleDeEstoqueApi.Migrations
                 name: "fornecedor",
                 columns: table => new
                 {
-                    codfornc = table.Column<int>(name: "cod_fornc", type: "integer", nullable: false)
+                    idfornecedor = table.Column<int>(name: "id_fornecedor", type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    codfunc = table.Column<int>(name: "cod_func", type: "integer", nullable: false),
-                    nomefant = table.Column<string>(name: "nome_fant", type: "text", nullable: false),
+                    codigodofornecedor = table.Column<int>(name: "codigo_do_fornecedor", type: "integer", nullable: false),
+                    codigodofuncionario = table.Column<int>(name: "codigo_do_funcionario", type: "integer", nullable: false),
+                    nomefantasiadofornecedor = table.Column<string>(name: "nome_fantasia_do_fornecedor", type: "text", nullable: false),
                     cnpj = table.Column<string>(type: "text", nullable: false),
                     endereco = table.Column<string>(type: "text", nullable: false),
                     email = table.Column<string>(type: "text", nullable: false),
                     site = table.Column<string>(type: "text", nullable: false),
                     telefone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    tempoentrega = table.Column<string>(name: "tempo_entrega", type: "text", nullable: false)
+                    tempodeentrega = table.Column<string>(name: "tempo_de_entrega", type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_fornecedor", x => x.codfornc);
-                    table.UniqueConstraint("AK_fornecedor_nome_fant", x => x.nomefant);
-                    table.UniqueConstraint("AK_fornecedor_cnpj", x => x.cnpj);
+                    table.PrimaryKey("PK_fornecedor", x => x.idfornecedor);
+                    table.UniqueConstraint("AK_fornecedor_codigo_do_fornecedor", x => x.codigodofornecedor);
+                    table.UniqueConstraint("AK_fornecedor_nome_fantasia_do_fornecedor", x => x.nomefantasiadofornecedor);
                     table.ForeignKey(
-                        name: "FK_fornecedor_funcionario_cod_func",
-                        column: x => x.codfunc,
+                        name: "FK_fornecedor_funcionario_codigo_do_funcionario",
+                        column: x => x.codigodofuncionario,
                         principalTable: "funcionario",
-                        principalColumn: "cod_func",
+                        principalColumn: "codigo_do_funcionario",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -108,20 +107,20 @@ namespace ControleDeEstoqueApi.Migrations
                 {
                     idvenda = table.Column<int>(name: "id_venda", type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    codvenda = table.Column<int>(name: "cod_venda", type: "integer", nullable: false),
-                    codfunc = table.Column<int>(name: "cod_func", type: "integer", nullable: false),
-                    valortotal = table.Column<double>(name: "valor_total", type: "double precision", nullable: false),
-                    datavenda = table.Column<DateTime>(name: "data_venda", type: "timestamp with time zone", nullable: false)
+                    codigodavenda = table.Column<int>(name: "codigo_da_venda", type: "integer", nullable: false),
+                    codigodofuncionario = table.Column<int>(name: "codigo_do_funcionario", type: "integer", nullable: false),
+                    valortotaldavenda = table.Column<double>(name: "valor_total_da_venda", type: "double precision", nullable: false),
+                    datadavenda = table.Column<DateTime>(name: "data_da_venda", type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_venda", x => x.idvenda);
-                    table.UniqueConstraint("AK_venda_cod_venda", x => x.codvenda);
+                    table.UniqueConstraint("AK_venda_codigo_da_venda", x => x.codigodavenda);
                     table.ForeignKey(
-                        name: "FK_venda_funcionario_cod_func",
-                        column: x => x.codfunc,
+                        name: "FK_venda_funcionario_codigo_do_funcionario",
+                        column: x => x.codigodofuncionario,
                         principalTable: "funcionario",
-                        principalColumn: "cod_func",
+                        principalColumn: "codigo_do_funcionario",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -131,30 +130,31 @@ namespace ControleDeEstoqueApi.Migrations
                 {
                     idproduto = table.Column<int>(name: "id_produto", type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    codprod = table.Column<int>(name: "cod_prod", type: "integer", nullable: false),
-                    codfab = table.Column<int>(name: "cod_fab", type: "integer", nullable: false),
-                    codfornc = table.Column<int>(name: "cod_fornc", type: "integer", nullable: false),
-                    nomeprod = table.Column<string>(name: "nome_prod", type: "character varying(250)", maxLength: 250, nullable: false),
-                    valorcompra = table.Column<decimal>(name: "valor_compra", type: "numeric", nullable: false),
-                    valorvenda = table.Column<decimal>(name: "valor_venda", type: "numeric", nullable: false),
-                    descricao = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
-                    quantidademin = table.Column<int>(name: "quantidade_min", type: "integer", nullable: false)
+                    codigodoproduto = table.Column<int>(name: "codigo_do_produto", type: "integer", nullable: false),
+                    codigodofabricante = table.Column<int>(name: "codigo_do_fabricante", type: "integer", nullable: false),
+                    codigodofornecedor = table.Column<int>(name: "codigo_do_fornecedor", type: "integer", nullable: false),
+                    nomedoproduto = table.Column<string>(name: "nome_do_produto", type: "character varying(250)", maxLength: 250, nullable: false),
+                    valordecompra = table.Column<decimal>(name: "valor_de_compra", type: "numeric", nullable: false),
+                    valordevenda = table.Column<decimal>(name: "valor_de_venda", type: "numeric", nullable: false),
+                    descricaodoproduto = table.Column<string>(name: "descricao_do_produto", type: "character varying(250)", maxLength: 250, nullable: false),
+                    quantidademinimaparacompra = table.Column<int>(name: "quantidade_minima_para_compra", type: "integer", nullable: false),
+                    datadocadastrodoproduto = table.Column<DateTime>(name: "data_do_cadastro_do_produto", type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_produto", x => x.idproduto);
-                    table.UniqueConstraint("AK_produto_cod_prod", x => x.codprod);
+                    table.UniqueConstraint("AK_produto_codigo_do_produto", x => x.codigodoproduto);
                     table.ForeignKey(
-                        name: "FK_produto_fabricante_cod_fab",
-                        column: x => x.codfab,
+                        name: "FK_produto_fabricante_codigo_do_fabricante",
+                        column: x => x.codigodofabricante,
                         principalTable: "fabricante",
-                        principalColumn: "cod_fab",
+                        principalColumn: "codigo_do_fabricante",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_produto_fornecedor_cod_fornc",
-                        column: x => x.codfornc,
+                        name: "FK_produto_fornecedor_codigo_do_fornecedor",
+                        column: x => x.codigodofornecedor,
                         principalTable: "fornecedor",
-                        principalColumn: "cod_fornc",
+                        principalColumn: "codigo_do_fornecedor",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -164,7 +164,7 @@ namespace ControleDeEstoqueApi.Migrations
                 {
                     idvenda = table.Column<int>(name: "id_venda", type: "integer", nullable: false),
                     idpagamento = table.Column<int>(name: "id_pagamento", type: "integer", nullable: false),
-                    valorpagamento = table.Column<double>(name: "valor_pagamento", type: "double precision", nullable: false)
+                    valordopagamento = table.Column<double>(name: "valor_do_pagamento", type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -189,39 +189,39 @@ namespace ControleDeEstoqueApi.Migrations
                 {
                     idestoque = table.Column<int>(name: "id_estoque", type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    codfunc = table.Column<int>(name: "cod_func", type: "integer", nullable: false),
-                    codprod = table.Column<int>(name: "cod_prod", type: "integer", nullable: false),
-                    nomeprod = table.Column<string>(name: "nome_prod", type: "character varying(250)", maxLength: 250, nullable: false),
-                    nomefant = table.Column<string>(name: "nome_fant", type: "text", nullable: false),
-                    nomefab = table.Column<string>(name: "nome_fab", type: "character varying(255)", nullable: false),
-                    quantidade = table.Column<int>(type: "integer", nullable: false)
+                    codigodofuncionario = table.Column<int>(name: "codigo_do_funcionario", type: "integer", nullable: false),
+                    codigodoproduto = table.Column<int>(name: "codigo_do_produto", type: "integer", nullable: false),
+                    nomedoproduto = table.Column<string>(name: "nome_do_produto", type: "character varying(250)", maxLength: 250, nullable: false),
+                    nomefantasiadofornecedor = table.Column<string>(name: "nome_fantasia_do_fornecedor", type: "text", nullable: false),
+                    nomedofabricante = table.Column<string>(name: "nome_do_fabricante", type: "character varying(255)", nullable: false),
+                    quantidadedoproduto = table.Column<int>(name: "quantidade_do_produto", type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_estoque", x => x.idestoque);
                     table.ForeignKey(
-                        name: "FK_estoque_fabricante_nome_fab",
-                        column: x => x.nomefab,
+                        name: "FK_estoque_fabricante_nome_do_fabricante",
+                        column: x => x.nomedofabricante,
                         principalTable: "fabricante",
-                        principalColumn: "nome_fab",
+                        principalColumn: "nome_do_fabricante",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_estoque_fornecedor_nome_fant",
-                        column: x => x.nomefant,
+                        name: "FK_estoque_fornecedor_nome_fantasia_do_fornecedor",
+                        column: x => x.nomefantasiadofornecedor,
                         principalTable: "fornecedor",
-                        principalColumn: "nome_fant",
+                        principalColumn: "nome_fantasia_do_fornecedor",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_estoque_funcionario_cod_func",
-                        column: x => x.codfunc,
+                        name: "FK_estoque_funcionario_codigo_do_funcionario",
+                        column: x => x.codigodofuncionario,
                         principalTable: "funcionario",
-                        principalColumn: "cod_func",
+                        principalColumn: "codigo_do_funcionario",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_estoque_produto_cod_prod",
-                        column: x => x.codprod,
+                        name: "FK_estoque_produto_codigo_do_produto",
+                        column: x => x.codigodoproduto,
                         principalTable: "produto",
-                        principalColumn: "cod_prod",
+                        principalColumn: "codigo_do_produto",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -231,25 +231,25 @@ namespace ControleDeEstoqueApi.Migrations
                 {
                     iditemvenda = table.Column<int>(name: "id_item_venda", type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    codprod = table.Column<int>(name: "cod_prod", type: "integer", nullable: false),
-                    codvenda = table.Column<int>(name: "cod_venda", type: "integer", nullable: false),
-                    quantidade = table.Column<int>(type: "integer", nullable: false),
+                    codigodoproduto = table.Column<int>(name: "codigo_do_produto", type: "integer", nullable: false),
+                    codigodavenda = table.Column<int>(name: "codigo_da_venda", type: "integer", nullable: false),
+                    quantidadedoproduto = table.Column<int>(name: "quantidade_do_produto", type: "integer", nullable: false),
                     valorunitario = table.Column<decimal>(name: "valor_unitario", type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_item_venda", x => x.iditemvenda);
                     table.ForeignKey(
-                        name: "FK_item_venda_produto_cod_prod",
-                        column: x => x.codprod,
+                        name: "FK_item_venda_produto_codigo_do_produto",
+                        column: x => x.codigodoproduto,
                         principalTable: "produto",
-                        principalColumn: "cod_prod",
+                        principalColumn: "codigo_do_produto",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_item_venda_venda_cod_venda",
-                        column: x => x.codvenda,
+                        name: "FK_item_venda_venda_codigo_da_venda",
+                        column: x => x.codigodavenda,
                         principalTable: "venda",
-                        principalColumn: "cod_venda",
+                        principalColumn: "codigo_da_venda",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -259,42 +259,42 @@ namespace ControleDeEstoqueApi.Migrations
                 column: "id_pagamento");
 
             migrationBuilder.CreateIndex(
-                name: "IX_estoque_cod_func",
+                name: "IX_estoque_codigo_do_funcionario",
                 table: "estoque",
-                column: "cod_func");
+                column: "codigo_do_funcionario");
 
             migrationBuilder.CreateIndex(
-                name: "IX_estoque_cod_prod",
+                name: "IX_estoque_codigo_do_produto",
                 table: "estoque",
-                column: "cod_prod",
+                column: "codigo_do_produto",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_estoque_nome_fab",
+                name: "IX_estoque_nome_do_fabricante",
                 table: "estoque",
-                column: "nome_fab");
+                column: "nome_do_fabricante");
 
             migrationBuilder.CreateIndex(
-                name: "IX_estoque_nome_fant",
+                name: "IX_estoque_nome_fantasia_do_fornecedor",
                 table: "estoque",
-                column: "nome_fant");
+                column: "nome_fantasia_do_fornecedor");
 
             migrationBuilder.CreateIndex(
-                name: "IX_fabricante_cod_fab",
+                name: "IX_fabricante_codigo_do_fabricante",
                 table: "fabricante",
-                column: "cod_fab",
+                column: "codigo_do_fabricante",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_fabricante_cod_func",
+                name: "IX_fabricante_codigo_do_funcionario",
                 table: "fabricante",
-                column: "cod_func",
+                column: "codigo_do_funcionario",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_fabricante_nome_fab",
+                name: "IX_fabricante_nome_do_fabricante",
                 table: "fabricante",
-                column: "nome_fab",
+                column: "nome_do_fabricante",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -304,21 +304,27 @@ namespace ControleDeEstoqueApi.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_fornecedor_cod_func",
+                name: "IX_fornecedor_codigo_do_fornecedor",
                 table: "fornecedor",
-                column: "cod_func",
+                column: "codigo_do_fornecedor",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_fornecedor_nome_fant",
+                name: "IX_fornecedor_codigo_do_funcionario",
                 table: "fornecedor",
-                column: "nome_fant",
+                column: "codigo_do_funcionario",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_funcionario_cod_func",
+                name: "IX_fornecedor_nome_fantasia_do_fornecedor",
+                table: "fornecedor",
+                column: "nome_fantasia_do_fornecedor",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_funcionario_codigo_do_funcionario",
                 table: "funcionario",
-                column: "cod_func",
+                column: "codigo_do_funcionario",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -328,48 +334,48 @@ namespace ControleDeEstoqueApi.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_item_venda_cod_prod",
+                name: "IX_item_venda_codigo_da_venda",
                 table: "item_venda",
-                column: "cod_prod",
+                column: "codigo_da_venda");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_item_venda_codigo_do_produto",
+                table: "item_venda",
+                column: "codigo_do_produto",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_item_venda_cod_venda",
-                table: "item_venda",
-                column: "cod_venda");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_pagamento_nome_pagmt",
+                name: "IX_pagamento_nome_do_pagamento",
                 table: "pagamento",
-                column: "nome_pagmt",
+                column: "nome_do_pagamento",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_produto_cod_fab",
+                name: "IX_produto_codigo_do_fabricante",
                 table: "produto",
-                column: "cod_fab");
+                column: "codigo_do_fabricante");
 
             migrationBuilder.CreateIndex(
-                name: "IX_produto_cod_fornc",
+                name: "IX_produto_codigo_do_fornecedor",
                 table: "produto",
-                column: "cod_fornc");
+                column: "codigo_do_fornecedor");
 
             migrationBuilder.CreateIndex(
-                name: "IX_produto_cod_prod",
+                name: "IX_produto_codigo_do_produto",
                 table: "produto",
-                column: "cod_prod",
+                column: "codigo_do_produto",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_venda_cod_func",
+                name: "IX_venda_codigo_da_venda",
                 table: "venda",
-                column: "cod_func");
+                column: "codigo_da_venda",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_venda_cod_venda",
+                name: "IX_venda_codigo_do_funcionario",
                 table: "venda",
-                column: "cod_venda",
-                unique: true);
+                column: "codigo_do_funcionario");
         }
 
         /// <inheritdoc />

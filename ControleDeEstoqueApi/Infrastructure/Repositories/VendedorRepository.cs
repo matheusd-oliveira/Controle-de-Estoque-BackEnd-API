@@ -1,4 +1,5 @@
-﻿using ControleDeEstoqueApi.Domain.Models;
+﻿using ControleDeEstoqueApi.Application.Services;
+using ControleDeEstoqueApi.Domain.Models;
 using ControleDeEstoqueApi.Domain.Models.Agents;
 using ControleDeEstoqueApi.Domain.Models.InterfacesRepositories;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -11,13 +12,16 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
     public class VendedorRepository : IVendedorRepository
     {
         DbConnection _dbConnection = new DbConnection();
-
+        ServiceProduto _serviceProduto = new ServiceProduto();
         public async Task<Produto> CadastrarProduto(Produto produto)
         {
             try
             {
                 if (produto != null)
-                {
+                {   
+                    var codigo = _serviceProduto.AdicionarUnidadeAoCodigo();
+                    produto.codigo_do_produto = codigo;
+
                     _dbConnection.Produto.Add(produto);
                     await _dbConnection.SaveChangesAsync();
                 }

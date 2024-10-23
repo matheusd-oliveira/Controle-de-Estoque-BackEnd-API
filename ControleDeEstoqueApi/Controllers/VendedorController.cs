@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using ControleDeEstoqueApi.Application.Services;
 using ControleDeEstoqueApi.Application.ViewModels;
 using ControleDeEstoqueApi.Domain.Models;
 using ControleDeEstoqueApi.Domain.Models.InterfacesRepositories;
@@ -21,7 +22,6 @@ namespace ControleDeEstoqueApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CadastroDeProdutos(ProdutoViewModel produtoView)
         {
-
             try
             {
                 var produto = new Produto(

@@ -10,7 +10,7 @@ namespace ControleDeEstoqueApi.Domain.Models
     public class Produto
     {
         public Produto(
-            int codigo_do_produto, 
+            int codigo_do_produto,
             int codigo_do_fabricante, 
             int codigo_do_fornecedor, 
             string nome_do_produto, 

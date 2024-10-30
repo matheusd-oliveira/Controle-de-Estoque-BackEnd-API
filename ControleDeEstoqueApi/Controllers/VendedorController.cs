@@ -3,6 +3,7 @@ using ControleDeEstoqueApi.Application.Services;
 using ControleDeEstoqueApi.Application.ViewModels;
 using ControleDeEstoqueApi.Domain.Models;
 using ControleDeEstoqueApi.Domain.Models.InterfacesRepositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDeEstoqueApi.Controllers
@@ -17,66 +18,10 @@ namespace ControleDeEstoqueApi.Controllers
         {
             _vendedorRepository = vendedorRepository ?? throw new ArgumentNullException(nameof(vendedorRepository));
         }
+  
+        
 
-
-        [HttpPost]
-        public async Task<IActionResult> CadastroDeProdutos(ProdutoViewModel produtoView)
-        {
-            try
-            {
-                var produto = new Produto(
-                    produtoView.CodigoDoProduto,
-                    produtoView.CodigoDoFabricante,
-                    produtoView.CodigoDoFornecedor,
-                    produtoView.NomeDoProduto.ToUpper(),
-                    produtoView.ValorDeCompra,
-                    produtoView.ValorDeVenda,
-                    produtoView.DescricaoDoProduto.ToUpper(),
-                    produtoView.QuantidadeMinimaParaComprar
-                    );
-
-                var novoProduto = await _vendedorRepository.CadastrarProduto(produto);
-
-                if (novoProduto == null)
-                    return NotFound("Produto não foi cadastrado! Entre em contato com o suporte.");
-
-                return Ok(novoProduto);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, $"Ocorreu um erro na aplicação. Debugue! {e.Message}");
-            }
-        }
-
-        // TODO: COLOCAR NOME_PROD COMO MAIUSCULO TAMBÉM
-        [HttpPut]
-        public async Task<IActionResult> AlteracaoDeProdutos(ProdutoViewModel produtoView)
-        {
-            try
-            {
-                var produto = new Produto(
-                    produtoView.CodigoDoProduto,
-                    produtoView.CodigoDoFabricante,
-                    produtoView.CodigoDoFornecedor,
-                    produtoView.NomeDoProduto.ToUpper(),
-                    produtoView.ValorDeCompra,
-                    produtoView.ValorDeVenda,
-                    produtoView.DescricaoDoProduto.ToUpper(),
-                    produtoView.QuantidadeMinimaParaComprar
-                    );
-
-                var novoProduto = await _vendedorRepository.AlterarProduto(produtoView.CodigoDoProduto, produto);
-
-                return Ok(novoProduto);
-            }
-            catch (Exception e)
-            {
-
-                throw;
-            }
-        }
-
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> BuscarProduto(string nomeDoProduto)
         {
@@ -95,6 +40,7 @@ namespace ControleDeEstoqueApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> BuscarProdutoNoEstoquePorId(int codigoDoProduto)
         {
@@ -121,6 +67,7 @@ namespace ControleDeEstoqueApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> BuscarTodosOsProdutosNoEstoque()
         {

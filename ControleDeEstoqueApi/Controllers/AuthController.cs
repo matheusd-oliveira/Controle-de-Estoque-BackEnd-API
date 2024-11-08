@@ -24,8 +24,15 @@ namespace ControleDeEstoqueApi.Controllers
                 return BadRequest("username or password invalid");
 
 
-            var token = _authRepository.Auth(model.login, model.password);
-            return Ok(token);
+            try
+            {
+                var token = _authRepository.Auth(model.login, model.password);
+                return Ok(token);
+            }
+            catch
+            {
+                return StatusCode(500, "Internal Error");
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using ControleDeEstoqueApi.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ControleDeEstoqueApi.Migrations
 {
     [DbContext(typeof(DbConnection))]
-    partial class DbConnectionModelSnapshot : ModelSnapshot
+    [Migration("20241108012308_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,7 +33,7 @@ namespace ControleDeEstoqueApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id_Cargo"));
 
-                    b.Property<string>("nome")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("text");
 

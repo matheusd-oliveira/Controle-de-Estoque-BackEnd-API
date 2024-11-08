@@ -12,6 +12,19 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
         DbConnection _dbConnection = new DbConnection();
         ServiceProduto _serviceProduto = new ServiceProduto();
 
+        public async Task<Cargo> CadastrarCargo(Cargo cargo)
+        {
+            if (cargo != null)
+            {
+                _dbConnection.Cargos.Add(cargo);
+                await _dbConnection.SaveChangesAsync();
+                return cargo;
+            }
+            else
+            {
+                throw new Exception("Tente novamente!");
+            }  
+        }
         public async Task<Produto> CadastrarProduto(Produto produto)
         {
             try
@@ -210,7 +223,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             {   
                 funcionarioEncontrado.nome_do_funcionario = novoFuncionario.nome_do_funcionario;
                 funcionarioEncontrado.salario = novoFuncionario.salario;
-                funcionarioEncontrado.cargo = novoFuncionario.cargo;
+                funcionarioEncontrado.cargoId = novoFuncionario.cargoId;
                 funcionarioEncontrado.cpf = novoFuncionario.cpf;
                 funcionarioEncontrado.situacao = novoFuncionario.situacao;
                 funcionarioEncontrado.telefone = funcionarioEncontrado.telefone;

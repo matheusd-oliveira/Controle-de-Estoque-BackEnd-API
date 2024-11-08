@@ -21,7 +21,7 @@ namespace ControleDeEstoqueApi.Services
                 Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
                 {
                     new Claim("funcionarioId", funcionario.id_funcionario.ToString()),
-                    new Claim("funcionarioCargo", funcionario.cargo.name)
+                    new Claim("funcionarioCargo", funcionario.cargoId.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(3),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

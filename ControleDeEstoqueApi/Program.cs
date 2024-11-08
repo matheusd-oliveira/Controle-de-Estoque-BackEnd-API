@@ -74,6 +74,7 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddDbContext<DbConnection>();
 builder.Services.AddTransient<IPagamentoRepository, PagamentoRepository>();
 builder.Services.AddTransient<IVendedorRepository, VendedorRepository>();
+builder.Services.AddTransient<IGerenteRepository, GerenteRepository>();
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();
 builder.Services.AddApiVersioning();
 

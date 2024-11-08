@@ -48,5 +48,9 @@ namespace ControleDeEstoqueApi.Domain.Models.InterfacesRepositories
         public Task<Fabricante> AlterarFabricante(int codigoDoFabricante, Fabricante novoFabricante);
         public Task<IEnumerable<Fabricante>> ListarFabricantes();
 
+
+        // Criar cargos
+
+        public Task<Cargo> CadastrarCargo(Cargo cargo);
     }
 }

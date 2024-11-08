@@ -3,6 +3,7 @@
     public class FuncionarioViewModel
     {
         public string NomeDoFuncionario { get; set; }
+        public int CodigoDoFuncionario { get; set; }
         public string Endereco { get; set; }
         public string Telefone { get; set; }
         public string Cpf { get; set; }

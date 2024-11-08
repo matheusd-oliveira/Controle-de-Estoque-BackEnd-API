@@ -7,33 +7,22 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ControleDeEstoqueApi.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "funcionario",
+                name: "Cargos",
                 columns: table => new
                 {
-                    idfuncionario = table.Column<int>(name: "id_funcionario", type: "integer", nullable: false)
+                    idCargo = table.Column<int>(name: "id_Cargo", type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    nomedofuncionario = table.Column<string>(name: "nome_do_funcionario", type: "character varying(250)", maxLength: 250, nullable: false),
-                    codigodofuncionario = table.Column<int>(name: "codigo_do_funcionario", type: "integer", nullable: false),
-                    cargo = table.Column<int>(type: "integer", nullable: false),
-                    salario = table.Column<decimal>(type: "numeric", nullable: false),
-                    endereco = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
-                    telefone = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    cpf = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
-                    login = table.Column<string>(type: "text", nullable: false),
-                    senha = table.Column<string>(type: "text", nullable: false),
-                    datanascimento = table.Column<string>(name: "data_nascimento", type: "character varying(250)", maxLength: 250, nullable: false),
-                    situacao = table.Column<bool>(type: "boolean", nullable: false)
+                    name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_funcionario", x => x.idfuncionario);
-                    table.UniqueConstraint("AK_funcionario_codigo_do_funcionario", x => x.codigodofuncionario);
+                    table.PrimaryKey("PK_Cargos", x => x.idCargo);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,6 +36,36 @@ namespace ControleDeEstoqueApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_pagamento", x => x.idpagamento);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "funcionario",
+                columns: table => new
+                {
+                    idfuncionario = table.Column<int>(name: "id_funcionario", type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    nomedofuncionario = table.Column<string>(name: "nome_do_funcionario", type: "character varying(250)", maxLength: 250, nullable: false),
+                    codigodofuncionario = table.Column<int>(name: "codigo_do_funcionario", type: "integer", nullable: false),
+                    salario = table.Column<decimal>(type: "numeric", nullable: false),
+                    endereco = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    telefone = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    cpf = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    login = table.Column<string>(type: "text", nullable: false),
+                    senhaHash = table.Column<string>(type: "text", nullable: false),
+                    datanascimento = table.Column<string>(name: "data_nascimento", type: "character varying(250)", maxLength: 250, nullable: false),
+                    situacao = table.Column<bool>(type: "boolean", nullable: false),
+                    cargoId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_funcionario", x => x.idfuncionario);
+                    table.UniqueConstraint("AK_funcionario_codigo_do_funcionario", x => x.codigodofuncionario);
+                    table.ForeignKey(
+                        name: "FK_funcionario_Cargos_cargoId",
+                        column: x => x.cargoId,
+                        principalTable: "Cargos",
+                        principalColumn: "id_Cargo",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -322,6 +341,11 @@ namespace ControleDeEstoqueApi.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_funcionario_cargoId",
+                table: "funcionario",
+                column: "cargoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_funcionario_codigo_do_funcionario",
                 table: "funcionario",
                 column: "codigo_do_funcionario",
@@ -407,6 +431,9 @@ namespace ControleDeEstoqueApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "funcionario");
+
+            migrationBuilder.DropTable(
+                name: "Cargos");
         }
     }
 }

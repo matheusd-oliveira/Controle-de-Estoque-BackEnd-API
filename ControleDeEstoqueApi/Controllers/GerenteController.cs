@@ -22,6 +22,28 @@ namespace ControleDeEstoqueApi.Controllers
             _gerenteRepository = gerenteRepository ?? throw new ArgumentNullException(nameof(gerenteRepository));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CadastroDeCargos([FromBody] CargoViewModel model) 
+        {
+            var cargo = new Cargo
+            {
+                nome = model.NomeDoCargo
+            };
+
+            try
+            {
+                await _gerenteRepository.CadastrarCargo(cargo);
+                return Ok(model);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(400, "Verifique se o cargo não está duplicado.");
+            }
+            catch
+            {
+                return StatusCode(500, "Internal Error");
+            }
+        }
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> CadastroDeProdutos(ProdutoViewModel produtoView)
@@ -168,7 +190,7 @@ namespace ControleDeEstoqueApi.Controllers
             }
         }
 
-        [Authorize]
+        
         [HttpPost]
         public async Task<IActionResult> CadastrarFuncionarios([FromBody] FuncionarioViewModel modelFuncionario) 
         {
@@ -177,8 +199,10 @@ namespace ControleDeEstoqueApi.Controllers
             var funcionario = new Funcionario
             {
                 nome_do_funcionario = modelFuncionario.NomeDoFuncionario,
+                codigo_do_funcionario = modelFuncionario.CodigoDoFuncionario,
                 endereco = modelFuncionario.Endereco,
                 telefone = modelFuncionario.Telefone,
+                data_nascimento = modelFuncionario.DataDeNascimento,
                 cpf = modelFuncionario.Cpf,
                 salario = modelFuncionario.Salario,
                 login = modelFuncionario.login,

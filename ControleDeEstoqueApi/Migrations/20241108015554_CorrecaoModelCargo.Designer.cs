@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ControleDeEstoqueApi.Migrations
 {
     [DbContext(typeof(DbConnection))]
-    [Migration("20241020024742_Initial")]
-    partial class Initial
+    [Migration("20241108015554_CorrecaoModelCargo")]
+    partial class CorrecaoModelCargo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,23 @@ namespace ControleDeEstoqueApi.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ControleDeEstoqueApi.Domain.Models.Agents.Cargo", b =>
+                {
+                    b.Property<int>("id_Cargo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id_Cargo"));
+
+                    b.Property<string>("nome")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("id_Cargo");
+
+                    b.ToTable("Cargos");
+                });
+
             modelBuilder.Entity("ControleDeEstoqueApi.Domain.Models.Agents.Funcionario", b =>
                 {
                     b.Property<int>("id_funcionario")
@@ -33,7 +50,7 @@ namespace ControleDeEstoqueApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id_funcionario"));
 
-                    b.Property<int>("cargo")
+                    b.Property<int>("cargoId")
                         .HasColumnType("integer");
 
                     b.Property<int>("codigo_do_funcionario")
@@ -66,7 +83,7 @@ namespace ControleDeEstoqueApi.Migrations
                     b.Property<decimal>("salario")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("senha")
+                    b.Property<string>("senhaHash")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -79,6 +96,8 @@ namespace ControleDeEstoqueApi.Migrations
                         .HasColumnType("character varying(255)");
 
                     b.HasKey("id_funcionario");
+
+                    b.HasIndex("cargoId");
 
                     b.HasIndex("codigo_do_funcionario")
                         .IsUnique();
@@ -373,6 +392,17 @@ namespace ControleDeEstoqueApi.Migrations
                     b.HasIndex("id_pagamento");
 
                     b.ToTable("VendaPagamentos");
+                });
+
+            modelBuilder.Entity("ControleDeEstoqueApi.Domain.Models.Agents.Funcionario", b =>
+                {
+                    b.HasOne("ControleDeEstoqueApi.Domain.Models.Agents.Cargo", "Cargo")
+                        .WithMany()
+                        .HasForeignKey("cargoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cargo");
                 });
 
             modelBuilder.Entity("ControleDeEstoqueApi.Domain.Models.Estoque", b =>

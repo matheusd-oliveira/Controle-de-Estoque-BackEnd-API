@@ -3,6 +3,7 @@ using ControleDeEstoqueApi.Domain.Models;
 using ControleDeEstoqueApi.Domain.Models.Agents;
 using ControleDeEstoqueApi.Domain.Models.InterfacesRepositories;
 using Microsoft.EntityFrameworkCore;
+using SQLitePCL;
 
 namespace ControleDeEstoqueApi.Infrastructure.Repositories
 {
@@ -87,28 +88,60 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             return produtoNoEstoque;
         }
 
-        // TODO
-        public async Task EntradaDoProdutoNoEstoque(Produto produto, Funcionario funcionario)
+       
+        public async Task<Estoque> EntradaDoProdutoNoEstoque(Estoque produtoNoEstoque)
         {
-            throw new NotImplementedException();
+            if (_dbConnection.Produto.FindAsync(produtoNoEstoque.codigo_do_produto) != null)
+            {
+                _dbConnection.Estoque.Add(produtoNoEstoque);
+                await _dbConnection.SaveChangesAsync();
+
+                return produtoNoEstoque;
+            }
+            else
+            {
+                throw new Exception("Produto não cadastrado no sistema. Volte para a tela de cadastro e faça manualmente a sua inserção.");
+            }
         }
-        // TODO
-        public async Task SaidaDoProdutoNoEstoque(Produto produto, Funcionario funcionario)
+        
+        public async Task<Estoque> SaidaDoProdutoNoEstoque(Estoque produtoNoEstoque)
         {
-            throw new NotImplementedException();
+            if (produtoNoEstoque != null)
+            {
+                _dbConnection.Estoque.Remove(produtoNoEstoque);
+                await _dbConnection.SaveChangesAsync();
+
+                return produtoNoEstoque;
+            }
+            else
+            {
+                throw new Exception("Não foi possivel realizar a saída do produto. Verifique com o desenvolvedor.");
+            }
+            
         }
         // TODO
         public async Task<Venda> EfetuarVenda(Venda venda)
         {
-            throw new NotImplementedException();
+            if (venda != null)
+            {
+                _dbConnection.Venda.Add(venda);
+                await _dbConnection.SaveChangesAsync();         
+            }
+            return venda;
         }
         // TODO
         public async Task<Venda> CancelarVenda(Venda venda)
         {
-            throw new NotImplementedException();
+            if (venda != null)
+            {
+                _dbConnection.Venda.Remove(venda);
+                await _dbConnection.SaveChangesAsync();
+            }
+            return venda;
+
         }
 
-        public async Task AdicionarItemDeVenda(Item_Venda itemDaVenda)
+        public async Task<Item_Venda> AdicionarItemDeVenda(Item_Venda itemDaVenda)
         {
             try
             {
@@ -117,6 +150,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
                     _dbConnection.Item_Venda.Add(itemDaVenda);
                     await _dbConnection.SaveChangesAsync();
                 }
+                return itemDaVenda;
             }
             catch (Exception e)
             {
@@ -124,7 +158,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             }
         }
 
-        public async Task CancelarItemDeVenda(Item_Venda itemDaVenda)
+        public async Task<Item_Venda> CancelarItemDeVenda(Item_Venda itemDaVenda)
         {
             try
             {
@@ -133,6 +167,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
                     _dbConnection.Item_Venda.Remove(itemDaVenda);
                     await _dbConnection.SaveChangesAsync();
                 }
+                return itemDaVenda;
             }
             catch (Exception e)
             {
@@ -146,7 +181,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             return await _dbConnection.Estoque.Where(produto => produto.nome_do_produto == nomeDoProduto).ToListAsync();
         }
         // TODO
-        public async Task ExibirRelatorioDeVendasDoMes()
+        public async Task<IEnumerable<Venda>> ExibirRelatorioDeVendasDoMes()
         {
             throw new NotImplementedException();
         }
@@ -155,50 +190,121 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
-        // TODO
-        public async Task CadastrarFuncionario(Funcionario funcionario)
+        
+        public async Task<Funcionario> CadastrarFuncionario(Funcionario funcionario)
         {
-            throw new NotImplementedException();
+            if (funcionario != null)
+            { 
+                _dbConnection.Funcionario.Add(funcionario);
+                await _dbConnection.SaveChangesAsync();
+            }
+
+            return funcionario;
         }
-        // TODO
-        public async Task AlterarFuncionario(int codigoDoFuncionario)
+        
+        public async Task<Funcionario> AlterarFuncionario(int codigoDoFuncionario, Funcionario novoFuncionario)
         {
-            throw new NotImplementedException();
+            var funcionarioEncontrado = await _dbConnection.Funcionario.FirstOrDefaultAsync(x => x.codigo_do_funcionario == codigoDoFuncionario);
+
+            if (funcionarioEncontrado != null)
+            {   
+                funcionarioEncontrado.nome_do_funcionario = novoFuncionario.nome_do_funcionario;
+                funcionarioEncontrado.salario = novoFuncionario.salario;
+                funcionarioEncontrado.cargo = novoFuncionario.cargo;
+                funcionarioEncontrado.cpf = novoFuncionario.cpf;
+                funcionarioEncontrado.situacao = novoFuncionario.situacao;
+                funcionarioEncontrado.telefone = funcionarioEncontrado.telefone;
+
+                await _dbConnection.SaveChangesAsync();
+
+                return novoFuncionario;
+            }
+
+            else
+            {
+                throw new Exception("Funcionario não encontrado");
+            }       
         }
-        // TODO
+        
         public async Task<IEnumerable<Funcionario>> ListarFuncionarios()
         {
-            throw new NotImplementedException();
+            return await _dbConnection.Funcionario.ToListAsync();
         }
-        // TODO
-        public async Task CadastrarFornecedor(Fornecedor fornecedor)
+        
+
+        public async Task<Fornecedor> CadastrarFornecedor(Fornecedor fornecedor)
         {
-            throw new NotImplementedException();
+            if (fornecedor != null)
+            {
+                _dbConnection.Fornecedor.Add(fornecedor);
+                await _dbConnection.SaveChangesAsync();
+            }
+
+            return fornecedor;
         }
-        // TODO
-        public async Task AlterarFornecedor(int codigoDoFornecedor)
+        
+        public async Task<Fornecedor> AlterarFornecedor(int codigoDoFornecedor, Fornecedor novoFornecedor)
         {
-            throw new NotImplementedException();
+            var fornecedorEncontrado = await _dbConnection.Fornecedor.FirstOrDefaultAsync(x => x.codigo_do_fornecedor == codigoDoFornecedor);
+
+            if (fornecedorEncontrado != null)
+            {  
+                fornecedorEncontrado.nome_fantasia_do_fornecedor = novoFornecedor.nome_fantasia_do_fornecedor;
+                fornecedorEncontrado.email = novoFornecedor.email;
+                fornecedorEncontrado.cnpj = novoFornecedor.cnpj;
+                fornecedorEncontrado.endereco = novoFornecedor.endereco;
+                fornecedorEncontrado.telefone = novoFornecedor.telefone;
+                fornecedorEncontrado.tempo_de_entrega = novoFornecedor.tempo_de_entrega;
+                fornecedorEncontrado.site = novoFornecedor.site;
+
+                await _dbConnection.SaveChangesAsync();
+
+                return novoFornecedor;
+            }
+            else
+            {
+                throw new Exception("Fornecedor não encontrado.");
+            }
         }
-        // TODO
+        
         public async Task<IEnumerable<Fornecedor>> ListarFornecedores()
         {
-            throw new NotImplementedException();
+            return await _dbConnection.Fornecedor.ToListAsync();
         }
-        // TODO
-        public async Task CadastrarFabricante(Fabricante fabricante)
+        
+
+        public async Task<Fabricante> CadastrarFabricante(Fabricante fabricante)
         {
-            throw new NotImplementedException();
+            if (fabricante != null)
+            { 
+                _dbConnection.Fabricante.Add(fabricante);
+                await _dbConnection.SaveChangesAsync();
+            }
+
+            return fabricante;
         }
-        // TODO
-        public async Task AlterarFabricante(int codigoDoFabricante)
+        
+        public async Task<Fabricante> AlterarFabricante(int codigoDoFabricante, Fabricante novoFabricante)
         {
-            throw new NotImplementedException();
+            var fabricanteEncontrado = await _dbConnection.Fabricante.FirstOrDefaultAsync(x => x.codigo_do_fabricante == codigoDoFabricante);
+
+            if (fabricanteEncontrado != null)
+            {
+                fabricanteEncontrado.nome_do_fabricante = fabricanteEncontrado.nome_do_fabricante;
+
+                await _dbConnection.SaveChangesAsync();
+
+                return novoFabricante;
+            }
+            else
+            {
+                throw new Exception("Fabricante não encontrado.");
+            }
         }
-        // TODO
+        
         public async Task<IEnumerable<Fabricante>> ListarFabricantes()
         {
-            throw new NotImplementedException();
+            return await _dbConnection.Fabricante.ToListAsync();
         }
     }
 }

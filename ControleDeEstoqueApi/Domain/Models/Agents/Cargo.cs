@@ -1,8 +1,11 @@
-﻿namespace ControleDeEstoqueApi.Domain.Models.Agents
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ControleDeEstoqueApi.Domain.Models.Agents
 {
-    public enum Cargo 
+    [Table("Cargos")]
+    public class Cargo 
     {
-        Gerente,
-        Vendedor
+        public int id_Cargo { get; set; }
+        public string name { get; set; }
     }
 }

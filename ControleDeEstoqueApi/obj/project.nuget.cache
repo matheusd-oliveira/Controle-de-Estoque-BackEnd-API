@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "THrM1LG68pb6On5DILOLp18Y5pdqHDZ9OXK5A2+NtqThoe3M2IYY5GrHM45hiTxWyjZu2w8vTvBzkiAAByoENA==",
+  "dgSpecHash": "wU/4b9WXf9KjWQUj27NulF74yCYY1/R3DsDs3KKfjA7g1Cc+WngG8+Yk1XLihi05DacJ+42ooyBoV3xd6H8O8g==",
   "success": true,
   "projectFilePath": "D:\\Desenvolvimento de Software\\Projetos Pessoais\\OldWestCode\\Sistema Estoque\\WPF - Backend\\Controle-de-Estoque-BackEnd-API\\ControleDeEstoqueApi\\ControleDeEstoqueApi.csproj",
   "expectedPackageFiles": [
@@ -43,6 +43,7 @@
     "C:\\Users\\mathe\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\mathe\\.nuget\\packages\\npgsql\\7.0.0\\npgsql.7.0.0.nupkg.sha512",
     "C:\\Users\\mathe\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\7.0.0\\npgsql.entityframeworkcore.postgresql.7.0.0.nupkg.sha512",
+    "C:\\Users\\mathe\\.nuget\\packages\\secureidentity\\1.0.4\\secureidentity.1.0.4.nupkg.sha512",
     "C:\\Users\\mathe\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.1.2\\sqlitepclraw.bundle_e_sqlite3.2.1.2.nupkg.sha512",
     "C:\\Users\\mathe\\.nuget\\packages\\sqlitepclraw.core\\2.1.2\\sqlitepclraw.core.2.1.2.nupkg.sha512",
     "C:\\Users\\mathe\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.2\\sqlitepclraw.lib.e_sqlite3.2.1.2.nupkg.sha512",

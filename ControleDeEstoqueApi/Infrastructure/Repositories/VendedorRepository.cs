@@ -75,9 +75,14 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
 
         }
         // TODO
-        public Task<Venda> EfetuarVenda(Venda venda)
-        {
-            throw new NotImplementedException();
+        public async Task<Venda> EfetuarVenda(Venda venda)
+        {   
+            if (venda != null)
+            {
+                _dbConnection.Venda.Add(venda);
+                await _dbConnection.SaveChangesAsync();
+            }
+            return venda;
         }
 
         public async Task<IEnumerable<Estoque>> ListarProdutosPorNomeNaTelaDeVenda(string nomeDoProduto)

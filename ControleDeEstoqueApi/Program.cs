@@ -5,6 +5,8 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using ControleDeEstoqueApi.Services;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,20 +17,24 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
+
+
 // Adicionando autenticação no swagger.
 builder.Services.AddSwaggerGen(c =>
 {
-    // c.OperationFilter<SwaggerDefaultValues>();
+// c.OperationFilter<SwaggerDefaultValues>();
+c.SwaggerDoc("v1", new OpenApiInfo { Title = "JWTAuthAuthentication", Version = "v1" });
+c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+{
+    Name = "Authorization",
+    In = ParameterLocation.Header,
+    Type = SecuritySchemeType.ApiKey,
+    Scheme = "Bearer",
+    BearerFormat = "JWT",
+    Description = "JWT Authorization header using the Bearer scheme",
+});
 
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
-    });
-
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+c.AddSecurityRequirement(new OpenApiSecurityRequirement()
     {
     {
         new OpenApiSecurityScheme
@@ -47,12 +53,11 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 
-
 });
 
 var key = Encoding.ASCII.GetBytes(Key.Secret);
 
-// Adicionando autenticação na API
+//Adicionando autenticação na API
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -72,6 +77,7 @@ builder.Services.AddAuthentication(x =>
 
 
 builder.Services.AddDbContext<DbConnection>();
+builder.Services.AddTransient<TokenService>();
 builder.Services.AddTransient<IPagamentoRepository, PagamentoRepository>();
 builder.Services.AddTransient<IVendedorRepository, VendedorRepository>();
 builder.Services.AddTransient<IGerenteRepository, GerenteRepository>();
@@ -93,14 +99,16 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "JWTAuthAuthentication v1"));
 }
 
 //app.UseCors();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

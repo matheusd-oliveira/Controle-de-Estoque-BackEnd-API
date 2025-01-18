@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ControleDeEstoqueApi.Migrations
 {
     [DbContext(typeof(DbConnection))]
-    [Migration("20241108015554_CorrecaoModelCargo")]
-    partial class CorrecaoModelCargo
+    [Migration("20250103022736_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

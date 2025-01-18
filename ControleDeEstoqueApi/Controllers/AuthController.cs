@@ -1,6 +1,7 @@
 ﻿using ControleDeEstoqueApi.Application.ViewModels;
 using ControleDeEstoqueApi.Domain.Models.InterfacesRepositories;
 using ControleDeEstoqueApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -26,7 +27,7 @@ namespace ControleDeEstoqueApi.Controllers
 
             try
             {
-                var token = _authRepository.Auth(model.login, model.password);
+                var token = _authRepository.Auth(model.login.ToUpper(), model.password);
                 return Ok(token);
             }
             catch

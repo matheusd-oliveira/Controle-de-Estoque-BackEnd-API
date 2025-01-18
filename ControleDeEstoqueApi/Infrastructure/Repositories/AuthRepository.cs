@@ -15,16 +15,24 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
         {
             try
             {
+                
                 var user = _dbConnection.Funcionario.FirstOrDefaultAsync(x => x.login == username).Result;
+
+                if (user == null) 
+                {
+                    var ErrorMessage = "Dados incorretos, tente novamente!";
+                    return ErrorMessage;
+                }
 
                 if (!PasswordHasher.Verify(user.senhaHash, password))
                 {
                     var ErrorMessage = "Dados incorretos, tente novamente!";
-                    return ErrorMessage; 
+                    return ErrorMessage;
                 }
 
 
-                var token = TokenService.GenerateToken(new Domain.Models.Agents.Funcionario());
+
+                var token = TokenService.GenerateToken(user);
                 return token;
 
             }

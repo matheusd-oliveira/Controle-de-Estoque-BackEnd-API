@@ -6,11 +6,15 @@ using ControleDeEstoqueApi.Domain.Models.InterfacesRepositories;
 using ControleDeEstoqueApi.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using SecureIdentity.Password;
+using SQLitePCL;
+using System.Security.Claims;
 
 namespace ControleDeEstoqueApi.Controllers
 {
+    //[Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[Controller]/[action]")]
     public class GerenteController : ControllerBase
@@ -22,12 +26,13 @@ namespace ControleDeEstoqueApi.Controllers
             _gerenteRepository = gerenteRepository ?? throw new ArgumentNullException(nameof(gerenteRepository));
         }
 
+        [Authorize(Roles = "1")]
         [HttpPost]
-        public async Task<IActionResult> CadastroDeCargos([FromBody] CargoViewModel model) 
+        public async Task<IActionResult> CadastroDeCargos([FromBody] CargoViewModel model)
         {
             var cargo = new Cargo
             {
-                nome = model.NomeDoCargo
+                nome = model.NomeDoCargo.ToUpper()
             };
 
             try
@@ -44,14 +49,14 @@ namespace ControleDeEstoqueApi.Controllers
                 return StatusCode(500, "Internal Error");
             }
         }
-        [Authorize]
+
+        // [Authorize(Roles = "1")]
         [HttpPost]
         public async Task<IActionResult> CadastroDeProdutos(ProdutoViewModel produtoView)
         {
             try
             {
                 var produto = new Produto(
-                    produtoView.CodigoDoProduto,
                     produtoView.CodigoDoFabricante,
                     produtoView.CodigoDoFornecedor,
                     produtoView.NomeDoProduto.ToUpper(),
@@ -74,15 +79,80 @@ namespace ControleDeEstoqueApi.Controllers
             }
         }
 
+        // [Authorize(Roles = "1")]
+        [HttpPost]
+        public async Task<IActionResult> CadastrarFuncionarios([FromBody] FuncionarioViewModel modelFuncionario)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-        [Authorize]
+            var funcionario = new Funcionario
+            {
+                nome_do_funcionario = modelFuncionario.NomeDoFuncionario.ToUpper(),
+                endereco = modelFuncionario.Endereco.ToUpper(),
+                telefone = modelFuncionario.Telefone,
+                data_nascimento = modelFuncionario.DataDeNascimento,
+                cpf = modelFuncionario.Cpf,
+                salario = modelFuncionario.Salario,
+                login = modelFuncionario.Login.ToUpper(),
+                senhaHash = PasswordHasher.Hash(modelFuncionario.Senha),
+                situacao = true,
+                cargoId = 1,
+            };
+
+            try
+            {
+                await _gerenteRepository.CadastrarFuncionario(funcionario);
+                return Ok($"Login: {funcionario.login} \nSenha: {funcionario.senhaHash}");
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(400, "Verifique se o funcionário não está duplicado.");
+            }
+            catch
+            {
+                return StatusCode(500, "Internal Error");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CadastrarFornecedores([FromBody] FornecedorViewModel modelFornecedor)
+        {
+            var fornecedor = new Fornecedor(
+                modelFornecedor.CodigoDoFuncionario,
+                modelFornecedor.NomeFantasia.ToUpper(),
+                modelFornecedor.Cnpj,
+                modelFornecedor.Endereco.ToUpper(),
+                modelFornecedor.Email,
+                modelFornecedor.Site,
+                modelFornecedor.Telefone,
+                modelFornecedor.TempoDeEntrega
+                );
+
+            var novoFornecedor = await _gerenteRepository.CadastrarFornecedor(fornecedor);
+
+            return Ok(novoFornecedor);
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> CadastrarFabricantes([FromBody] FabricanteViewModel modelFabricante)
+        {
+            var fabricante = new Fabricante(
+             modelFabricante.CodigoDoFuncionario,
+             modelFabricante.NomeDoFabricante.ToUpper()
+             );
+
+            var novoFabricante = await _gerenteRepository.CadastrarFabricante(fabricante);
+
+            return Ok(novoFabricante);
+        }
+
+        // [Authorize(Roles = "1")]
         [HttpPut]
-        public async Task<IActionResult> AlteracaoDeProdutos(ProdutoViewModel produtoView)
+        public async Task<IActionResult> AlteracaoDeProdutos(int codigoDoProduto, ProdutoViewModel produtoView)
         {
             try
             {
                 var produto = new Produto(
-                    produtoView.CodigoDoProduto,
                     produtoView.CodigoDoFabricante,
                     produtoView.CodigoDoFornecedor,
                     produtoView.NomeDoProduto.ToUpper(),
@@ -92,18 +162,58 @@ namespace ControleDeEstoqueApi.Controllers
                     produtoView.QuantidadeMinimaParaComprar
                     );
 
-                var novoProduto = await _gerenteRepository.AlterarProduto(produtoView.CodigoDoProduto, produto);
+                var novoProduto = await _gerenteRepository.AlterarProduto(codigoDoProduto, produto);
 
                 return Ok(novoProduto);
             }
-            catch (Exception e)
+            catch (ArgumentNullException argNull)
             {
-
-                throw;
+                return BadRequest("Algum elemento está nulo.");
+            }
+            catch (DbUpdateException dbException)
+            {
+                return StatusCode(400, "Erro ao atualizar o banco de dados. Verifique o código-fonte. ");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao atualizar o Produto - {ex.Message}.");
             }
         }
 
-        [Authorize]
+        // [Authorize(Roles = "1")]
+        [HttpPut]
+        public async Task<IActionResult> AlteracaoDeFuncionarios(int codigoDoFuncionario, FuncionarioViewModel funcionarioView)
+        {
+            try
+            {
+                var funcionario = new Funcionario(
+                    funcionarioView.NomeDoFuncionario.ToUpper(),
+                    funcionarioView.Endereco.ToUpper(),
+                    funcionarioView.Telefone,
+                    funcionarioView.Cpf,
+                    funcionarioView.Salario,
+                    funcionarioView.DataDeNascimento,
+                    funcionarioView.Situacao
+                    );
+
+                var novoFuncionario = await _gerenteRepository.AlterarFuncionario(codigoDoFuncionario, funcionario);
+                return Ok(novoFuncionario);
+            }
+            catch (ArgumentNullException argNull)
+            {
+                return BadRequest("Algum elemento está nulo.");
+            }
+            catch (DbUpdateException dbException)
+            {
+                return StatusCode(400, "Erro ao atualizar o banco de dados. Verifique o código-fonte. ");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao atualizar o Funcionário - {ex.Message}.");
+            }
+        }
+
+        // [Authorize(Roles = "1")]
         [HttpGet]
         public async Task<IActionResult> BuscarProduto(string nomeDoProduto)
         {
@@ -122,8 +232,7 @@ namespace ControleDeEstoqueApi.Controllers
             }
         }
 
-
-        [Authorize]
+        // [Authorize(Roles = "1")]
         [HttpGet]
         public async Task<IActionResult> BuscarProdutoNoEstoquePorId(int codigoDoProduto)
         {
@@ -150,8 +259,7 @@ namespace ControleDeEstoqueApi.Controllers
             }
         }
 
-
-        [Authorize]
+        //  [Authorize(Roles = "1")]
         [HttpGet]
         public async Task<IActionResult> BuscarTodosOsProdutosNoEstoque()
         {
@@ -171,7 +279,7 @@ namespace ControleDeEstoqueApi.Controllers
             }
         }
 
-        [Authorize]
+        //  [Authorize(Roles = "1")]
         [HttpGet]
         public async Task<IActionResult> ListarProdutosDoEstoquePorNomeNaTela(string nomeDoProduto)
         {
@@ -190,46 +298,7 @@ namespace ControleDeEstoqueApi.Controllers
             }
         }
 
-        
-        [HttpPost]
-        public async Task<IActionResult> CadastrarFuncionarios([FromBody] FuncionarioViewModel modelFuncionario) 
-        {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var funcionario = new Funcionario
-            {
-                nome_do_funcionario = modelFuncionario.NomeDoFuncionario,
-                codigo_do_funcionario = modelFuncionario.CodigoDoFuncionario,
-                endereco = modelFuncionario.Endereco,
-                telefone = modelFuncionario.Telefone,
-                data_nascimento = modelFuncionario.DataDeNascimento,
-                cpf = modelFuncionario.Cpf,
-                salario = modelFuncionario.Salario,
-                login = modelFuncionario.login,
-                senhaHash = PasswordHasher.Hash(modelFuncionario.senha),
-                situacao = true,
-                cargoId = 1,
-            };
-
-            try
-            {
-                await _gerenteRepository.CadastrarFuncionario(funcionario);
-                return Ok($"Login: {funcionario.login} \nSenha: {funcionario.senhaHash}");
-            }
-            catch (DbUpdateException)
-            {
-                return StatusCode(400, "Verifique se o funcionário não está duplicado.");
-            }
-            catch
-            {
-                return StatusCode(500, "Internal Error");
-            }
-        }
-
-        //[Authorize]
-        //[HttpPut]
-
-        //public async Task<IActionResult> AlteracaoDeFuncionarios(Funcionario funcionario) { }
         //[Authorize]
         //[HttpGet]
         //public async Task<IActionResult> ListarFuncionarios() { }

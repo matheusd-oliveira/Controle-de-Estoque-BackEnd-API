@@ -18,7 +18,7 @@ namespace ControleDeEstoqueApi.Migrations
                 {
                     idCargo = table.Column<int>(name: "id_Cargo", type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "text", nullable: false)
+                    nome = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,13 +46,13 @@ namespace ControleDeEstoqueApi.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     nomedofuncionario = table.Column<string>(name: "nome_do_funcionario", type: "character varying(250)", maxLength: 250, nullable: false),
                     codigodofuncionario = table.Column<int>(name: "codigo_do_funcionario", type: "integer", nullable: false),
-                    salario = table.Column<decimal>(type: "numeric", nullable: false),
                     endereco = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
                     telefone = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     cpf = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    salario = table.Column<decimal>(type: "numeric", nullable: false),
+                    datanascimento = table.Column<string>(name: "data_nascimento", type: "character varying(250)", maxLength: 250, nullable: false),
                     login = table.Column<string>(type: "text", nullable: false),
                     senhaHash = table.Column<string>(type: "text", nullable: false),
-                    datanascimento = table.Column<string>(name: "data_nascimento", type: "character varying(250)", maxLength: 250, nullable: false),
                     situacao = table.Column<bool>(type: "boolean", nullable: false),
                     cargoId = table.Column<int>(type: "integer", nullable: false)
                 },

@@ -10,7 +10,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
     public class GerenteRepository : IGerenteRepository
     {
         DbConnection _dbConnection = new DbConnection();
-        ServiceProduto _serviceProduto = new ServiceProduto();
+        bool success = false;
 
         public async Task<Cargo> CadastrarCargo(Cargo cargo)
         {
@@ -23,28 +23,29 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             else
             {
                 throw new Exception("Tente novamente!");
-            }  
+            }
         }
+
         public async Task<Produto> CadastrarProduto(Produto produto)
         {
-            try
+            while (!success)
             {
-                if (produto != null)
+                try
                 {
-                    var codigo = _serviceProduto.AdicionarUnidadeAoCodigo();
-                    produto.codigo_do_produto = codigo;
-
-                    _dbConnection.Produto.Add(produto);
-                    await _dbConnection.SaveChangesAsync();
+                    if (produto != null)
+                    {
+                        _dbConnection.Produto.Add(produto);
+                        await _dbConnection.SaveChangesAsync();
+                        success = true;
+                    }
                 }
-                return produto;
+                catch (DbUpdateException ex) when (ex.InnerException?.Message.Contains("PRIMARY KEY") == true)
+                {
+                    throw new Exception(ex.Message);
+                }
             }
-            catch (Exception e)
-            {
-
-                throw new ArgumentException(e.Message);
-            }
-
+            success = false;
+            return produto;
         }
 
 
@@ -59,8 +60,6 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
 
             if (produtoEncontrado != null)
             {
-                // Atualizando as propriedades
-                produtoEncontrado.codigo_do_produto = novoProduto.codigo_do_produto;
                 produtoEncontrado.codigo_do_fabricante = novoProduto.codigo_do_fabricante;
                 produtoEncontrado.codigo_do_fornecedor = novoProduto.codigo_do_fornecedor;
                 produtoEncontrado.nome_do_produto = novoProduto.nome_do_produto;
@@ -101,7 +100,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             return produtoNoEstoque;
         }
 
-       
+
         public async Task<Estoque> EntradaDoProdutoNoEstoque(Estoque produtoNoEstoque)
         {
             if (_dbConnection.Produto.FindAsync(produtoNoEstoque.codigo_do_produto) != null)
@@ -116,7 +115,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
                 throw new Exception("Produto não cadastrado no sistema. Volte para a tela de cadastro e faça manualmente a sua inserção.");
             }
         }
-        
+
         public async Task<Estoque> SaidaDoProdutoNoEstoque(Estoque produtoNoEstoque)
         {
             if (produtoNoEstoque != null)
@@ -130,7 +129,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             {
                 throw new Exception("Não foi possivel realizar a saída do produto. Verifique com o desenvolvedor.");
             }
-            
+
         }
         // TODO
         public async Task<Venda> EfetuarVenda(Venda venda)
@@ -138,7 +137,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             if (venda != null)
             {
                 _dbConnection.Venda.Add(venda);
-                await _dbConnection.SaveChangesAsync();         
+                await _dbConnection.SaveChangesAsync();
             }
             return venda;
         }
@@ -203,30 +202,33 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
-        
+
         public async Task<Funcionario> CadastrarFuncionario(Funcionario funcionario)
         {
             if (funcionario != null)
-            { 
+            {
                 _dbConnection.Funcionario.Add(funcionario);
                 await _dbConnection.SaveChangesAsync();
             }
 
             return funcionario;
         }
-        
+
         public async Task<Funcionario> AlterarFuncionario(int codigoDoFuncionario, Funcionario novoFuncionario)
         {
             var funcionarioEncontrado = await _dbConnection.Funcionario.FirstOrDefaultAsync(x => x.codigo_do_funcionario == codigoDoFuncionario);
 
             if (funcionarioEncontrado != null)
-            {   
+            {
                 funcionarioEncontrado.nome_do_funcionario = novoFuncionario.nome_do_funcionario;
+                funcionarioEncontrado.endereco = novoFuncionario.endereco;
+                funcionarioEncontrado.telefone = funcionarioEncontrado.telefone;
                 funcionarioEncontrado.salario = novoFuncionario.salario;
-                funcionarioEncontrado.cargoId = novoFuncionario.cargoId;
                 funcionarioEncontrado.cpf = novoFuncionario.cpf;
                 funcionarioEncontrado.situacao = novoFuncionario.situacao;
-                funcionarioEncontrado.telefone = funcionarioEncontrado.telefone;
+                funcionarioEncontrado.login = novoFuncionario.login;
+                funcionarioEncontrado.senhaHash = novoFuncionario.senhaHash;
+
 
                 await _dbConnection.SaveChangesAsync();
 
@@ -236,14 +238,14 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             else
             {
                 throw new Exception("Funcionario não encontrado");
-            }       
+            }
         }
-        
+
         public async Task<IEnumerable<Funcionario>> ListarFuncionarios()
         {
             return await _dbConnection.Funcionario.ToListAsync();
         }
-        
+
 
         public async Task<Fornecedor> CadastrarFornecedor(Fornecedor fornecedor)
         {
@@ -255,13 +257,13 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
 
             return fornecedor;
         }
-        
+
         public async Task<Fornecedor> AlterarFornecedor(int codigoDoFornecedor, Fornecedor novoFornecedor)
         {
             var fornecedorEncontrado = await _dbConnection.Fornecedor.FirstOrDefaultAsync(x => x.codigo_do_fornecedor == codigoDoFornecedor);
 
             if (fornecedorEncontrado != null)
-            {  
+            {
                 fornecedorEncontrado.nome_fantasia_do_fornecedor = novoFornecedor.nome_fantasia_do_fornecedor;
                 fornecedorEncontrado.email = novoFornecedor.email;
                 fornecedorEncontrado.cnpj = novoFornecedor.cnpj;
@@ -279,24 +281,24 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
                 throw new Exception("Fornecedor não encontrado.");
             }
         }
-        
+
         public async Task<IEnumerable<Fornecedor>> ListarFornecedores()
         {
             return await _dbConnection.Fornecedor.ToListAsync();
         }
-        
+
 
         public async Task<Fabricante> CadastrarFabricante(Fabricante fabricante)
         {
             if (fabricante != null)
-            { 
+            {
                 _dbConnection.Fabricante.Add(fabricante);
                 await _dbConnection.SaveChangesAsync();
             }
 
             return fabricante;
         }
-        
+
         public async Task<Fabricante> AlterarFabricante(int codigoDoFabricante, Fabricante novoFabricante)
         {
             var fabricanteEncontrado = await _dbConnection.Fabricante.FirstOrDefaultAsync(x => x.codigo_do_fabricante == codigoDoFabricante);
@@ -314,7 +316,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
                 throw new Exception("Fabricante não encontrado.");
             }
         }
-        
+
         public async Task<IEnumerable<Fabricante>> ListarFabricantes()
         {
             return await _dbConnection.Fabricante.ToListAsync();

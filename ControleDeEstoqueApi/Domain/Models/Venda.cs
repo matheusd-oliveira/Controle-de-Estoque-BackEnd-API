@@ -26,6 +26,8 @@ namespace ControleDeEstoqueApi.Domain.Models
         [ForeignKey("Funcionario")]
         public int codigo_do_funcionario { get; set; }
         public double valor_total_da_venda { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime data_da_venda { get; set; } = DateTime.UtcNow;
 
 

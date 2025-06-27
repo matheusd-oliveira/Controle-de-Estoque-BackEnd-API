@@ -298,7 +298,34 @@ namespace ControleDeEstoqueApi.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> EfetuarVenda([FromBody] VendaViewModel vendaView)
+        {
+            var venda = new Venda
+            (
+                vendaView.CodigoDaVenda,
+                vendaView.CodigoDoFuncionario,
+                vendaView.ValorTotalDaVenda,
+                vendaView.DataDaVenda
+            );
 
+
+            try
+            {
+                var novaVenda = await _gerenteRepository.EfetuarVenda(venda);
+                return Ok(novaVenda);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(400, "Verifique se a venda não está duplicada.");
+            }
+            catch
+            {
+                return StatusCode(500, "Internal Error");
+            }
+
+
+        }
         //[Authorize]
         //[HttpGet]
         //public async Task<IActionResult> ListarFuncionarios() { }

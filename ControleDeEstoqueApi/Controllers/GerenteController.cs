@@ -146,6 +146,35 @@ namespace ControleDeEstoqueApi.Controllers
             return Ok(novoFabricante);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> EfetuarVenda(VendaViewModel vendaView)
+        {
+            var venda = new Venda
+            (
+                vendaView.CodigoDaVenda,
+                vendaView.CodigoDoFuncionario,
+                vendaView.ValorTotalDaVenda,
+                vendaView.DataDaVenda
+            );
+
+
+            try
+            {
+                var novaVenda = await _gerenteRepository.EfetuarVenda(venda);
+                return Ok(novaVenda);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(400, "Verifique se a venda não está duplicada.");
+            }
+            catch
+            {
+                return StatusCode(500, "Internal Error");
+            }
+
+
+        }
+
         // [Authorize(Roles = "1")]
         [HttpPut]
         public async Task<IActionResult> AlteracaoDeProdutos(int codigoDoProduto, ProdutoViewModel produtoView)
@@ -298,32 +327,27 @@ namespace ControleDeEstoqueApi.Controllers
             }
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> EfetuarVenda([FromBody] VendaViewModel vendaView)
+        public async Task<IActionResult> CancelarVenda(int id)
         {
-            var venda = new Venda
-            (
-                vendaView.CodigoDaVenda,
-                vendaView.CodigoDoFuncionario,
-                vendaView.ValorTotalDaVenda,
-                vendaView.DataDaVenda
-            );
-
-
             try
             {
-                var novaVenda = await _gerenteRepository.EfetuarVenda(venda);
-                return Ok(novaVenda);
-            }
-            catch (DbUpdateException)
-            {
-                return StatusCode(400, "Verifique se a venda não está duplicada.");
-            }
-            catch
-            {
-                return StatusCode(500, "Internal Error");
-            }
+              
 
+                var vendaRemove = await _gerenteRepository.CancelarVenda(id);
+
+                
+                if (vendaRemove == null)
+                    return NotFound("Id inexistente.");
+
+                return Ok(vendaRemove);
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Ocorreu um erro na aplicação. Debugue! {e.Message}");
+            }
 
         }
         //[Authorize]

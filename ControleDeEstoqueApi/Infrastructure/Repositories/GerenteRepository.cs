@@ -131,7 +131,6 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             }
 
         }
-        // TODO
         public async Task<Venda> EfetuarVenda(Venda venda)
         {
             if (venda != null)
@@ -142,15 +141,18 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             return venda;
         }
         // TODO
-        public async Task<Venda> CancelarVenda(Venda venda)
+        public async Task<Venda> CancelarVenda(int id)
         {
-            if (venda != null)
-            {
-                _dbConnection.Venda.Remove(venda);
-                await _dbConnection.SaveChangesAsync();
-            }
-            return venda;
+            var venda = await _dbConnection.Venda.FirstOrDefaultAsync(v => v.codigo_da_venda == id);
 
+            if (venda == null)
+            {
+                return null;
+            }
+
+            _dbConnection.Venda.Remove(venda);
+            await _dbConnection.SaveChangesAsync();
+            return venda;
         }
 
         public async Task<Item_Venda> AdicionarItemDeVenda(Item_Venda itemDaVenda)

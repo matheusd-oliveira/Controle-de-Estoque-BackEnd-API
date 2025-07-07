@@ -140,7 +140,6 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             }
             return venda;
         }
-        // TODO
         public async Task<Venda> CancelarVenda(int id)
         {
             var venda = await _dbConnection.Venda.FirstOrDefaultAsync(v => v.codigo_da_venda == id);
@@ -172,6 +171,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
             }
         }
 
+        // TODO
         public async Task<Item_Venda> CancelarItemDeVenda(Item_Venda itemDaVenda)
         {
             try
@@ -242,7 +242,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
                 throw new Exception("Funcionario não encontrado");
             }
         }
-
+        // TODO
         public async Task<IEnumerable<Funcionario>> ListarFuncionarios()
         {
             return await _dbConnection.Funcionario.ToListAsync();
@@ -283,7 +283,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
                 throw new Exception("Fornecedor não encontrado.");
             }
         }
-
+        // TODO
         public async Task<IEnumerable<Fornecedor>> ListarFornecedores()
         {
             return await _dbConnection.Fornecedor.ToListAsync();
@@ -300,7 +300,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
 
             return fabricante;
         }
-
+        // TODO
         public async Task<Fabricante> AlterarFabricante(int codigoDoFabricante, Fabricante novoFabricante)
         {
             var fabricanteEncontrado = await _dbConnection.Fabricante.FirstOrDefaultAsync(x => x.codigo_do_fabricante == codigoDoFabricante);
@@ -318,7 +318,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Repositories
                 throw new Exception("Fabricante não encontrado.");
             }
         }
-
+        // TODO
         public async Task<IEnumerable<Fabricante>> ListarFabricantes()
         {
             return await _dbConnection.Fabricante.ToListAsync();

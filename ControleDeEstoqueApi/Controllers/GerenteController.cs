@@ -175,6 +175,32 @@ namespace ControleDeEstoqueApi.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AdicionarItemVenda(ItemVendaViewModel itemVenda)
+        {
+            try
+            {
+                var novoItemDaVenda = new Item_Venda
+                (
+                    itemVenda.CodigoDoProduto,
+                    itemVenda.CodigoDaVenda,
+                    itemVenda.QuantidadeDoProduto,
+                    itemVenda.ValorUnitario
+                );
+
+                await _gerenteRepository.AdicionarItemDeVenda(novoItemDaVenda);
+                return Ok(novoItemDaVenda);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(400, "Erro ao inserir informações no banco. Contate o administrador. ");
+            }
+            catch (Exception e)
+            {
+                return BadRequest($"Erro inesperado. {e.Message}");
+            }
+        }
+
         // [Authorize(Roles = "1")]
         [HttpPut]
         public async Task<IActionResult> AlteracaoDeProdutos(int codigoDoProduto, ProdutoViewModel produtoView)
@@ -328,16 +354,16 @@ namespace ControleDeEstoqueApi.Controllers
         }
 
 
-        [HttpPost]
+        [HttpDelete]
         public async Task<IActionResult> CancelarVenda(int id)
         {
             try
             {
-              
+
 
                 var vendaRemove = await _gerenteRepository.CancelarVenda(id);
 
-                
+
                 if (vendaRemove == null)
                     return NotFound("Id inexistente.");
 
@@ -350,6 +376,8 @@ namespace ControleDeEstoqueApi.Controllers
             }
 
         }
+
+        
         //[Authorize]
         //[HttpGet]
         //public async Task<IActionResult> ListarFuncionarios() { }

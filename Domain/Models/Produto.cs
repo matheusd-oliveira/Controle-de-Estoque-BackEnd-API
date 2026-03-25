@@ -8,7 +8,7 @@ namespace ControleDeEstoqueApi.Domain.Models
     public class Produto
     {
 
-        public Produto(int fabricanteId, int fornecedorId, string produtoNome, decimal valorDaCompra, decimal valorDeVenda, string descricaoDoProduto, int quantidadeMinimaDeCompra, DateTime cadastroDoProduto)
+        public Produto(int fornecedorId, string produtoNome, decimal valorDaCompra, decimal valorDeVenda, string descricaoDoProduto, int quantidadeMinimaDeCompra, DateTime cadastroDoProduto)
         {
             if (string.IsNullOrWhiteSpace(produtoNome))
                 throw new Exception("Nome inválido");
@@ -16,13 +16,9 @@ namespace ControleDeEstoqueApi.Domain.Models
             if (valorDeVenda <= 0)
                 throw new Exception("Valor de venda inválido");
 
-            if (fabricanteId <= 0)
-                throw new Exception("Fabricante obrigatório");
-
             if (fornecedorId <= 0)
                 throw new Exception("Fornecedor obrigatório");
 
-            FabricanteId = fabricanteId;
             FornecedorId = fornecedorId;
             Nome = produtoNome;
             ValorCompra = valorDaCompra;
@@ -34,7 +30,6 @@ namespace ControleDeEstoqueApi.Domain.Models
         }
 
         public int Id { get; private set; }
-        public int FabricanteId { get; private set; }
         public int FornecedorId { get; private set; }
         public string Nome { get; private set; }
         public decimal ValorCompra { get; private set; }
@@ -42,6 +37,9 @@ namespace ControleDeEstoqueApi.Domain.Models
         public string Descricao { get; private set; } 
         public int QuantidadeMinima { get; private set; }
         public DateTime DataCadastro { get; private set; } = DateTime.UtcNow;
+
+        public Fornecedor Fornecedor { get; set; }
+        public Estoque Estoque { get; set; }
     }
 
 }

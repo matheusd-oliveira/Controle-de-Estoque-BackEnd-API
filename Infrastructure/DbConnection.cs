@@ -21,17 +21,6 @@ namespace ControleDeEstoqueApi.Infrastructure
         public DbSet<Venda> Venda { get; set; }
         public DbSet<VendaPagamento> VendaPagamentos { get; set; } // Tabela de junção.
 
-        /// <summary>
-        /// Configuração POSTGRES AMAZON AWS
-        /// </summary>
-        /// <param name="optionsBuilder"></param>
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //  => optionsBuilder.UseNpgsql(
-        // "Server=controle-estoque.cdmowgqow0s1.us-east-1.rds.amazonaws.com;" +
-        // "Port=5432; Database=postgres;" +
-        // "User Id=postgres;" +
-        // "Password=Senha123;");
-
         // Conexão realizada para o Postgres LOCAL
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql("Server=localhost; User Id=postgres; Password=1234; Port=5432; Database=BancoTeste;");
@@ -39,38 +28,26 @@ namespace ControleDeEstoqueApi.Infrastructure
         // Configuração das tabelas.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            #region Criação e configuração das FK's do Model Produto
+            modelBuilder.Entity<Produto>()
+                .HasOne(p => p.Fornecedor)
+                .WithMany(forn => forn.Produto)
+                .HasForeignKey(p => p.FornecedorId);         
+            #endregion
+
             #region Criação e configuração das FK's do Model Estoque 
             // Criando chave estrangeira e passando referência de tabela e coluna. Estoque --> Produto. 
-            // Estoque | cod_prod ---> Produto | cod_prod
+            // Estoque | ProdutoId ---> Produto | Id
             modelBuilder.Entity<Estoque>()
                 .HasOne(e => e.Produto)
                 .WithOne(p => p.Estoque)
-                .HasForeignKey<Estoque>(e => e.codigo_do_produto)
-                .HasPrincipalKey<Produto>(p => p.codigo_do_produto);
+                .HasForeignKey<Estoque>(e => e.ProdutoId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // Criando chave estrangeira e passando referência de tabela e coluna. Estoque --> Fabricante. 
-            // Estoque | nome_fab ---> Fabricante | nome_fab
             modelBuilder.Entity<Estoque>()
-                .HasOne(e => e.Fabricante)
-                .WithMany(f => f.Estoque)
-                .HasForeignKey(e => e.nome_do_fabricante)
-                .HasPrincipalKey(f => f.nome_do_fabricante);
-
-            // Criando chave estrangeira e passando referência de tabela e coluna. Estoque --> Fornecedor. 
-            // Estoque | nome_fant ---> Fornecedor | nome_fant
-            modelBuilder.Entity<Estoque>()
-                .HasOne(e => e.Fornecedor)
-                .WithMany(f => f.Estoque)
-                .HasForeignKey(e => e.nome_fantasia_do_fornecedor)
-                .HasPrincipalKey(f => f.nome_fantasia_do_fornecedor);
-
-            // Criando chave estrangeira e passando referência de tabela e coluna. Estoque --> Funcionario. 
-            // Estoque | cod_func ---> Funcionario | cod_func
-            modelBuilder.Entity<Estoque>()
-                .HasOne(e => e.Funcionario)
-                .WithMany(f => f.Estoque)
-                .HasForeignKey(e => e.codigo_do_funcionario)
-                .HasPrincipalKey(f => f.codigo_do_funcionario);
+                .HasIndex(e => e.ProdutoId)
+                .IsUnique();
             #endregion
 
             #region Criação e configuração das FK's do Model Fornecedor
@@ -87,35 +64,6 @@ namespace ControleDeEstoqueApi.Infrastructure
                 .WithOne(func => func.Fabricante)
                 .HasForeignKey<Fabricante>(fab => fab.codigo_do_funcionario)
                 .HasPrincipalKey<Funcionario>(func => func.codigo_do_funcionario);
-            #endregion
-
-            #region Criação e configuração das FK's do Model Item Venda
-            modelBuilder.Entity<Item_Venda>()
-                .HasOne(item => item.Produto)
-                .WithOne(p => p.Item_Venda)
-                .HasForeignKey<Item_Venda>(item => item.codigo_do_produto)
-                .HasPrincipalKey<Produto>(p => p.codigo_do_produto);
-
-            modelBuilder.Entity<Item_Venda>()
-               .HasOne(item => item.Venda)
-               .WithMany(v => v.Item_Venda)
-               .HasForeignKey(item => item.codigo_da_venda)
-               .HasPrincipalKey(v => v.codigo_da_venda);
-            #endregion
-
-            #region Criação e configuração das FK's do Model Produto
-            modelBuilder.Entity<Produto>()
-                .HasOne(p => p.Fabricante)
-                .WithMany(fab => fab.Produto)
-                .HasForeignKey(p => p.codigo_do_fabricante)
-                .HasPrincipalKey(fab => fab.codigo_do_fabricante);
-
-            modelBuilder.Entity<Produto>()
-                .HasOne(p => p.Fornecedor)
-                .WithMany(fornc => fornc.Produto)
-                .HasForeignKey(p => p.codigo_do_fornecedor)
-                .HasPrincipalKey(fornc => fornc.codigo_do_fornecedor);
-
             #endregion
 
             #region Criação e configuração das FK's do Model Venda 

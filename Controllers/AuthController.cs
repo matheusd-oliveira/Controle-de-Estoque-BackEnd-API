@@ -1,0 +1,39 @@
+﻿using ControleDeEstoqueApi.Application.ViewModels;
+using ControleDeEstoqueApi.Domain.Models.InterfacesRepositories;
+using ControleDeEstoqueApi.Infrastructure.Security;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+namespace ControleDeEstoqueApi.Controllers
+{
+    [ApiController]
+    [Route("/api/v1/auth")]
+    public class AuthController : ControllerBase
+    {
+        private readonly IAuthRepository _authRepository;
+
+        public AuthController(IAuthRepository authRepository)
+        {
+            _authRepository = authRepository;
+        }
+
+        [HttpPost]
+        public IActionResult AuthUser(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("username or password invalid");
+
+
+            try
+            {
+                var token = _authRepository.Auth(model.login.ToUpper(), model.password);
+                return Ok(token);
+            }
+            catch
+            {
+                return StatusCode(500, "Internal Error");
+            }
+        }
+    }
+}

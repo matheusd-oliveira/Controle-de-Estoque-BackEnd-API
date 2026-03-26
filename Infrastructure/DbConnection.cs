@@ -31,9 +31,9 @@ namespace ControleDeEstoqueApi.Infrastructure
 
             #region Criação e configuração das FK's do Model Produto
             modelBuilder.Entity<Produto>()
-                .HasOne(p => p.Fornecedor)
+                .HasOne(p => p.Fabricante)
                 .WithMany(forn => forn.Produto)
-                .HasForeignKey(p => p.FornecedorId);         
+                .HasForeignKey(p => p.FabricanteId);         
             #endregion
 
             #region Criação e configuração das FK's do Model Estoque 

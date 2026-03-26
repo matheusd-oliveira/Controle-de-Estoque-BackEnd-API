@@ -5,40 +5,28 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ControleDeEstoqueApi.Domain.Models
 {
-    [Table("fabricante")]
-    [Index(nameof(codigo_do_fabricante), IsUnique = true)] // Código do fabricante como CONSTRAINT UNIQUE
-    [Index(nameof(nome_do_fabricante), IsUnique = true)] // Nome do fabricante como CONSTRAINT UNIQUE
     public class Fabricante
     {
-        public Fabricante(int codigo_do_funcionario, string nome_do_fabricante)
+        public Fabricante(int funcionarioId, string nomeFabricante)
         {
-           
-            this.codigo_do_funcionario = codigo_do_funcionario;
-            this.nome_do_fabricante = nome_do_fabricante;
+            FuncionarioId = funcionarioId;
+            NomeFabricante = nomeFabricante;
+
+            if (FuncionarioId <= 0)
+                throw new Exception("Id inválido!");
+
+            if (string.IsNullOrWhiteSpace(NomeFabricante))
+                throw new Exception("Nome do fabricante é obrigatório.");
         }
 
-        public Fabricante()
-        {
-            
-        }
-
-        [Key]
-        public int id_fabricante { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int codigo_do_fabricante { get; set; }
-
-        [ForeignKey("Funcionario")]
-        public int codigo_do_funcionario { get; set; }
-
-        [MaxLength(255)]
-        public string nome_do_fabricante { get; set; }
+        public int Id { get; set; }
+        public int FuncionarioId { get; set; }
+        public string NomeFabricante { get; set; }
 
         
         /// <summary>
         /// Propriedades de navegação entre as tabelas para mapamento do EntityFramework
         /// </summary>
-        public ICollection<Estoque> Estoque { get; set; }  // Relação muitos para um. Onde o fabricante pode ter vários produtos dentro de um estoque geral.
         public Funcionario Funcionario { get; set; } 
         public ICollection<Produto> Produto { get; set; }
     }

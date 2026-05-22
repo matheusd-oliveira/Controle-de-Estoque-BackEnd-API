@@ -4,18 +4,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ControleDeEstoqueApi.Domain.Models
 {
-    [Table("pagamento")]
-    [Index(nameof(nome_do_pagamento), IsUnique = true)] // Nome do pagamento como CONSTRAINT UNIQUE
     public class Pagamento
     {
-        public Pagamento(string nome_do_pagamento)
+        public Pagamento(string nomePagamento)
         {
-            this.nome_do_pagamento = nome_do_pagamento.ToUpper() ?? throw new ArgumentNullException(nameof(nome_do_pagamento));
+            nomePagamento = NomePagamento.ToUpper() ?? throw new ArgumentNullException(nameof(nomePagamento));
         }
 
         [Key]
-        public int id_pagamento { get; set; }
-        public string nome_do_pagamento { get; set; }
+        public int Id { get; set; }
+        public string NomePagamento { get; set; }
 
         /// <summary>
         /// Propriedades de navegação entre as tabelas para mapeamento do EntityFramework

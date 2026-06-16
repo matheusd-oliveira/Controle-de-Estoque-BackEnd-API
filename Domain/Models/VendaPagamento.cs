@@ -2,12 +2,12 @@
 {
     public class VendaPagamento
     {
-        public int id_venda { get; set; }
+        public int VendaId { get; set; }
         public Venda Venda { get; set; }
 
-        public int id_pagamento { get; set; }
+        public int PagamentoId { get; set; }
         public Pagamento Pagamento { get; set; }
 
-        public double valor_do_pagamento { get; set; }
+        public double ValorPagamento { get; set; }
     }
 }

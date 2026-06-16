@@ -40,6 +40,7 @@ namespace ControleDeEstoqueApi.Domain.Models
 
         public Fabricante Fabricante { get; set; }
         public Estoque Estoque { get; set; }
+        public ICollection<Item_Venda> Item_Venda { get; set; } = new List<Item_Venda>();
     }
 
 }

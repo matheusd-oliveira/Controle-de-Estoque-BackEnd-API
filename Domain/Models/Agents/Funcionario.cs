@@ -60,5 +60,6 @@ namespace ControleDeEstoqueApi.Domain.Models.Agents
         public Fornecedor Fornecedor { get; set; }
         public Fabricante Fabricante { get; set; }
         public Cargo Cargo { get; set; }
+        public ICollection<Venda> Venda { get; set; }
     }
 }

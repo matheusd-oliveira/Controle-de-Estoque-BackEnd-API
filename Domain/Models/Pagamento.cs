@@ -11,7 +11,6 @@ namespace ControleDeEstoqueApi.Domain.Models
             nomePagamento = NomePagamento.ToUpper() ?? throw new ArgumentNullException(nameof(nomePagamento));
         }
 
-        [Key]
         public int Id { get; set; }
         public string NomePagamento { get; set; }
 

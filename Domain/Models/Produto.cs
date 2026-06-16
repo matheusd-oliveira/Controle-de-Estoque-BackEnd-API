@@ -8,6 +8,9 @@ namespace ControleDeEstoqueApi.Domain.Models
     public class Produto
     {
 
+        public Produto()
+        {
+        }
         public Produto(int fabricanteId, string produtoNome, decimal valorDaCompra, decimal valorDeVenda, string descricaoDoProduto, int quantidadeMinimaDeCompra, DateTime cadastroDoProduto)
         {
             if (string.IsNullOrWhiteSpace(produtoNome))
@@ -25,8 +28,7 @@ namespace ControleDeEstoqueApi.Domain.Models
             ValorVenda = valorDeVenda;
             Descricao = descricaoDoProduto;
             QuantidadeMinima = quantidadeMinimaDeCompra;
-
-            
+            DataCadastro = cadastroDoProduto;
         }
 
         public int Id { get; private set; }

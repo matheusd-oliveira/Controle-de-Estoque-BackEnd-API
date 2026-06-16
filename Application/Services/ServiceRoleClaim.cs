@@ -9,9 +9,9 @@ namespace ControleDeEstoqueApi.Application.Services
         {
             var result = new List<Claim>
             {
-                new(ClaimTypes.Name, funcionario.nome_do_funcionario),
-                new(ClaimTypes.NameIdentifier, funcionario.login),
-                new(ClaimTypes.Role, funcionario.cargoId.ToString())
+                new(ClaimTypes.Name, funcionario.NomeFuncionario),
+                new(ClaimTypes.NameIdentifier, funcionario.Login),
+                new(ClaimTypes.Role, funcionario.CargoId.ToString())
             };
             return result;
         }

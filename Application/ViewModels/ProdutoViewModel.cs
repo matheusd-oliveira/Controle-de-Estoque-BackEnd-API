@@ -10,7 +10,7 @@
         public decimal ValorDeVenda { get; set; }
         public string DescricaoDoProduto { get; set; }
         public int QuantidadeMinimaParaComprar { get; set; }
-
+        public DateTime DataCadastro { get; set; } = DateTime.UtcNow;
 
 
         //public ProdutoViewModel(

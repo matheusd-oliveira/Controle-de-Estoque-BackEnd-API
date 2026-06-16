@@ -9,10 +9,9 @@ namespace ControleDeEstoqueApi.Application.ViewModels
         public string Endereco { get; set; }
         public string Telefone { get; set; }
         public string Cpf { get; set; }
-        public decimal Salario { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public string DataDeNascimento { get; set; }
+        public DateTime DataDeNascimento { get; set; }
         public string Login { get; set; }
         public string Senha { get; set; }
         public bool Situacao{ get; set; }

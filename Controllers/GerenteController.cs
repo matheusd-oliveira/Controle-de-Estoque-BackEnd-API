@@ -32,7 +32,7 @@ namespace ControleDeEstoqueApi.Controllers
         {
             var cargo = new Cargo
             {
-                nome = model.NomeDoCargo.ToUpper()
+                Nome = model.NomeDoCargo.ToUpper()
             };
 
             try
@@ -58,12 +58,12 @@ namespace ControleDeEstoqueApi.Controllers
             {
                 var produto = new Produto(
                     produtoView.CodigoDoFabricante,
-                    produtoView.CodigoDoFornecedor,
                     produtoView.NomeDoProduto.ToUpper(),
                     produtoView.ValorDeCompra,
                     produtoView.ValorDeVenda,
                     produtoView.DescricaoDoProduto.ToUpper(),
-                    produtoView.QuantidadeMinimaParaComprar
+                    produtoView.QuantidadeMinimaParaComprar,
+                    produtoView.DataCadastro
                     );
 
                 var novoProduto = await _gerenteRepository.CadastrarProduto(produto);
@@ -87,16 +87,15 @@ namespace ControleDeEstoqueApi.Controllers
 
             var funcionario = new Funcionario
             {
-                nome_do_funcionario = modelFuncionario.NomeDoFuncionario.ToUpper(),
-                endereco = modelFuncionario.Endereco.ToUpper(),
-                telefone = modelFuncionario.Telefone,
-                data_nascimento = modelFuncionario.DataDeNascimento,
-                cpf = modelFuncionario.Cpf,
-                salario = modelFuncionario.Salario,
-                login = modelFuncionario.Login.ToUpper(),
-                senhaHash = PasswordHasher.Hash(modelFuncionario.Senha),
-                situacao = true,
-                cargoId = 1,
+                NomeFuncionario = modelFuncionario.NomeDoFuncionario.ToUpper(),
+                Endereco = modelFuncionario.Endereco.ToUpper(),
+                Telefone = modelFuncionario.Telefone,
+                Cpf = modelFuncionario.Cpf,
+                Login = modelFuncionario.Login.ToUpper(),
+                Senha = PasswordHasher.Hash(modelFuncionario.Senha),
+                Situacao = true,
+                CargoId = 1,
+                DataNascimento = modelFuncionario.DataDeNascimento
             };
 
             try

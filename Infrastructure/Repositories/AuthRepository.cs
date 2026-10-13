@@ -1,0 +1,45 @@
+﻿using ControleDeEstoqueApi.Domain.Models.InterfacesRepositories;
+using ControleDeEstoqueApi.Infrastructure.Security;
+using Microsoft.EntityFrameworkCore;
+using SecureIdentity.Password;
+using System.Data.Common;
+
+
+namespace ControleDeEstoqueApi.Infrastructure.Repositories
+{
+    public class AuthRepository : IAuthRepository
+    {
+        DbConnection _dbConnection = new DbConnection();
+
+        public object Auth(string username, string password)
+        {
+            try
+            {
+                
+                var user = _dbConnection.Funcionario.FirstOrDefaultAsync(x => x.login == username).Result;
+
+                if (user == null) 
+                {
+                    var ErrorMessage = "Dados incorretos, tente novamente!";
+                    return ErrorMessage;
+                }
+
+                if (!PasswordHasher.Verify(user.senhaHash, password))
+                {
+                    var ErrorMessage = "Dados incorretos, tente novamente!";
+                    return ErrorMessage;
+                }
+
+
+
+                var token = TokenService.GenerateToken(user);
+                return token;
+
+            }
+            catch (Exception db)
+            {
+                throw new Exception("Erro Interno -" + db.Message);
+            }
+        }
+    }
+}

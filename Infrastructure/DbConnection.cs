@@ -26,7 +26,7 @@ namespace ControleDeEstoqueApi.Infrastructure
 
         // Conexão realizada para o Postgres LOCAL
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql("Server=localhost; User Id=postgres; Password=1234; Port=5432; Database=BancoTeste;");
+            => optionsBuilder.UseNpgsql("Server=localhost; User Id=postgres; Password=1234; Port=5432; Database=BancoTesteV2;");
 
         // Configuração das tabelas.
         protected override void OnModelCreating(ModelBuilder modelBuilder)

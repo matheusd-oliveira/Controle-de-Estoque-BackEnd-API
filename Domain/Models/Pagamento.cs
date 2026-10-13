@@ -14,10 +14,5 @@ namespace ControleDeEstoqueApi.Domain.Models
         public int Id { get; set; }
         public string NomePagamento { get; set; }
 
-        /// <summary>
-        /// Propriedades de navegação entre as tabelas para mapeamento do EntityFramework
-        /// </summary>
-        public ICollection<VendaPagamento> VendaPagamentos { get; set; } // Relação muitos-para-muitos
-
     }
 }

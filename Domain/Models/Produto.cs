@@ -20,7 +20,7 @@ namespace ControleDeEstoqueApi.Domain.Models
                 throw new Exception("Valor de venda inválido");
 
             if (fabricanteId <= 0)
-                throw new Exception("Fornecedor obrigatório");
+                throw new Exception("Fabricante obrigatório");
 
             FabricanteId = fabricanteId;
             Nome = produtoNome;
@@ -42,7 +42,7 @@ namespace ControleDeEstoqueApi.Domain.Models
 
         public Fabricante Fabricante { get; set; }
         public Estoque Estoque { get; set; }
-        public ICollection<Item_Venda> Item_Venda { get; set; } = new List<Item_Venda>();
+        public ICollection<Item_Venda> Item_Venda { get; set; }
     }
 
 }

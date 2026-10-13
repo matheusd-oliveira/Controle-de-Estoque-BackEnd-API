@@ -19,6 +19,7 @@ namespace ControleDeEstoqueApi.Domain.Models
         public int Id { get; set; }
         public int FuncionarioId { get; set; }
         public double ValorTotal { get; set; }
+        public Pagamento FormaDePagamento { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DataVenda { get; set; } = DateTime.UtcNow;
@@ -29,6 +30,5 @@ namespace ControleDeEstoqueApi.Domain.Models
         /// </summary>
         public ICollection<Item_Venda> Item_Venda { get; set; }
         public Funcionario Funcionario { get; set; }
-        public ICollection<VendaPagamento> VendaPagamentos { get; set; } // Relação muitos-para-muitos
     }
 }

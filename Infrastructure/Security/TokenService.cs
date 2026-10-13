@@ -14,7 +14,7 @@ namespace ControleDeEstoqueApi.Infrastructure.Security
         public static object GenerateToken(Funcionario funcionario) 
         {
             // Chave do token
-            var key = Encoding.ASCII.GetBytes(Key.Secret);
+            var key = Encoding.ASCII.GetBytes(Key.SecretPass);
 
             var claims = funcionario.GetClaims();
 

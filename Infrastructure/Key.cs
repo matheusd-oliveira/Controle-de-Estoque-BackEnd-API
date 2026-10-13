@@ -2,6 +2,6 @@
 {
     public class Key
     {
-        public static string Secret = "Cjgvpyz46p8q8g5garg4abw71jqbfrw1";
+        public static string SecretPass = "Cjgvpyz46p8q8g5garg4abw71jqbfrw1";
     }
 }

@@ -8,7 +8,7 @@ namespace ControleDeEstoqueApi.Domain.Models
     public class Estoque
     {
 
-        public Estoque(int produtoId, int quantidade)
+        public Estoque(int produtoId, int quantidade, string nomeProduto)
         {
             ProdutoId = produtoId;
             Quantidade = quantidade;

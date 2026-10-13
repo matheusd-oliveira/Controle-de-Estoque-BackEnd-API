@@ -12,7 +12,6 @@ namespace ControleDeEstoqueApi.Domain.Models
     public class Fornecedor
     {
         public Fornecedor(
-            int codigo_do_fornecedor ,
             int codigo_do_funcionario, 
             string nome_fantasia_do_fornecedor, 
             string cnpj,
@@ -22,7 +21,6 @@ namespace ControleDeEstoqueApi.Domain.Models
             string telefone,
             string tempo_de_entrega )
         {
-            this.codigo_do_fornecedor = codigo_do_fornecedor;
             this.codigo_do_funcionario = codigo_do_funcionario;
             this.nome_fantasia_do_fornecedor = nome_fantasia_do_fornecedor;
             this.cnpj = cnpj;
@@ -32,10 +30,15 @@ namespace ControleDeEstoqueApi.Domain.Models
             this.telefone = telefone;
             this.tempo_de_entrega = tempo_de_entrega;
         }
+        public Fornecedor()
+        {
+            
+        }
 
         [Key]
         public int id_fornecedor{ get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int codigo_do_fornecedor { get; set; }
 
         [ForeignKey("Funcionario")]

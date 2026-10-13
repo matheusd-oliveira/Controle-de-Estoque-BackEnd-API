@@ -10,15 +10,22 @@ namespace ControleDeEstoqueApi.Domain.Models
     [Index(nameof(nome_do_fabricante), IsUnique = true)] // Nome do fabricante como CONSTRAINT UNIQUE
     public class Fabricante
     {
-        public Fabricante(int codigo_do_fabricante, int codigo_do_funcionario, string nome_do_fabricante)
+        public Fabricante(int codigo_do_funcionario, string nome_do_fabricante)
         {
-            this.codigo_do_fabricante = codigo_do_fabricante;
+           
             this.codigo_do_funcionario = codigo_do_funcionario;
             this.nome_do_fabricante = nome_do_fabricante;
         }
 
+        public Fabricante()
+        {
+            
+        }
+
         [Key]
         public int id_fabricante { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int codigo_do_fabricante { get; set; }
 
         [ForeignKey("Funcionario")]

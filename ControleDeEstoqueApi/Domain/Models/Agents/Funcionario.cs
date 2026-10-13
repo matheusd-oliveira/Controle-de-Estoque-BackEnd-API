@@ -15,9 +15,9 @@ namespace ControleDeEstoqueApi.Domain.Models.Agents
 
         [MaxLength(250)]
         public string nome_do_funcionario { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int codigo_do_funcionario { get; set; }
-        public Cargo cargo { get; set; }
-        public decimal salario { get; set; }
 
         [MaxLength(250)]
         public string endereco { get; set; }
@@ -27,38 +27,58 @@ namespace ControleDeEstoqueApi.Domain.Models.Agents
 
         [MaxLength(250)]
         public string cpf { get; set; }
+        public decimal salario { get; set; }
 
-        // TODO: Tratar essas propriedades, pois não é legal colocar senha no banco de dados.
-        public string login { get; set; }
-        public string senha { get; set; }
-
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [MaxLength(250)]
         public string data_nascimento { get; set; }
+
+        public string login { get; set; }
+        public string senhaHash { get; set; }
+
         public bool situacao { get; set; }
 
+        // Criando propriedade para referenciar ao Cargo
+        public int cargoId { get; set; }
+
+        public Funcionario(
+            string nome_do_funcionario, string endereco, string telefone, string cpf, decimal salario,
+            string data_nascimento, string login, string senhaHash, bool situacao)
+        {
+            this.nome_do_funcionario = nome_do_funcionario;
+            this.endereco = endereco;
+            this.telefone = telefone;
+            this.cpf = cpf;
+            this.salario = salario;
+            this.data_nascimento = data_nascimento;
+            this.login = login;
+            this.senhaHash = senhaHash;
+            this.situacao = situacao;
+        }
+
+        public Funcionario(
+        string nome_do_funcionario, string endereco, string telefone, string cpf, decimal salario,
+        string data_nascimento, bool situacao)
+        {
+            this.nome_do_funcionario = nome_do_funcionario;
+            this.endereco = endereco;
+            this.telefone = telefone;
+            this.cpf = cpf;
+            this.salario = salario;
+            this.data_nascimento = data_nascimento;
+            this.situacao = situacao;
+        }
+        public Funcionario()
+        {
+            
+        }
         /// <summary>
         /// Propriedades de navegação entre as tabelas para mapeamento do EntityFramework
         /// </summary>
         public ICollection<Estoque> Estoque { get; set; }
         public Fornecedor Fornecedor { get; set; } 
         public Fabricante Fabricante { get; set; } 
-        public ICollection<Venda> Venda { get; set; } 
-
-
-
-
-
-        // Escopo dos métodos criados de acordo com o PDF da documentação original.
-        // Lendo um pouco mais sobre as funcionalidades da classe "Funcionario", descobri que o diagrama de classes e o diagrama relacional posusi alguns erros, que foram corrigidos.
-        // Esses métodos abaixo foram criados conforme a explicação do material, e isso está correto e faz sentido. 
-        // O funcionario possui as funcionalides de Cadastrar/Alterar/Buscar um/Buscar todos os produtos. 
-        // Criei apenas o escopo dos métodos. O resto fica com Biel.
-        // Foi criado um padrão repository para os métodos. - 02/06/2024
-
-        //public void CadastrarProduto() { }
-        //public void AlterarProduto() { }
-        //public void BuscarProduto() { }
-        //public void BuscarTodosOsProdutosNoEstoque() { }
-        //public void EfetuaLogin() { }
+        public ICollection<Venda> Venda { get; set; }
+        public Cargo Cargo { get; set; }
     }
 }

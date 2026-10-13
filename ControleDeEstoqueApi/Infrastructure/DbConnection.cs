@@ -17,6 +17,8 @@ namespace ControleDeEstoqueApi.Infrastructure
         public DbSet<Fabricante> Fabricante { get; set; }
         public DbSet<Fornecedor> Fornecedor { get; set; }
         public DbSet<Funcionario> Funcionario { get; set; }
+        public DbSet<Cargo> Cargos { get; set; }
+        public DbSet<Venda> Venda { get; set; }
         public DbSet<VendaPagamento> VendaPagamentos { get; set; } // Tabela de junção.
 
         /// <summary>

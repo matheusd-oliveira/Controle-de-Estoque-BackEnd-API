@@ -10,7 +10,6 @@ namespace ControleDeEstoqueApi.Domain.Models
     public class Produto
     {
         public Produto(
-            int codigo_do_produto,
             int codigo_do_fabricante, 
             int codigo_do_fornecedor, 
             string nome_do_produto, 
@@ -19,7 +18,6 @@ namespace ControleDeEstoqueApi.Domain.Models
             string descricao_do_produto, 
             int quantidade_minima_para_compra )
         {
-            this.codigo_do_produto = codigo_do_produto;
             this.codigo_do_fabricante = codigo_do_fabricante;
             this.codigo_do_fornecedor = codigo_do_fornecedor;
             this.nome_do_produto = nome_do_produto;
@@ -32,6 +30,8 @@ namespace ControleDeEstoqueApi.Domain.Models
 
         [Key]
         public int id_produto { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int codigo_do_produto { get; set; }
 
         [ForeignKey("Fabricante")]
@@ -51,6 +51,8 @@ namespace ControleDeEstoqueApi.Domain.Models
         public string descricao_do_produto { get; set;} 
 
         public int quantidade_minima_para_compra { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime data_do_cadastro_do_produto { get; set; } = DateTime.UtcNow;
 
         /// <summary>

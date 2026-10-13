@@ -7,6 +7,7 @@ namespace ControleDeEstoqueApi.Application.ViewModels
         public int CodigoDoProduto { get; set; }
         public int CodigoDaVenda { get; set; }
         public int QuantidadeDoProduto { get; set; }
+        public decimal ValorUnitario { get; set; }
 
     }
 }

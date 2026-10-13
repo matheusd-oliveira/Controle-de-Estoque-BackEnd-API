@@ -1,7 +1,13 @@
 using ControleDeEstoqueApi.Domain.Models.InterfacesRepositories;
 using ControleDeEstoqueApi.Infrastructure;
 using ControleDeEstoqueApi.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.OpenApi.Models;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using ControleDeEstoqueApi.Services;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,10 +16,72 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+
+
+// Adicionando autenticação no swagger.
+builder.Services.AddSwaggerGen(c =>
+{
+// c.OperationFilter<SwaggerDefaultValues>();
+c.SwaggerDoc("v1", new OpenApiInfo { Title = "JWTAuthAuthentication", Version = "v1" });
+c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+{
+    Name = "Authorization",
+    In = ParameterLocation.Header,
+    Type = SecuritySchemeType.ApiKey,
+    Scheme = "Bearer",
+    BearerFormat = "JWT",
+    Description = "JWT Authorization header using the Bearer scheme",
+});
+
+c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+    {
+        new OpenApiSecurityScheme
+        {
+        Reference = new OpenApiReference
+            {
+            Type = ReferenceType.SecurityScheme,
+            Id = "Bearer"
+            },
+            Scheme = "oauth2",
+            Name = "Bearer",
+            In = ParameterLocation.Header,
+
+        },
+        new List<string>()
+        }
+    });
+
+});
+
+var key = Encoding.ASCII.GetBytes(Key.Secret);
+
+//Adicionando autenticação na API
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+
+
 builder.Services.AddDbContext<DbConnection>();
+builder.Services.AddTransient<TokenService>();
 builder.Services.AddTransient<IPagamentoRepository, PagamentoRepository>();
 builder.Services.AddTransient<IVendedorRepository, VendedorRepository>();
+builder.Services.AddTransient<IGerenteRepository, GerenteRepository>();
+builder.Services.AddTransient<IAuthRepository, AuthRepository>();
 builder.Services.AddApiVersioning();
 
 //builder.Services.AddCors(options =>
@@ -31,14 +99,16 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "JWTAuthAuthentication v1"));
 }
 
 //app.UseCors();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

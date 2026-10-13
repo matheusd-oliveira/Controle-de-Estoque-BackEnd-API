@@ -1,0 +1,584 @@
+[
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.AuthController",
+    "Method": "AuthUser",
+    "RelativePath": "api/v1/auth",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "ControleDeEstoqueApi.Application.ViewModels.LoginViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.PagamentoController",
+    "Method": "Add",
+    "RelativePath": "api/v1/pagamento",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagamentoView",
+        "Type": "ControleDeEstoqueApi.Application.ViewModels.PagamentoViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "AdicionarItemVenda",
+    "RelativePath": "api/v{version}/Gerente/AdicionarItemVenda",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CodigoDoProduto",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "CodigoDaVenda",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "QuantidadeDoProduto",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "ValorUnitario",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "AlteracaoDeFuncionarios",
+    "RelativePath": "api/v{version}/Gerente/AlteracaoDeFuncionarios",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoDoFuncionario",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "NomeDoFuncionario",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Endereco",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Telefone",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Cpf",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Salario",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "DataDeNascimento",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Login",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Senha",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Situacao",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "AlteracaoDeProdutos",
+    "RelativePath": "api/v{version}/Gerente/AlteracaoDeProdutos",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoDoProduto",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "CodigoDoFornecedor",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "CodigoDoFabricante",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "NomeDoProduto",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ValorDeCompra",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "ValorDeVenda",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "DescricaoDoProduto",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "QuantidadeMinimaParaComprar",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "BuscarProduto",
+    "RelativePath": "api/v{version}/Gerente/BuscarProduto",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nomeDoProduto",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "BuscarProdutoNoEstoquePorId",
+    "RelativePath": "api/v{version}/Gerente/BuscarProdutoNoEstoquePorId",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoDoProduto",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "BuscarTodosOsProdutosNoEstoque",
+    "RelativePath": "api/v{version}/Gerente/BuscarTodosOsProdutosNoEstoque",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "CadastrarFabricantes",
+    "RelativePath": "api/v{version}/Gerente/CadastrarFabricantes",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modelFabricante",
+        "Type": "ControleDeEstoqueApi.Application.ViewModels.FabricanteViewModel",
+        "IsRequired": true
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "CadastrarFornecedores",
+    "RelativePath": "api/v{version}/Gerente/CadastrarFornecedores",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modelFornecedor",
+        "Type": "ControleDeEstoqueApi.Application.ViewModels.FornecedorViewModel",
+        "IsRequired": true
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "CadastrarFuncionarios",
+    "RelativePath": "api/v{version}/Gerente/CadastrarFuncionarios",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modelFuncionario",
+        "Type": "ControleDeEstoqueApi.Application.ViewModels.FuncionarioViewModel",
+        "IsRequired": true
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "CadastroDeCargos",
+    "RelativePath": "api/v{version}/Gerente/CadastroDeCargos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "ControleDeEstoqueApi.Application.ViewModels.CargoViewModel",
+        "IsRequired": true
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "CadastroDeProdutos",
+    "RelativePath": "api/v{version}/Gerente/CadastroDeProdutos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CodigoDoFornecedor",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "CodigoDoFabricante",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "NomeDoProduto",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ValorDeCompra",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "ValorDeVenda",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "DescricaoDoProduto",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "QuantidadeMinimaParaComprar",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "CancelarVenda",
+    "RelativePath": "api/v{version}/Gerente/CancelarVenda",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "EfetuarVenda",
+    "RelativePath": "api/v{version}/Gerente/EfetuarVenda",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CodigoDaVenda",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "CodigoDoFuncionario",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "ValorTotalDaVenda",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "DataDaVenda",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "ListarFabricantes",
+    "RelativePath": "api/v{version}/Gerente/ListarFabricantes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nomeDoFabricante",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "ListarFornecedores",
+    "RelativePath": "api/v{version}/Gerente/ListarFornecedores",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nomeDoFornecedor",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "ListarFuncionarios",
+    "RelativePath": "api/v{version}/Gerente/ListarFuncionarios",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nomeDoFuncionario",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.GerenteController",
+    "Method": "ListarProdutosDoEstoquePorNomeNaTela",
+    "RelativePath": "api/v{version}/Gerente/ListarProdutosDoEstoquePorNomeNaTela",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nomeDoProduto",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.VendedorController",
+    "Method": "BuscarProduto",
+    "RelativePath": "api/v{version}/Vendedor/BuscarProduto",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nomeDoProduto",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.VendedorController",
+    "Method": "BuscarProdutoNoEstoquePorId",
+    "RelativePath": "api/v{version}/Vendedor/BuscarProdutoNoEstoquePorId",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoDoProduto",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ControleDeEstoqueApi.Controllers.VendedorController",
+    "Method": "BuscarTodosOsProdutosNoEstoque",
+    "RelativePath": "api/v{version}/Vendedor/BuscarTodosOsProdutosNoEstoque",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "version",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
